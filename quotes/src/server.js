@@ -1,3 +1,5 @@
+import config from './config';
+
 const express = require('express');
 const app = express();
 
