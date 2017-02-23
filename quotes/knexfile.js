@@ -1,5 +1,6 @@
 module.exports = {
 
+  // TODO: Move to configuration.
   development: {
     client: 'sqlite3',
     connection: {

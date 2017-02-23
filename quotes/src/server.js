@@ -1,6 +1,5 @@
-import config from './config';
-
 const express = require('express');
+const config = require('./config');
 const app = express();
 
 app.get('/', (req, res) => {
@@ -9,6 +8,6 @@ app.get('/', (req, res) => {
 
 app.use('/quote', require('./routes/quote'));
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(config.port, function () {
+  console.log('App listening on port ' + config.port);
 });
