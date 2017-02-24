@@ -19,6 +19,7 @@
   "homepage": "https://github.com/wigy/netfyffe#readme",
   "dependencies": {
     "express": "^4.14.1",
+    "neat-dump": "^1.0.7",
     "nodemon": "^1.11.0"
   },
   "devDependencies": {

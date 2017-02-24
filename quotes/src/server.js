@@ -2,6 +2,10 @@ const express = require('express');
 const config = require('./config');
 const app = express();
 
+const d = require('neat-dump');
+d.config.showSourceLine = false;
+global.d = d;
+
 app.get('/', (req, res) => {
   res.redirect('/quote/');
 });
@@ -9,5 +13,5 @@ app.get('/', (req, res) => {
 app.use('/quote', require('./routes/quote'));
 
 app.listen(config.port, function () {
-  console.log('App listening on port ' + config.port);
+  d.info('App listening on port ' + config.port);
 });
