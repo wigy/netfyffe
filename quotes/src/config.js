@@ -1,6 +1,21 @@
+const knexfile = require('../knexfile');
 
-// TODO: Pick one config based on environment NODE_ENV.
+const config = {
+    develop: {
+        // Server port
+        port: process.env.PORT || 9000,
+        // Database settings for Knex
+        database: knexfile.development,
+    },
 
-module.exports = {
-    port: process.env.PORT || 9000 // Server port
+    production: {
+        // Server port
+        port: process.env.PORT || 9000,
+        // Database settings for Knex
+        database: knexfile.production,
+    },
 };
+
+const env = process.env.NODE_ENV || 'develop';
+
+module.exports = config[env];

@@ -1,17 +1,11 @@
 const express = require('express');
 const quote = express.Router();
-
-// TODO: Move to configuration.
-const knex = require('knex')( {
-    client: 'sqlite3',
-    connection: {
-      filename: './dev.sqlite3'
-    },
-    useNullAsDefault: true
-  });
+const db = require('../db');
 
 quote.get('/', (req, res) => {
-    knex.select().from('tickers').then(data => res.send(data));
+    db.select('ticker').from('tickers').then(
+        data => res.send(data.map(obj => obj.ticker))
+    );
 });
 
 module.exports = quote;
