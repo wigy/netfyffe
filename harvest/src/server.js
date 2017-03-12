@@ -5,12 +5,7 @@ const app = express();
 global.d = require('neat-dump');
 d.config.showSourceLine = false;
 
-app.get('/', (req, res) => {
-  res.redirect('/quote/');
-});
-
-app.use('/quote', require('./routes/quote'));
-app.use('/industries', require('./routes/industries'));
+app.use('/ticker', require('./routes/ticker'));
 
 app.listen(config.port, function () {
   d.info('App listening on port ' + config.port);
