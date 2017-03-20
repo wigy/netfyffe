@@ -1,18 +1,38 @@
-const knexfile = require('../knexfile');
-
 const config = {
+
     develop: {
         // Server port
         port: process.env.PORT || 9000,
         // Database settings for Knex
-        database: knexfile.development,
+        database: {
+            client: 'sqlite3',
+            connection: {
+                filename: '../development.sqlite'
+            },
+            useNullAsDefault: true
+        },
     },
 
     production: {
         // Server port
         port: process.env.PORT || 9000,
         // Database settings for Knex
-        database: knexfile.production,
+        database: {
+            client: 'postgresql',
+            connection: {
+                database: 'netfyffe',
+                user:     'username',
+                password: 'password'
+            },
+            pool: {
+                min: 2,
+                max: 10
+            },
+            migrations: {
+                tableName: 'knex_migrations'
+            },
+            useNullAsDefault: true
+        },
     },
 };
 
