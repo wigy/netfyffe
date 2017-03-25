@@ -1,0 +1,647 @@
+{
+  "date": "2017-03-25T10:18:19.033Z",
+  "version": "1.0.1",
+  "tables": [
+    "tickers",
+    "quotes"
+  ],
+  "columns": {
+    "tickers": [
+      "ticker",
+      "country",
+      "currency",
+      "name"
+    ],
+    "quotes": [
+      "ticker",
+      "date",
+      "close",
+      "high",
+      "low",
+      "open",
+      "volume"
+    ]
+  },
+  "rows": {
+    "tickers": 54,
+    "quotes": 32
+  },
+  "data": {
+    "tickers": [
+      {
+        "ticker": "CPH:NOVO-B",
+        "name": "Novo Nordisk A/S",
+        "country": "DEN",
+        "currency": "DKK"
+      },
+      {
+        "ticker": "FRA:DXSU",
+        "name": "X-Tr. EM Liquid Euro Bond",
+        "country": "EM",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "FRA:EOAN",
+        "name": "E.ON SE",
+        "country": "GER",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "FRA:IUS4",
+        "name": "iShares Japan Small Cap",
+        "country": "JAP",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "name": "CapMan Plc B",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:CAV1V",
+        "name": "Caverion Oyj",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:EQV1V",
+        "name": "eQ Oyj",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:FUM1V",
+        "name": "Fortum Corporation",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:KESBV",
+        "name": "Kesko B",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "name": "Keskisuomalainen",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:LEHTO",
+        "name": "Lehto Group",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:METSO",
+        "name": "Metso Corporation",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:NDA1V",
+        "name": "Nordea Bank AB (publ) FDR",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "name": "Neste",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:NOKIA",
+        "name": "Nokia Corporation",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:NORVE",
+        "name": "Norvestia Plc",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:OREIT",
+        "name": "Orava REIT",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:OREITN0116",
+        "name": "Orava Asuntorahasto uudet",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:RMR1V",
+        "name": "Ramirent",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:SAMPO",
+        "name": "Sampo",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "name": "Siili Solutions Oyj",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:TELIA1",
+        "name": "Telia Company",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:UPM",
+        "name": "UPM",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:WRT1V",
+        "name": "Wärtsilä Corporation",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:WUF1V",
+        "name": "Wulff Group Plc",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "NASDAQ:BOTZ",
+        "name": "Global X Robotics & A.I.",
+        "country": "JAP",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NASDAQ:GMLP",
+        "name": "Golar LNG Partners LP",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NASDAQ:INTC",
+        "name": "Intel",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NASDAQ:NYMT",
+        "name": "NY Mortage Trust REIT",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NASDAQ:TDIV",
+        "name": "First Trust Technology Divident",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NASDAQ:TSLA",
+        "name": "Tesla Motors, Inc.",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSE:AI",
+        "name": "Arlington REIT",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSE:ARR",
+        "name": "Armour REIT",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSE:HCP",
+        "name": "HCP Inc",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSE:IBM",
+        "name": "IBM",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSE:O",
+        "name": "Realty Income REIT",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSE:WY",
+        "name": "Weyerhaeuser",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:FAN",
+        "name": "First Trust ISE Global Wind Energy ETF",
+        "country": "EUR",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "name": "VanEck EM High Yield",
+        "country": "EM",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:IAU",
+        "name": "ishares Gold Trust",
+        "country": "N/A",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:NGE",
+        "name": "Global X MSCI Nigeria",
+        "country": "NGA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "name": "VanEck Russian Small Cap",
+        "country": "RUS",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:SLX",
+        "name": "Market Vectors Steel",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:SLYV",
+        "name": "SPDR S&P 600 Small Cap Value",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "NYSEARCA:VGT",
+        "name": "Vanguard IT Index Fund",
+        "country": "USA",
+        "currency": "USD"
+      },
+      {
+        "ticker": "STO:AZN",
+        "name": "AstraZeneca Plc",
+        "country": "SWE",
+        "currency": "SEK"
+      },
+      {
+        "ticker": "X:EUR",
+        "name": "Käteinen €",
+        "country": "EUR",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "X:OKM1V",
+        "name": "Okmetic Oyj",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "X:SUPDEN",
+        "name": "Nordnet Superfondet Denmark",
+        "country": "DEN",
+        "currency": "DKK"
+      },
+      {
+        "ticker": "X:SUPFIN",
+        "name": "Nordnet Superrahasto Suomi",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "X:SUPNOR",
+        "name": "Nordnet Superfondet Norge",
+        "country": "NOR",
+        "currency": "NOK"
+      },
+      {
+        "ticker": "X:SUPSVE",
+        "name": "Nordnet Superfonden Sverige",
+        "country": "SWE",
+        "currency": "SEK"
+      },
+      {
+        "ticker": "X:UB",
+        "name": "United Bankers",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "X:VINCIT",
+        "name": "Vincit Group Oyj",
+        "country": "FIN",
+        "currency": "EUR"
+      }
+    ],
+    "quotes": [
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-01",
+        "open": 18.42,
+        "high": 18.42,
+        "low": 18.2,
+        "close": 18.29,
+        "volume": 26401
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-02",
+        "open": 18.28,
+        "high": 18.29,
+        "low": 18.04,
+        "close": 18.12,
+        "volume": 17166
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-03",
+        "open": 18.09,
+        "high": 18.14,
+        "low": 17.43,
+        "close": 17.6,
+        "volume": 46582
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-04",
+        "open": 17.65,
+        "high": 17.75,
+        "low": 17.33,
+        "close": 17.4,
+        "volume": 24354
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-05",
+        "open": 17.4,
+        "high": 17.4,
+        "low": 17.4,
+        "close": 17.4,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-06",
+        "open": 17.4,
+        "high": 17.4,
+        "low": 17.4,
+        "close": 17.4,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-07",
+        "open": 17.4,
+        "high": 17.4,
+        "low": 17.4,
+        "close": 17.4,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-08",
+        "open": 17.4,
+        "high": 17.42,
+        "low": 17,
+        "close": 17.1,
+        "volume": 25392
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-09",
+        "open": 17.25,
+        "high": 17.33,
+        "low": 17.1,
+        "close": 17.22,
+        "volume": 18995
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-10",
+        "open": 17.3,
+        "high": 17.31,
+        "low": 16.99,
+        "close": 17.15,
+        "volume": 24113
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-11",
+        "open": 17.3,
+        "high": 17.3,
+        "low": 16.99,
+        "close": 16.99,
+        "volume": 12132
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-12",
+        "open": 17.08,
+        "high": 17.11,
+        "low": 16.99,
+        "close": 17.01,
+        "volume": 10758
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-13",
+        "open": 17.01,
+        "high": 17.01,
+        "low": 17.01,
+        "close": 17.01,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-14",
+        "open": 17.01,
+        "high": 17.01,
+        "low": 17.01,
+        "close": 17.01,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-15",
+        "open": 17.1,
+        "high": 17.1,
+        "low": 17.01,
+        "close": 17.07,
+        "volume": 10725
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-16",
+        "open": 17.2,
+        "high": 17.2,
+        "low": 16.66,
+        "close": 16.78,
+        "volume": 33507
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-17",
+        "open": 16.8,
+        "high": 17,
+        "low": 16.76,
+        "close": 16.84,
+        "volume": 8125
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-18",
+        "open": 16.88,
+        "high": 17.04,
+        "low": 16.82,
+        "close": 16.82,
+        "volume": 15913
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-19",
+        "open": 17,
+        "high": 17.05,
+        "low": 16.82,
+        "close": 17.02,
+        "volume": 6594
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-20",
+        "open": 17.02,
+        "high": 17.02,
+        "low": 17.02,
+        "close": 17.02,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-21",
+        "open": 17.02,
+        "high": 17.02,
+        "low": 17.02,
+        "close": 17.02,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-22",
+        "open": 17.1,
+        "high": 17.1,
+        "low": 16.95,
+        "close": 17.07,
+        "volume": 27674
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-23",
+        "open": 17.05,
+        "high": 17.1,
+        "low": 16.92,
+        "close": 16.92,
+        "volume": 7612
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-24",
+        "open": 17,
+        "high": 17.1,
+        "low": 16.9,
+        "close": 16.9,
+        "volume": 16142
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-25",
+        "open": 16.9,
+        "high": 17.1,
+        "low": 16.9,
+        "close": 17,
+        "volume": 24358
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-26",
+        "open": 17,
+        "high": 17.19,
+        "low": 17,
+        "close": 17.19,
+        "volume": 12008
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-27",
+        "open": 17.19,
+        "high": 17.19,
+        "low": 17.19,
+        "close": 17.19,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-28",
+        "open": 17.19,
+        "high": 17.19,
+        "low": 17.19,
+        "close": 17.19,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-29",
+        "open": 17.19,
+        "high": 17.22,
+        "low": 17.06,
+        "close": 17.19,
+        "volume": 15932
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-30",
+        "open": 17.15,
+        "high": 17.15,
+        "low": 16.85,
+        "close": 16.88,
+        "volume": 14262
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-01-31",
+        "open": 16.84,
+        "high": 17.35,
+        "low": 16.84,
+        "close": 17.35,
+        "volume": 10848
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "date": "2017-02-01",
+        "open": 17.39,
+        "high": 17.47,
+        "low": 17.3,
+        "close": 17.35,
+        "volume": 3467
+      }
+    ]
+  }
+}
