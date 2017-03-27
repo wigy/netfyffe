@@ -9,19 +9,23 @@ let cache = {};
 
 module.exports = {
 
-    // TODO: Check for existing data.
-    // TODO: Add mocha tests using mocked harvester.
-    // TODO: Use cache.
-    // TODO: Store data.
     /**
      * Provide data for a ticker for the given date range (inclusive).
      */
     quotes(ticker, start, end) {
         let uri = config.harvest + '/ticker/' + ticker + '/' + start + '/' + end;
         d.info('Fetching', uri);
-        return rp({uri: uri}).then(data => {
-            db.insert(data).into('quotes');
-            return data;
-        });
+        // TODO: Check cache if we have data already.
+        // TODO: Fill in everything from database to the cache from the range.
+        return rp({uri: uri, json: true})
+            .then(data => {
+                d.info('Got', data.length, 'entries for', ticker);
+                // TODO: Fill cache and construct second array for entries not found.
+                return data;
+            })
+            .then(data => {
+                // TODO: Insert only those entries that havent been not found.
+                return db('quotes').insert(data).then(() => {return data;});
+            });
     }
 };
