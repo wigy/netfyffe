@@ -15,7 +15,10 @@ quote.get('/:ticker', (req, res) => {
 });
 
 quote.get('/:ticker/:from/:to', (req, res) => {
-    // TODO: Tricker harvesting and respond with 'unknown'.
+    // TODO: Check for existing data.
+    // TODO: Add mocha tests using mocked harvester.
+    // TODO: Move fetching and logic to the separate service module that uses memory cache.
+    // TODO: Use harvesting using configured url.
     res.send("TODO");
 });
 
