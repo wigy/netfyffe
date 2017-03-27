@@ -1,8 +1,9 @@
 const rp = require('request-promise');
 const express = require('express');
-const ticker = express.Router();
 const moment = require('moment');
 const config = require('../config');
+
+const ticker = express.Router();
 
 /**
  * Helper to check existence of the harvester module and instantiating it.
@@ -58,7 +59,7 @@ ticker.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
         })
         .catch(err => {
             d.error(err);
-            res.status(500).send("Error");
+            res.status(500).send("Internal server error");
         });
     }
 });

@@ -3,6 +3,8 @@ const config = {
     develop: {
         // Server port
         port: process.env.PORT || 9000,
+        // Harvest service URI
+        harvest: process.env.NETFYFFE_HARVEST || 'http://localhost:9001',
         // Database settings for Knex
         database: {
             client: 'sqlite3',

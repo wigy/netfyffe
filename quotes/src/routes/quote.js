@@ -1,5 +1,6 @@
 const express = require('express');
 const quote = express.Router();
+const harvestCache = require('../lib/harvest/cache');
 const db = require('../db');
 
 // TODO: API docs.
@@ -10,16 +11,18 @@ quote.get('/', (req, res) => {
 });
 
 quote.get('/:ticker', (req, res) => {
-    // TODO: Ask from harvester.
+    // TODO: Ask from harvester (configured start date until yesterday).
     res.send("TODO");
 });
 
-quote.get('/:ticker/:from/:to', (req, res) => {
-    // TODO: Check for existing data.
-    // TODO: Add mocha tests using mocked harvester.
-    // TODO: Move fetching and logic to the separate service module that uses memory cache.
-    // TODO: Use harvesting using configured url.
-    res.send("TODO");
+quote.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
+    const {ticker, start, end} = req.params;
+    harvestCache.quotes(ticker, start, end)
+        .then(data => res.send(data))
+        .catch(err => {
+            d.error(err);
+            res.status(500).send("Internal server error");
+        });
 });
 
 module.exports = quote;
