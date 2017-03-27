@@ -1,5 +1,5 @@
 {
-  "date": "2017-03-27T17:15:33.198Z",
+  "date": "2017-03-27T18:37:21.143Z",
   "version": "1.0.2",
   "tables": [
     "tickers",
@@ -24,7 +24,7 @@
   },
   "rows": {
     "tickers": 54,
-    "quotes": 63
+    "quotes": 100
   },
   "data": {
     "tickers": [
@@ -919,6 +919,339 @@
         "high": 24.382,
         "low": 24.382,
         "close": 24.382,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-02",
+        "open": 24.5,
+        "high": 24.59,
+        "low": 24.41,
+        "close": 24.51,
+        "volume": 6284
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-03",
+        "open": 24.51,
+        "high": 24.51,
+        "low": 24.51,
+        "close": 24.51,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-04",
+        "open": 24.51,
+        "high": 24.51,
+        "low": 24.51,
+        "close": 24.51,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-05",
+        "open": 24.58,
+        "high": 24.58,
+        "low": 24.49,
+        "close": 24.55,
+        "volume": 41569
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-06",
+        "open": 24.55,
+        "high": 24.57,
+        "low": 24.49,
+        "close": 24.51,
+        "volume": 5278
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-07",
+        "open": 24.53,
+        "high": 24.57,
+        "low": 24.45,
+        "close": 24.57,
+        "volume": 31029
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-08",
+        "open": 24.57,
+        "high": 24.57,
+        "low": 24.48,
+        "close": 24.48,
+        "volume": 9229
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-09",
+        "open": 24.57,
+        "high": 24.61,
+        "low": 24.55,
+        "close": 24.61,
+        "volume": 5264
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-10",
+        "open": 24.61,
+        "high": 24.61,
+        "low": 24.61,
+        "close": 24.61,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-11",
+        "open": 24.61,
+        "high": 24.61,
+        "low": 24.61,
+        "close": 24.61,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-12",
+        "open": 24.63,
+        "high": 24.64,
+        "low": 24.57,
+        "close": 24.63,
+        "volume": 15440
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-13",
+        "open": 24.67,
+        "high": 24.67,
+        "low": 24.51,
+        "close": 24.56,
+        "volume": 19515
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-14",
+        "open": 24.54,
+        "high": 24.61,
+        "low": 24.51,
+        "close": 24.58,
+        "volume": 32668
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-15",
+        "open": 24.6,
+        "high": 24.64,
+        "low": 24.55,
+        "close": 24.59,
+        "volume": 4720
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-16",
+        "open": 24.59,
+        "high": 24.59,
+        "low": 24.51,
+        "close": 24.53,
+        "volume": 10916
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-17",
+        "open": 24.53,
+        "high": 24.53,
+        "low": 24.53,
+        "close": 24.53,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-18",
+        "open": 24.53,
+        "high": 24.53,
+        "low": 24.53,
+        "close": 24.53,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-19",
+        "open": 24.53,
+        "high": 24.53,
+        "low": 24.53,
+        "close": 24.53,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-20",
+        "open": 24.67,
+        "high": 24.67,
+        "low": 24.59,
+        "close": 24.63,
+        "volume": 10232
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-21",
+        "open": 24.68,
+        "high": 24.74,
+        "low": 24.65,
+        "close": 24.72,
+        "volume": 8369
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-22",
+        "open": 24.77,
+        "high": 24.78,
+        "low": 24.67,
+        "close": 24.7,
+        "volume": 6326
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-23",
+        "open": 24.78,
+        "high": 24.78,
+        "low": 24.66,
+        "close": 24.73,
+        "volume": 11294
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-24",
+        "open": 24.73,
+        "high": 24.73,
+        "low": 24.73,
+        "close": 24.73,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-25",
+        "open": 24.73,
+        "high": 24.73,
+        "low": 24.73,
+        "close": 24.73,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-26",
+        "open": 24.74,
+        "high": 24.74,
+        "low": 24.68,
+        "close": 24.72,
+        "volume": 4207
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-27",
+        "open": 24.71,
+        "high": 24.72,
+        "low": 24.7,
+        "close": 24.72,
+        "volume": 15581
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-02-28",
+        "open": 24.65,
+        "high": 24.675,
+        "low": 24.56,
+        "close": 24.675,
+        "volume": 22858
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-01",
+        "open": 24.64,
+        "high": 24.65,
+        "low": 24.56,
+        "close": 24.57,
+        "volume": 15917
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-02",
+        "open": 24.61,
+        "high": 24.69,
+        "low": 24.6,
+        "close": 24.61,
+        "volume": 3909
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-03",
+        "open": 24.61,
+        "high": 24.61,
+        "low": 24.61,
+        "close": 24.61,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-04",
+        "open": 24.61,
+        "high": 24.61,
+        "low": 24.61,
+        "close": 24.61,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-05",
+        "open": 24.62,
+        "high": 24.63,
+        "low": 24.6,
+        "close": 24.63,
+        "volume": 3911
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-06",
+        "open": 24.62,
+        "high": 24.65,
+        "low": 24.57,
+        "close": 24.59,
+        "volume": 8759
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-07",
+        "open": 24.6,
+        "high": 24.6,
+        "low": 24.43,
+        "close": 24.46,
+        "volume": 11274
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-08",
+        "open": 24.46,
+        "high": 24.46,
+        "low": 24.28,
+        "close": 24.42,
+        "volume": 8930
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-09",
+        "open": 24.42,
+        "high": 24.42,
+        "low": 24.42,
+        "close": 24.42,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:HYEM",
+        "date": "2017-03-10",
+        "open": 24.5,
+        "high": 24.5,
+        "low": 24.5,
+        "close": 24.5,
         "volume": 0
       }
     ]
