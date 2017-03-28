@@ -9,7 +9,7 @@ const config = {
         database: {
             client: 'sqlite3',
             connection: {
-                filename: '../development.sqlite'
+                filename: './development.sqlite'
             },
             useNullAsDefault: true
         },
