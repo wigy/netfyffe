@@ -5,6 +5,7 @@ const app = express();
 global.d = require('neat-dump');
 d.config.showSourceLine = false;
 
+app.use('/doc', express.static('./doc'));
 app.use('/ticker', require('./routes/ticker'));
 
 app.listen(config.port, function () {

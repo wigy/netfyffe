@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "doc": "apidoc -i src"
+  },
+  "apidoc": {
+    "title": "NetFyffe Harvest",
+    "description": "Service to collect online data from various sources."
   },
   "repository": {
     "type": "git",
@@ -18,6 +23,7 @@
   },
   "homepage": "https://github.com/wigy/netfyffe#readme",
   "dependencies": {
+    "apidoc": "^0.17.5",
     "express": "^4.14.1",
     "knex": "^0.12.7",
     "moment": "^2.17.1",
