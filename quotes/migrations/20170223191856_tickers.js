@@ -1,12 +1,12 @@
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('tickers', function (t) {
-        t.string('ticker', 32).primary().notNullable();
-        t.string('name', 256).nullable();
-        t.string('country', 6).nullable();
-        t.string('currency', 3).notNullable();
+    return knex.schema.createTable('tickers', function (table) {
+        table.string('ticker', 32).primary().notNullable();
+        table.string('name', 256).nullable();
+        table.string('country', 6).nullable();
+        table.string('currency', 3).notNullable();
 
-        t.index('country');
-        t.index('currency');
+        table.index('country');
+        table.index('currency');
     });
 };
 

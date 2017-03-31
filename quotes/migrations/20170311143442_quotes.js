@@ -1,15 +1,15 @@
 exports.up = function (knex, Promise) {
 
-    return knex.schema.createTable('quotes', function (t) {
-        t.string('ticker', 32).notNullable();
-        t.date('date').notNullable();
-        t.decimal('open').notNullable();
-        t.decimal('high');
-        t.decimal('low');
-        t.decimal('close');
-        t.integer('volume');
+    return knex.schema.createTable('quotes', function (table) {
+        table.string('ticker', 32).notNullable();
+        table.date('date').notNullable();
+        table.decimal('open').notNullable();
+        table.decimal('high');
+        table.decimal('low');
+        table.decimal('close');
+        table.integer('volume');
 
-        t.unique(['ticker', 'date']);
+        table.unique(['ticker', 'date']);
     });
 };
 
