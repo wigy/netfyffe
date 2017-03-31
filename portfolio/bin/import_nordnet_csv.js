@@ -73,7 +73,7 @@ function convert(line) {
         code: ticker,
         count: count,
         amount: total,
-        options: {},
+        options: '{}',
         applied: false,
     };
 }

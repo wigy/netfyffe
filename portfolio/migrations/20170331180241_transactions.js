@@ -9,10 +9,10 @@ exports.up = function (knex, Promise) {
         table.string('code', 32);
         table.integer('count');
         table.integer('amount');
-        table.json('options');
+        table.text('options');
         table.boolean('applied');
 
-        table.index(['date']);
+        table.index(['date', 'id']);
         table.index(['account_id', 'date']);
         table.index(['code']);
     });
