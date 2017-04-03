@@ -2,10 +2,10 @@ exports.up = function (knex, Promise) {
     return knex.schema.createTable('accounts', function (table) {
 
         table.increments('id').primary();
+        table.string('bank', 256).nullable();
         table.string('name', 256).notNullable();
         table.string('code', 16).notNullable();
         table.string('currency', 3).notNullable();
-        table.string('location', 256).nullable();
 
         table.unique(['name', 'currency']);
     });

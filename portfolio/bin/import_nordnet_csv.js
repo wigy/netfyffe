@@ -4,7 +4,7 @@
  * Parse an exported CSV-file from Nordnet and import it the database.
  *
  * usage:
- *   bin/import_nordnet_csv.js <name for the account> <ID number of account> <path to the CSV file>
+ *   bin/import_nordnet_csv.js <bank name> <name for the account> <ID number of account> <path to the CSV file>
  */
 
 const ArgumentParser = require('argparse').ArgumentParser;
@@ -93,7 +93,7 @@ function checkAccounts(currencies) {
     }))).then(() => {
         currencies = currencies.filter(cur => existing.indexOf(cur) < 0);
         return Promise.all(currencies.map(cur => db('accounts').insert(
-            {name: args.account_name, code: args.account_code, currency: cur}
+            {bank: 'Nordnet', name: args.account_name, code: args.account_code, currency: cur}
         ).then(acc => accountIds[cur] = parseInt(acc))));
     });
 }
@@ -128,6 +128,7 @@ function load(filepath) {
             // Save transactions.
             // TODO: Check existence of transactions.
             db('transactions').insert(data).then(() => {
+                console.log('Inserted ' + data.length + ' new transactions.');
                 process.exit();
             });
         }).catch(err => {
