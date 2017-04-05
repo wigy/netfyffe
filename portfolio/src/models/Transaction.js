@@ -13,10 +13,12 @@ class Transaction extends Model {
      * Returns a promise that resolves to null or transaction ID if successfully applied.
      */
     apply() {
-        d.info('Applying transaction', '#' + this.id, this.type, this.code ? '[' + this.code + ']' : '[]', this.amount/100, 'to account', '#' + this.account_id);
+        d.info('Applying', this.date,'transaction', '#' + this.id, this.type, this.code ? '[' + this.code + ' x ' + this.count + ']' : '[]', this.amount/100, 'to account', '#' + this.account_id);
         switch(this.type) {
             case 'deposit':
-                return Account.deposit(this.account_id, this.date, this.amount);
+            case 'withdraw':
+                return Account.deposit(this.account_id, this.date, this.amount)
+                    .then(() => this.id);
             default:
                 d.error("Don't know how to apply transaction of type", this.type, '(leaving it as is).');
                 return Promise.resolve(null);
@@ -33,10 +35,19 @@ class Transaction extends Model {
         return Transaction
             .query()
             .where('applied', '=', false)
-            .then(data => Promise.all(data.map(trx => trx.apply())))
+            .then(data => Promise.all(data.map(trx => {
+                trx.apply()
+                    .then(id => {
+                        if (id) {
+                            return Transaction
+                                .query()
+                                .patch({applied: true})
+                                .where('id', id);
+                        }
+                    });
+            })));
             // TODO: Mark successfully applied.
             // TODO: Unlocking needed here.
-            .then(res => res);
     }
 }
 

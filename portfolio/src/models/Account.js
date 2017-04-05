@@ -8,41 +8,70 @@ class Account extends Model {
     }
 
     /**
-     * Get the balance of the account on the day before the given `date`.
+     * Get the balance of the account on the given `date`.
      */
-    balanceBefore(date) {
+    balance(date) {
         return Balance
             .query()
             .where('account_id', this.id)
-            .andWhere('date', '<', date)
+            .andWhere('date', '<=', date)
             .sum('balance as balance')
             .then(res => res[0].balance || 0);
     }
 
     /**
      * Deposit an `amount` on specific `date` to the account with the given `id`.
+     *
+     * Returns a promise that is resolved once deposit complete.
      */
     static deposit(id, date, amount) {
         let acc = Account.cache[id];
+        let total = amount;
         if (!acc) {
             return Promise.reject("Cannot find account with ID " + id);
         }
-        return acc.balanceBefore(date)
+        return acc.balance(date)
             .then(sum => {
-                amount += sum;
+                // Add the cumulated balance before this.
+                total += sum;
+            })
+            .then(() => {
+                // Check if we have existing entry.
                 return Balance
                     .query()
                     .where('account_id', id)
-                    .andWhere('date', date)
-                    .then(data => {
-                        if (data.length) {
-                            return "TODO: Update " + amount;
-                        }
-                        return Balance
-                            .query()
-                            .insert({account_id: id, date: date, balance: amount});
-                    });
-            });
+                    .andWhere('date', date);
+            })
+            .then(data => {
+                if (data.length) {
+                    // If found, update existing entry.
+                    return Balance
+                        .query()
+                        .patch({balance: total})
+                        .where('id', data[0].id)
+                }
+                // If not found, create new entry.
+                return Balance
+                    .query()
+                    .insert({account_id: id, date: date, balance: total});
+            })
+            .then(() => {
+                // Find balance entries after the date.
+                return Balance
+                    .query()
+                    .where('account_id', id)
+                    .andWhere('date', '>', date);
+            })
+            .then(entries => {
+                // Update all entries.
+                return Promise.all(entries.map(entry => {
+                    return Balance
+                        .query()
+                        .patch({balance: entry.balance + amount})
+                        .where('id', entry.id)
+                }));
+            })
+            .then(() => true);
     }
 
     /**
