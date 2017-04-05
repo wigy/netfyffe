@@ -1,6 +1,7 @@
 const express = require('express');
 const fyffe = express.Router();
 const db = require('../db');
+const Account = require('../models/Account');
 const Transaction = require('../models/Transaction');
 
 /**
@@ -11,10 +12,16 @@ const Transaction = require('../models/Transaction');
  * TODO: Docs.
  */
 fyffe.get('/', (req, res) => {
-    // TODO: Fetch all accounts into the cache.
-    Transaction.refresh()
-        .then(res => d("Resolved:", res))
-    res.send("TODO");
+    Account.cacheAll()
+        .then(() => {
+            Transaction.refresh()
+                // TODO: Collect actual data from accounts, once transactions applied.
+                .then(data => res.send(data))
+        })
+        .catch(err => {
+            d.error(err);
+            res.status(500).send({error: 'FetchFailed'});
+        });
 });
 
 module.exports = fyffe;

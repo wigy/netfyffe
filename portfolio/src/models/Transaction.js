@@ -13,10 +13,10 @@ class Transaction extends Model {
      * Returns a promise that resolves to null or transaction ID if successfully applied.
      */
     apply() {
+        d.info('Applying transaction', '#' + this.id, this.type, this.code ? '[' + this.code + ']' : '[]', this.amount/100, 'to account', '#' + this.account_id);
         switch(this.type) {
             case 'deposit':
-                // TODO: Implement deposit.
-                return Promise.resolve(this.id);
+                return Account.deposit(this.account_id, this.date, this.amount);
             default:
                 d.error("Don't know how to apply transaction of type", this.type, '(leaving it as is).');
                 return Promise.resolve(null);
