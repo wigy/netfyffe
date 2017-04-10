@@ -15,6 +15,16 @@ const config = {
         },
     },
 
+    test: {
+        database: {
+            client: 'sqlite3',
+            connection: {
+                filename: './test.sqlite'
+            },
+            useNullAsDefault: true
+        },
+    },
+
     production: {
         // Server port
         port: process.env.PORT || 9002,
