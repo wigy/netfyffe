@@ -1,5 +1,6 @@
 const Model = require('objection').Model;
 const Account = require('./Account');
+const d = require('neat-dump');
 
 class Transaction extends Model {
 
@@ -36,7 +37,7 @@ class Transaction extends Model {
             .query()
             .where('applied', '=', false)
             .then(data => Promise.all(data.map(trx => {
-                trx.apply()
+                return trx.apply()
                     .then(id => {
                         if (id) {
                             return Transaction

@@ -5,7 +5,7 @@ exports.up = function (knex, Promise) {
 
         table.integer('account_id').unsigned().notNullable();
         table.date('date').notNullable();
-        table.integer('balance');
+        table.integer('balance').notNullable();
 
         table.unique(['account_id', 'date']);
     });

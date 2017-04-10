@@ -1,5 +1,6 @@
 const Model = require('objection').Model;
 const Balance = require('./Balance');
+const d = require('neat-dump');
 
 class Account extends Model {
 
@@ -20,17 +21,33 @@ class Account extends Model {
     }
 
     /**
+     * Find the account with the given ID and cache it for future.
+     *
+     * Returns promise resolved with the account or undefined if no such account.
+     */
+    static find(id) {
+        let acc = Account.cache[id];
+        if (acc) {
+            return Promise.resolve(acc);
+        }
+        return Account.cacheAll()
+            .then(() => {
+                if (!Account.cache[id]) {
+                    return Promise.reject("Cannot find account with ID " + id);
+                }
+                return Account.cache[id];
+            });
+    }
+
+    /**
      * Deposit an `amount` on specific `date` to the account with the given `id`.
      *
      * Returns a promise that is resolved once deposit complete.
      */
     static deposit(id, date, amount) {
-        let acc = Account.cache[id];
         let total = amount;
-        if (!acc) {
-            return Promise.reject("Cannot find account with ID " + id);
-        }
-        return acc.balance(date)
+        return Account.find(id)
+            .then(acc => acc.balance(date))
             .then(sum => {
                 // Add the cumulated balance before this.
                 total += sum;
@@ -91,5 +108,6 @@ class Account extends Model {
 }
 
 Account.knex(require('../db'));
+Account.cache = {};
 
 module.exports = Account;

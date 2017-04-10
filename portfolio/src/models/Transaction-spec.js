@@ -1,5 +1,6 @@
 let Account = require('./Account');
 let Transaction = require('./Transaction');
+let Balance = require('./Balance');
 
 describe('Transaction', function() {
 
@@ -16,23 +17,32 @@ describe('Transaction', function() {
     });
 
     after(function(done) {
+        // TODO: Make Account.delete() function to handle this.
         Transaction
             .query()
             .where('account_id', 1)
             .delete()
             .then(() => {
-                Account
+                return Account
                     .query()
                     .where('name', 'Test account')
                     .delete()
-                    .then(() => done());
+                    .then(() => {});
             })
+            .then(() => {
+                return Balance
+                    .query()
+                    .where('account_id', 1)
+                    .delete()
+                    .then(() => {});
+            })
+            .then(() => done());
     });
 
-    describe('deposit and withdraw', function() {
+    describe('deposit', function() {
 
-        it('adds up currectly', function(done) {
-            // TODO: Add test.
+        it('shows correct balance', function(done) {
+            // TODO: Add test for balance on days before, during and after.
             Transaction.refresh()
                 .then(() => done());
         });
