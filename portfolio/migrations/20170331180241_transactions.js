@@ -6,7 +6,7 @@ exports.up = function (knex, Promise) {
         table.integer('account_id').unsigned().notNullable();
         table.date('date').notNullable();
         table.enu('type', ['deposit', 'withdraw', 'buy', 'sell', 'interest', 'tax', 'divident', 'split', 'move-out', 'move-in']).notNullable();
-        table.string('code', 32).defaultTo(false);
+        table.string('code', 32).defaultTo(null);
         table.integer('count').defaultTo(null);
         table.integer('amount').defaultTo(null);
         table.text('options').defaultTo('{}');

@@ -47,7 +47,6 @@ class Transaction extends Model {
                         }
                     });
             })));
-            // TODO: Mark successfully applied.
             // TODO: Unlocking needed here.
     }
 }

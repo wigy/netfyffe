@@ -40,6 +40,40 @@ class Account extends Model {
     }
 
     /**
+     * Delete the account and all related information.
+     *
+     * Returns promise, which resolves after everything is deleted.
+     */
+    static delete(id) {
+
+        const Instrument = require('./Instrument');
+        const Transaction = require('./Transaction');
+
+        return Transaction
+            .query()
+            .where('account_id', id)
+            .delete()
+            .then(() => {
+                return Balance
+                    .query()
+                    .where('account_id', id)
+                    .delete()
+            })
+            .then(() => {
+                return Instrument
+                    .query()
+                    .where('account_id', id)
+                    .delete()
+            })
+            .then(() => {
+                return Account
+                    .query()
+                    .where('id', id)
+                    .delete()
+            });
+    }
+
+    /**
      * Deposit an `amount` on specific `date` to the account with the given `id`.
      *
      * Returns a promise that is resolved once deposit complete.

@@ -1,6 +1,6 @@
-let Account = require('./Account');
-let Transaction = require('./Transaction');
-let Balance = require('./Balance');
+const Account = require('./Account');
+const Transaction = require('./Transaction');
+const Balance = require('./Balance');
 
 describe('Transaction', function() {
 
@@ -17,26 +17,7 @@ describe('Transaction', function() {
     });
 
     after(function(done) {
-        // TODO: Make Account.delete() function to handle this.
-        Transaction
-            .query()
-            .where('account_id', 1)
-            .delete()
-            .then(() => {
-                return Account
-                    .query()
-                    .where('name', 'Test account')
-                    .delete()
-                    .then(() => {});
-            })
-            .then(() => {
-                return Balance
-                    .query()
-                    .where('account_id', 1)
-                    .delete()
-                    .then(() => {});
-            })
-            .then(() => done());
+        Account.delete(1).then(() => done());
     });
 
     describe('deposit', function() {
