@@ -1,19 +1,19 @@
 const Account = require('./Account');
 const Transaction = require('./Transaction');
 const Balance = require('./Balance');
+const query = require('../lib/db/query');
 
 describe('Transaction', function() {
 
     before(function(done) {
-        Account
-            .query()
-            .insert({id: 1, name: 'Test account', bank: 'Test Bank', code: 'ACC001', currency: 'EUR'})
-            .then(() => {
-                Transaction
-                    .query()
-                    .insert({account_id: 1, date: '2017-01-01', 'type': 'deposit', amount: 1200})
-                    .then(() => done());
-            });
+        query.insert(Account, {id: 1, name: 'Test account', bank: 'Test Bank', code: 'ACC001', currency: 'EUR'})
+            .then(() => query.insert(Transaction, [
+                {account_id: 1, date: '2017-01-01', 'type': 'deposit', amount: 1200},
+                {account_id: 1, date: '2017-01-02', 'type': 'deposit', amount: 200},
+                {account_id: 1, date: '2017-01-02', 'type': 'deposit', amount: 200},
+            ]))
+            .then(() => Transaction.refresh())
+            .then(() => done());
     });
 
     after(function(done) {
@@ -23,9 +23,18 @@ describe('Transaction', function() {
     describe('deposit', function() {
 
         it('shows correct balance', function(done) {
-            // TODO: Add test for balance on days before, during and after.
-            Transaction.refresh()
-                .then(() => done());
+            Account.find(1)
+                .then(acc => {
+                    Promise.all([
+                        acc.balance('2016-31-12'),
+                        acc.balance('2017-01-01'),
+                        acc.balance('2017-01-02'),
+                    ]).then(res => {
+                        // TODO: Add tests.
+                        console.log(res);
+                        done();
+                    });
+                });
         });
     });
 });
