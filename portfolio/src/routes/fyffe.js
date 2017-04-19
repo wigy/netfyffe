@@ -14,6 +14,7 @@ const Transaction = require('../models/Transaction');
 fyffe.get('/', (req, res) => {
     Account.cacheAll()
         .then(() => {
+            // TODO: Drop this. Not needed here.
             Transaction.refresh()
                 // TODO: Collect actual data from accounts, once transactions applied.
                 .then(data => res.send(data))
