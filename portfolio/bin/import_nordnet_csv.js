@@ -24,6 +24,7 @@ const rp = require('request-promise');
 const db = require('../src/db');
 const config = require('../src/config');
 const Account = require('../src/models/Account');
+const Transaction = require('../src/models/Transaction');
 
 // Mapping from Nordnet ticker names to  netFyffe tickers.
 let tickers = {};
@@ -129,7 +130,8 @@ function load(filepath) {
             // TODO: Check existence of transactions.
             db('transactions').insert(data).then(() => {
                 console.log('Inserted ' + data.length + ' new transactions.');
-                process.exit();
+                Transaction.refresh()
+                    .then(() => process.exit());
             });
         }).catch(err => {
             console.error(err);
