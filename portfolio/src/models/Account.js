@@ -16,8 +16,9 @@ class Account extends Model {
             .query()
             .where('account_id', this.id)
             .andWhere('date', '<=', date)
-            .sum('balance as balance')
-            .then(res => res[0].balance || 0);
+            .orderBy('date', 'desc')
+            .limit(1)
+            .then(res => {let ret = res.length ? res[0].balance : 0; return ret;});
     }
 
     /**
@@ -122,7 +123,7 @@ class Account extends Model {
                         .where('id', entry.id)
                 }));
             })
-            .then(() => true);
+            .then(() => true)
     }
 
     /**

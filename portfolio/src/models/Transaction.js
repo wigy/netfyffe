@@ -1,5 +1,6 @@
 const Model = require('objection').Model;
 const Account = require('./Account');
+const promise = require('../lib/async/promise');
 const d = require('neat-dump');
 
 class Transaction extends Model {
@@ -48,21 +49,14 @@ class Transaction extends Model {
      * Returns a promise that is resolved once all transactions have been applied.
      */
     static refresh() {
-        /*
-        return Transaction
-            .query()
-            .where('applied', '=', false)
-            .then(data => {
-                console.log(data);
-            });
-            */
         // TODO: Locking needed here.
         return Transaction
             .query()
             .where('applied', '=', false)
-            .then(data => Promise.all(data.map(trx => {
-                return trx.apply();
-            })));
+            .then(data => {
+                data = data.map(trx => (() => trx.apply()));
+                return promise.seq(data);
+            });
             // TODO: Unlocking needed here.
     }
 }

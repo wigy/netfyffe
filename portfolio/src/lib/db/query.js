@@ -9,14 +9,7 @@ function insert(model, entries) {
     if (!(entries instanceof Array)) {
         entries = [entries];
     }
-    if (entries.length < 1) {
-        return Promise.resolve([]);
-    }
-    let ret = model.query().insert(entries[0]);
-    for (let i=1; i < entries.length; i++) {
-        ret = ret.then(() => model.query().insert(entries[i]));
-    }
-    return ret;
+    return Promise.all(entries.map(entry => model.query().insert(entry)));
 }
 
 module.exports = {insert};
