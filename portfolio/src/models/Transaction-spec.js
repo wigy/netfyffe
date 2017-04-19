@@ -10,7 +10,8 @@ describe('Transaction', function() {
             .then(() => query.insert(Transaction, [
                 {account_id: 1, date: '2017-01-01', 'type': 'deposit', amount: 1200},
                 {account_id: 1, date: '2017-01-02', 'type': 'deposit', amount: 200},
-                {account_id: 1, date: '2017-01-02', 'type': 'deposit', amount: 200},
+                {account_id: 1, date: '2017-01-03', 'type': 'deposit', amount: 200},
+//                {account_id: 1, date: '2017-01-03', 'type': 'deposit', amount: 200},
             ]))
             .then(() => Transaction.refresh())
             .then(() => done());

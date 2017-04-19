@@ -15,15 +15,31 @@ class Transaction extends Model {
      */
     apply() {
         d.info('Applying', this.date,'transaction', '#' + this.id, this.type, this.code ? '[' + this.code + ' x ' + this.count + ']' : '[]', this.amount/100, 'to account', '#' + this.account_id);
-        switch(this.type) {
-            case 'deposit':
-            case 'withdraw':
-                return Account.deposit(this.account_id, this.date, this.amount)
-                    .then(() => this.id);
-            default:
-                d.error("Don't know how to apply transaction of type", this.type, '(leaving it as is).');
-                return Promise.resolve(null);
+
+        function implementation(self) {
+            switch(self.type) {
+                case 'deposit':
+                case 'withdraw':
+                    return Account.deposit(self.account_id, self.date, self.amount);
+                default:
+                    d.error("Don't know how to apply transaction of type", self.type, '(leaving it as is).');
+                    return Promise.resolve(null);
+            }
         }
+
+        return Transaction
+            .query()
+            .patch({applied: true})
+            .where('id', this.id)
+            .then(() => implementation(this))
+            .then(res => res)
+            .catch(err => {
+                d.error("Transaction failed", err);
+                return Transaction
+                    .query()
+                    .patch({applied: false})
+                    .where('id', this.id);
+            });
     }
 
     /**
@@ -32,20 +48,20 @@ class Transaction extends Model {
      * Returns a promise that is resolved once all transactions have been applied.
      */
     static refresh() {
+        /*
+        return Transaction
+            .query()
+            .where('applied', '=', false)
+            .then(data => {
+                console.log(data);
+            });
+            */
         // TODO: Locking needed here.
         return Transaction
             .query()
             .where('applied', '=', false)
             .then(data => Promise.all(data.map(trx => {
-                return trx.apply()
-                    .then(id => {
-                        if (id) {
-                            return Transaction
-                                .query()
-                                .patch({applied: true})
-                                .where('id', id);
-                        }
-                    });
+                return trx.apply();
             })));
             // TODO: Unlocking needed here.
     }
