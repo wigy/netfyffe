@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
         table.string('code', 16).notNullable();
         table.string('currency', 3).notNullable();
 
-        table.unique(['name', 'currency']);
+        table.unique(['bank', 'name', 'currency']);
     });
 };
 

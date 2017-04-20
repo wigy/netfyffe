@@ -151,16 +151,16 @@ class Account extends Model {
     /**
      * Read all accounts into the cache.
      *
-     * Return a promise resolved when the cache is ready.
+     * Return a promise resolved with all accounts when loaded.
      */
     static cacheAll() {
         Account.cache = {};
         return Account
             .query()
-            .then(res => res.map(acc => {
-                Account.cache[acc.id] = acc;
-                return true;
-            }));
+            .then(res => {
+                res.map(acc => Account.cache[acc.id] = acc);
+                return Account.cache;
+            });
     }
 }
 
