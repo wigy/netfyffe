@@ -2,6 +2,7 @@ const Model = require('objection').Model;
 const Account = require('./Account');
 const Instrument = require('./Instrument');
 const promise = require('../lib/async/promise');
+const lockfile = require('lockfile');
 const d = require('neat-dump');
 
 class Transaction extends Model {
@@ -62,7 +63,7 @@ class Transaction extends Model {
      * Returns a promise that is resolved once all transactions have been applied.
      */
     static refresh() {
-        // TODO: Locking needed here.
+        lockfile.lockSync('.transaction.lock');
         return Transaction
             .query()
             .where('applied', '=', false)
@@ -70,8 +71,8 @@ class Transaction extends Model {
             .then(data => {
                 data = data.map(trx => (() => trx.apply()));
                 return promise.seq(data);
-            });
-            // TODO: Unlocking needed here.
+            })
+            .finally(() => lockfile.unlockSync('.transaction.lock'))
     }
 }
 

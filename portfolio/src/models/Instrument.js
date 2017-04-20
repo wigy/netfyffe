@@ -35,7 +35,7 @@ class Instrument extends Model {
                 // Go through instruments we own starting from the oldest.
                 having.forEach(instrument => {
                     if (count >= instrument.count) {
-                        // If whole bundle is sold, mark it sold and update sell price and sell date.
+                        // If whole bundle is sold, mark it as sold and update sell price and sell date.
                         let sellPrice = count > instrument.count ? Math.round(instrument.count * amount/count) : remainingSell;
                         remainingSell -= sellPrice;
                         ops.push(Instrument
