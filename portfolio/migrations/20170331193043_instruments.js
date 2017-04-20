@@ -6,7 +6,8 @@ exports.up = function (knex, Promise) {
         table.integer('account_id').unsigned().notNullable();
         table.string('ticker', 32).notNullable();
         table.integer('count').notNullable();
-        table.integer('price').notNullable();
+        table.integer('buy_price').notNullable();
+        table.integer('sell_price');
         table.date('bought').notNullable();
         table.date('sold');
 

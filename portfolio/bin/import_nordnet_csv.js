@@ -36,12 +36,18 @@ let types = {
     'TALLETUS': 'deposit',
     'MYYNTI': 'sell',
     'OSTO': 'buy',
+    'LAJIMAKSU': 'expense',
     'PÄÄOMIT YLIT.KORKO': 'interest',
     'LAINAKORKO': 'interest',
     'VALUUTAN MYYNTI': 'move-out',
     'VALUUTAN OSTO': 'move-in',
     'ENNAKKOPIDÄTYS': 'tax',
     'OSINKO': 'divident',
+};
+// Mapping from old tickers.
+let oldTickers = {
+    // TODO: This could be in quote-service.
+    'UPM1V': 'UPM',
 };
 
 /**
@@ -53,6 +59,9 @@ function convert(line) {
 
     total = parseInt(total.replace(/[ ,]/g, ''));
     if (ticker !== '') {
+        if (oldTickers[ticker]) {
+            ticker = oldTickers[ticker];
+        }
         if (!tickers[ticker]) {
             throw Error('Cannot find ticker ' + ticker);
         }
@@ -129,6 +138,7 @@ function load(filepath) {
             // Save transactions.
             // TODO: Check existence of transactions.
             db('transactions').insert(data).then(() => {
+                data.map(row => console.log('Adding', JSON.stringify(row)));
                 console.log('Inserted ' + data.length + ' new transactions.');
                 Transaction.refresh()
                     .then(() => process.exit());

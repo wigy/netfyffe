@@ -1,5 +1,6 @@
 const Model = require('objection').Model;
 const Balance = require('./Balance');
+const Instrument = require('./Instrument');
 const d = require('neat-dump');
 
 class Account extends Model {
@@ -19,6 +20,27 @@ class Account extends Model {
             .orderBy('date', 'desc')
             .limit(1)
             .then(res => {let ret = res.length ? res[0].balance : 0; return ret;});
+    }
+
+    /**
+     * Get the list of instruments owned on the given `date`.
+     */
+    instruments(date) {
+        return Promise.all([
+            Instrument
+                .query()
+                .whereNull('sold')
+                .andWhere('bought', '<=', date)
+                .andWhere('account_id', this.id),
+            Instrument
+                .query()
+                .whereNotNull('sold')
+                .andWhere('bought', '<=', date)
+                .andWhere('sold', '>', date)
+                .andWhere('account_id', this.id),
+        ]).then( res => {
+            return res[0].concat(res[1]);
+        })
     }
 
     /**
