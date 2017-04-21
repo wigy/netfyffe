@@ -21,6 +21,7 @@ const fs = require('fs');
 const parse = require('csv-parse');
 const encoding = require('encoding');
 const rp = require('request-promise');
+const d = require('neat-dump');
 const db = require('../src/db');
 const config = require('../src/config');
 const Account = require('../src/models/Account');
@@ -139,7 +140,7 @@ function load(filepath) {
     parse(input, {comment: '#', delimiter: ';', skip_empty_lines: true}, function(err, output){
 
         if (err) {
-            console.error(err);
+            d.error(err);
             process.exit(1);
         }
 
@@ -157,15 +158,25 @@ function load(filepath) {
                 data[k].account_id = accountIds[data[k].account_id];
             });
             // Save transactions.
-            // TODO: Check existence of transactions.
-            db('transactions').insert(data).then(() => {
-                data.map(row => console.log('Adding', JSON.stringify(row)));
-                console.log('Inserted ' + data.length + ' new transactions.');
-                Transaction.refresh()
-                    .then(() => process.exit());
+            return db('transactions').where({
+                date: data[0].date,
+                type: data[0].type,
+                count: data[0].count,
+                amount: data[0].amount,
+                code: data[0].code,
+            }).then(old => {
+                if (old.length) {
+                    throw new Error("Suspisiously similar transaction " + JSON.stringify(old[0]) + ' found already from DB.');
+                }
+                db('transactions').insert(data).then(() => {
+                    data.map(row => console.log('Adding', JSON.stringify(row)));
+                    console.log('Inserted ' + data.length + ' new transactions.');
+                    Transaction.refresh()
+                        .then(() => process.exit());
+                });
             });
         }).catch(err => {
-            console.error(err);
+            d.error(err);
             process.exit();
         });
     });
