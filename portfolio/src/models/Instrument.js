@@ -75,6 +75,36 @@ class Instrument extends Model {
                 return Promise.all(ops);
             })
     }
+
+    /**
+     * Transfer `count` copies of instruments with ticker `code` on specific `date` away from the account with the given `account_id`.
+     *
+     * Returns a promise that is resolved once movement is complete.
+     */
+    static moveOut(account_id, date, count, code) {
+        return Instrument
+            .query()
+            .whereNull('sold')
+            .andWhere('account_id', account_id)
+            .andWhere('count', count)
+            .andWhere('ticker', code)
+            .then(matches => {
+                if (matches.length === 0) {
+                    throw new Error('Cannot find any bundle of ' + count + ' instruments ' + code + ' from account ' + account_id + ' to move out.');
+                }
+                if (matches.length > 1) {
+                    throw new Error('Too many bundles (' +matches.length+ ') of ' + count + ' instruments ' + code + ' in account ' + account_id + ' to move out.');
+                }
+                let instrument = matches[0];
+                return Instrument
+                    .query()
+                    .patch({
+                        sell_price: instrument.buy_price,
+                        sold: date,
+                    })
+                    .where('id', instrument.id);
+            });
+    }
 }
 
 Instrument.knex(require('../db'));

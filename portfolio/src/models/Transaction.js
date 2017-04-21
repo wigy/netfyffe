@@ -29,16 +29,20 @@ class Transaction extends Model {
                     return Instrument.sell(self.account_id, self.date, self.amount, self.count, self.code)
                         .then(() => Account.deposit(self.account_id, self.date, self.amount));
 
+                case 'out':
+                    return Instrument.moveOut(self.account_id, self.date, self.count, self.code);
+
                 case 'deposit':
                 case 'withdraw':
-                case 'move-in':
-                case 'move-out':
+                case 'cash-in':
+                case 'cash-out':
                 case 'interest':
                 case 'tax':
                 case 'divident':
+                case 'expense':
                     return Account.deposit(self.account_id, self.date, self.amount);
                 default:
-                    return Promise.reject("Don't know how to apply transaction of type " + self.type + ' (leaving it as is).');
+                    return Promise.reject("Don't know how to apply transaction of type '" + self.type + "' (leaving it as is).");
             }
         }
 
@@ -49,7 +53,7 @@ class Transaction extends Model {
             .then(() => implementation(this))
             .then(res => res)
             .catch(err => {
-                d.error("Transaction failed", err);
+                d.error("Transaction failed:", err);
                 return Transaction
                     .query()
                     .patch({applied: false})

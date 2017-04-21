@@ -39,15 +39,24 @@ let types = {
     'LAJIMAKSU': 'expense',
     'PÄÄOMIT YLIT.KORKO': 'interest',
     'LAINAKORKO': 'interest',
-    'VALUUTAN MYYNTI': 'move-out',
-    'VALUUTAN OSTO': 'move-in',
+    'VALUUTAN MYYNTI': 'cash-out',
+    'VALUUTAN OSTO': 'cash-in',
     'ENNAKKOPIDÄTYS': 'tax',
     'OSINKO': 'divident',
+    'AP OTTO': 'out',
 };
 // Mapping from old tickers.
 let oldTickers = {
     // TODO: This could be in quote-service.
     'UPM1V': 'UPM',
+};
+// Mapping from few funds.
+let funds = {
+    // TODO: This should be in quote-service.
+    'NN SUPERRAHASTO SUOMI': 'SUPFIN',
+    'NN SUPERFONDEN SVERIGE': 'SUPSVE',
+    'NN SUPERFONDEN DANMARK': 'SUPDEN',
+    'NN SUPERFONDET NORGE': 'SUPNOR',
 };
 
 /**
@@ -56,13 +65,18 @@ let oldTickers = {
 function convert(line) {
 
     let [id, date1, date2, date3, type, ticker, instr, isin, count, price, interest, fees, total, currency, ...rest] = line;
+    let options = {};
 
     total = parseInt(total.replace(/[ ,]/g, ''));
     if (ticker !== '') {
         if (oldTickers[ticker]) {
             ticker = oldTickers[ticker];
         }
+        if (funds[ticker]) {
+            ticker = funds[ticker];
+        }
         if (!tickers[ticker]) {
+            console.log(tickers);
             throw Error('Cannot find ticker ' + ticker);
         }
         ticker = tickers[ticker];
@@ -70,7 +84,15 @@ function convert(line) {
         ticker = null;
     }
     accountIds[currency] = true;
-    count = count === '' ? null: parseInt(count);
+    if (count === '') {
+        count = null;
+    } else {
+        if (/,/.test(count)) {
+            options.float = true;
+        }
+        count = parseFloat(count.replace(',', '.'));
+    }
+
     if (!types[type]) {
         throw Error('Cannot recognize transaction type ' + type);
     }
@@ -83,7 +105,7 @@ function convert(line) {
         code: ticker,
         count: count,
         amount: total,
-        options: '{}',
+        options: JSON.stringify(options),
         applied: false,
     };
 }

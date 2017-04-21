@@ -5,7 +5,21 @@ exports.up = function (knex, Promise) {
 
         table.integer('account_id').unsigned().notNullable();
         table.date('date').notNullable();
-        table.enu('type', ['deposit', 'withdraw', 'buy', 'sell', 'interest', 'tax', 'expense', 'divident', 'split', 'move-out', 'move-in']).notNullable();
+        table.enu('type', [
+            'deposit',  // Put cash from outside.
+            'withdraw', // Take case to outside.
+            'buy',      // Buy an instrument.
+            'sell',     // Sell an instrument.
+            'interest', // Charged or earned interest amount.
+            'tax',      // Taxes deducted.
+            'expense',  // Other expense.
+            'divident', // Divident payement.
+            'split',    // Split the instrument to new value.
+            'out',      // Move an instrument to another account.
+            'in',       // Receive an instrument from another account.
+            'cash-out', // Transfer cash to another account.
+            'cash-in'   // Transfer cash from another account.
+        ]).notNullable();
         table.string('code', 32).defaultTo(null);
         table.integer('count').defaultTo(null);
         table.integer('amount').defaultTo(null);
