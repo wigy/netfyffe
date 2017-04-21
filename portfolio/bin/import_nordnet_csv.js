@@ -76,7 +76,6 @@ function convert(line) {
             ticker = funds[ticker];
         }
         if (!tickers[ticker]) {
-            console.log(tickers);
             throw Error('Cannot find ticker ' + ticker);
         }
         ticker = tickers[ticker];
