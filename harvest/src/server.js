@@ -3,7 +3,10 @@ const config = require('./config');
 const app = express();
 
 global.d = require('neat-dump');
-d.config.showSourceLine = false;
+
+if (!config.harvester_module) {
+    throw new Error("The harvester module is not defined in NETFYFFE_HARVEST environment variable.");
+}
 
 app.use('/doc', express.static('./doc'));
 app.use('/ticker', require('./routes/ticker'));

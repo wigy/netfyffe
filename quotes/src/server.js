@@ -3,7 +3,6 @@ const config = require('./config');
 const app = express();
 
 global.d = require('neat-dump');
-d.config.showSourceLine = false;
 
 app.get('/', (req, res) => {
   res.redirect('/quote/');

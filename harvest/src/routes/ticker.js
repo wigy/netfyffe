@@ -6,7 +6,7 @@ const config = require('../config');
 const ticker = express.Router();
 
 /**
- * Helper to check existence of the harvester module and instantiating it.
+ * Helper to instantiate harvester module.
  *
  * The harvester module is a module exporting a class with the following methods:
  *
@@ -15,15 +15,7 @@ const ticker = express.Router();
  *
  */
 function harvester(res) {
-
-    const harvester = config.harvester_module;
-
-    if (!harvester) {
-        res.status(500).send("The harvester module is not defined in NETFYFFE_HARVEST environment variable.");
-        return null;
-    }
-
-    return new (require(harvester))(rp);
+    return new (require(config.harvester_module))(rp);
 }
 
 /**
