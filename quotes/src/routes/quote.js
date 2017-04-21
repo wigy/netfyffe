@@ -14,7 +14,7 @@ quote.get('/', (req, res) => {
 quote.get('/:ticker', (req, res) => {
     const {ticker} = req.params;
     let from = moment().subtract(30,'days').format('YYYY-MM-DD');
-    let to = moment().format('YYYY-MM-DD');
+    let to = moment().subtract(1,'days').format('YYYY-MM-DD');
     res.redirect('/quote/' + ticker + '/' + from + '/' + to);
 });
 

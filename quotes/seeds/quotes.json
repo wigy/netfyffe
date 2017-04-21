@@ -1,5 +1,5 @@
 {
-  "date": "2017-04-21T13:01:44.181Z",
+  "date": "2017-04-21T15:04:35.362Z",
   "version": "1.0.2",
   "tables": [
     "tickers",
@@ -24,7 +24,7 @@
   },
   "rows": {
     "tickers": 54,
-    "quotes": 0
+    "quotes": 124
   },
   "data": {
     "tickers": [
@@ -353,6 +353,1123 @@
         "currency": "EUR"
       }
     ],
-    "quotes": []
+    "quotes": [
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-22",
+        "open": 8.9,
+        "high": 8.9,
+        "low": 8.76,
+        "close": 8.76,
+        "volume": 691
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-23",
+        "open": 8.75,
+        "high": 8.77,
+        "low": 8.75,
+        "close": 8.77,
+        "volume": 36
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-24",
+        "open": 8.77,
+        "high": 8.77,
+        "low": 8.77,
+        "close": 8.77,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-25",
+        "open": 8.77,
+        "high": 8.77,
+        "low": 8.77,
+        "close": 8.77,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-26",
+        "open": 8.79,
+        "high": 8.8,
+        "low": 8.76,
+        "close": 8.79,
+        "volume": 1134
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-27",
+        "open": 8.9,
+        "high": 8.99,
+        "low": 8.79,
+        "close": 8.99,
+        "volume": 213
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-28",
+        "open": 8.99,
+        "high": 9.1,
+        "low": 8.93,
+        "close": 9.05,
+        "volume": 2550
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-29",
+        "open": 8.92,
+        "high": 9.05,
+        "low": 8.84,
+        "close": 9.04,
+        "volume": 497
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-30",
+        "open": 9.04,
+        "high": 9.04,
+        "low": 8.9,
+        "close": 9.04,
+        "volume": 2073
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-03-31",
+        "open": 9.04,
+        "high": 9.04,
+        "low": 9.04,
+        "close": 9.04,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-01",
+        "open": 9.04,
+        "high": 9.04,
+        "low": 9.04,
+        "close": 9.04,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-02",
+        "open": 9.04,
+        "high": 9.04,
+        "low": 9,
+        "close": 9,
+        "volume": 464
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-03",
+        "open": 9.03,
+        "high": 9.04,
+        "low": 9,
+        "close": 9.02,
+        "volume": 504
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-04",
+        "open": 9,
+        "high": 9,
+        "low": 8.96,
+        "close": 9,
+        "volume": 2323
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-05",
+        "open": 9.04,
+        "high": 9.04,
+        "low": 8.96,
+        "close": 9,
+        "volume": 672
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-06",
+        "open": 9.04,
+        "high": 9.05,
+        "low": 8.98,
+        "close": 9.05,
+        "volume": 2267
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-07",
+        "open": 9.05,
+        "high": 9.05,
+        "low": 9.05,
+        "close": 9.05,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-08",
+        "open": 9.05,
+        "high": 9.05,
+        "low": 9.05,
+        "close": 9.05,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-09",
+        "open": 9.17,
+        "high": 9.17,
+        "low": 9.03,
+        "close": 9.07,
+        "volume": 2994
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-10",
+        "open": 9.07,
+        "high": 9.1,
+        "low": 9,
+        "close": 9.1,
+        "volume": 5770
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-11",
+        "open": 9.1,
+        "high": 9.5,
+        "low": 9.1,
+        "close": 9.35,
+        "volume": 5742
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-12",
+        "open": 9.37,
+        "high": 9.4,
+        "low": 9.35,
+        "close": 9.36,
+        "volume": 1385
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-13",
+        "open": 9.36,
+        "high": 9.36,
+        "low": 9.36,
+        "close": 9.36,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-14",
+        "open": 9.36,
+        "high": 9.36,
+        "low": 9.36,
+        "close": 9.36,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-15",
+        "open": 9.36,
+        "high": 9.36,
+        "low": 9.36,
+        "close": 9.36,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-16",
+        "open": 9.36,
+        "high": 9.36,
+        "low": 9.36,
+        "close": 9.36,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-17",
+        "open": 9.37,
+        "high": 9.45,
+        "low": 9.35,
+        "close": 9.36,
+        "volume": 3629
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-18",
+        "open": 9.38,
+        "high": 9.68,
+        "low": 9.38,
+        "close": 9.46,
+        "volume": 5546
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-19",
+        "open": 9.46,
+        "high": 9.85,
+        "low": 9.46,
+        "close": 9.83,
+        "volume": 9750
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-20",
+        "open": 9.83,
+        "high": 9.83,
+        "low": 9.83,
+        "close": 9.83,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:KSLAV",
+        "date": "2017-04-21",
+        "open": 9.85,
+        "high": 9.85,
+        "low": 9.65,
+        "close": 9.65,
+        "volume": 2274
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-22",
+        "open": 36.34,
+        "high": 36.53,
+        "low": 35.82,
+        "close": 36.48,
+        "volume": 638868
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-23",
+        "open": 36.5,
+        "high": 36.54,
+        "low": 36.03,
+        "close": 36.26,
+        "volume": 426545
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-24",
+        "open": 36.26,
+        "high": 36.26,
+        "low": 36.26,
+        "close": 36.26,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-25",
+        "open": 36.26,
+        "high": 36.26,
+        "low": 36.26,
+        "close": 36.26,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-26",
+        "open": 36.14,
+        "high": 36.15,
+        "low": 35.73,
+        "close": 35.97,
+        "volume": 458059
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-27",
+        "open": 35.96,
+        "high": 36.27,
+        "low": 35.86,
+        "close": 36.21,
+        "volume": 420409
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-28",
+        "open": 36.67,
+        "high": 36.97,
+        "low": 36.44,
+        "close": 36.81,
+        "volume": 489034
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-29",
+        "open": 36.76,
+        "high": 36.96,
+        "low": 36.52,
+        "close": 36.88,
+        "volume": 527184
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-30",
+        "open": 36.89,
+        "high": 36.89,
+        "low": 36.29,
+        "close": 36.56,
+        "volume": 595890
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-03-31",
+        "open": 36.56,
+        "high": 36.56,
+        "low": 36.56,
+        "close": 36.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-01",
+        "open": 36.56,
+        "high": 36.56,
+        "low": 36.56,
+        "close": 36.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-02",
+        "open": 36.68,
+        "high": 37.15,
+        "low": 36.61,
+        "close": 36.96,
+        "volume": 633211
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-03",
+        "open": 36.96,
+        "high": 37.5,
+        "low": 36.78,
+        "close": 37.5,
+        "volume": 564758
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-04",
+        "open": 37.5,
+        "high": 37.78,
+        "low": 37.06,
+        "close": 37.5,
+        "volume": 886280
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-05",
+        "open": 35.79,
+        "high": 36.81,
+        "low": 35.79,
+        "close": 36.64,
+        "volume": 661051
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-06",
+        "open": 36.64,
+        "high": 36.8,
+        "low": 36.25,
+        "close": 36.75,
+        "volume": 566014
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-07",
+        "open": 36.75,
+        "high": 36.75,
+        "low": 36.75,
+        "close": 36.75,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-08",
+        "open": 36.75,
+        "high": 36.75,
+        "low": 36.75,
+        "close": 36.75,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-09",
+        "open": 36.7,
+        "high": 37.08,
+        "low": 36.57,
+        "close": 36.93,
+        "volume": 484051
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-10",
+        "open": 36.9,
+        "high": 36.99,
+        "low": 36.61,
+        "close": 36.72,
+        "volume": 577680
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-11",
+        "open": 36.77,
+        "high": 37.56,
+        "low": 36.73,
+        "close": 37.31,
+        "volume": 574826
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-12",
+        "open": 37.32,
+        "high": 37.69,
+        "low": 37.02,
+        "close": 37.56,
+        "volume": 419193
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-13",
+        "open": 37.56,
+        "high": 37.56,
+        "low": 37.56,
+        "close": 37.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-14",
+        "open": 37.56,
+        "high": 37.56,
+        "low": 37.56,
+        "close": 37.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-15",
+        "open": 37.56,
+        "high": 37.56,
+        "low": 37.56,
+        "close": 37.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-16",
+        "open": 37.56,
+        "high": 37.56,
+        "low": 37.56,
+        "close": 37.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-17",
+        "open": 37.62,
+        "high": 37.67,
+        "low": 37.16,
+        "close": 37.37,
+        "volume": 656724
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-18",
+        "open": 37.34,
+        "high": 37.53,
+        "low": 37.04,
+        "close": 37.42,
+        "volume": 511119
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-19",
+        "open": 37.41,
+        "high": 38.21,
+        "low": 37.26,
+        "close": 37.99,
+        "volume": 697715
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-20",
+        "open": 37.99,
+        "high": 37.99,
+        "low": 37.99,
+        "close": 37.99,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-04-21",
+        "open": 37.62,
+        "high": 37.94,
+        "low": 37.2,
+        "close": 37.64,
+        "volume": 553858
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-22",
+        "open": 9.49,
+        "high": 9.49,
+        "low": 9.27,
+        "close": 9.35,
+        "volume": 11540
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-23",
+        "open": 9.35,
+        "high": 9.35,
+        "low": 9.21,
+        "close": 9.27,
+        "volume": 7958
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-24",
+        "open": 9.27,
+        "high": 9.27,
+        "low": 9.27,
+        "close": 9.27,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-25",
+        "open": 9.27,
+        "high": 9.27,
+        "low": 9.27,
+        "close": 9.27,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-26",
+        "open": 9.26,
+        "high": 9.26,
+        "low": 9.15,
+        "close": 9.17,
+        "volume": 5325
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-27",
+        "open": 9.17,
+        "high": 9.37,
+        "low": 9.17,
+        "close": 9.37,
+        "volume": 12373
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-28",
+        "open": 9.37,
+        "high": 9.37,
+        "low": 9.23,
+        "close": 9.28,
+        "volume": 8502
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-29",
+        "open": 9.27,
+        "high": 9.53,
+        "low": 9.22,
+        "close": 9.52,
+        "volume": 17416
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-30",
+        "open": 9.34,
+        "high": 9.62,
+        "low": 9.34,
+        "close": 9.56,
+        "volume": 12701
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-03-31",
+        "open": 9.56,
+        "high": 9.56,
+        "low": 9.56,
+        "close": 9.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-01",
+        "open": 9.56,
+        "high": 9.56,
+        "low": 9.56,
+        "close": 9.56,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-02",
+        "open": 9.5,
+        "high": 9.53,
+        "low": 9.15,
+        "close": 9.5,
+        "volume": 10025
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-03",
+        "open": 9.5,
+        "high": 9.69,
+        "low": 9.45,
+        "close": 9.6,
+        "volume": 12714
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-04",
+        "open": 9.6,
+        "high": 9.68,
+        "low": 9.56,
+        "close": 9.67,
+        "volume": 6473
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-05",
+        "open": 9.67,
+        "high": 9.67,
+        "low": 9.48,
+        "close": 9.63,
+        "volume": 4735
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-06",
+        "open": 9.63,
+        "high": 9.63,
+        "low": 9.56,
+        "close": 9.63,
+        "volume": 1310
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-07",
+        "open": 9.63,
+        "high": 9.63,
+        "low": 9.63,
+        "close": 9.63,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-08",
+        "open": 9.63,
+        "high": 9.63,
+        "low": 9.63,
+        "close": 9.63,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-09",
+        "open": 9.62,
+        "high": 9.62,
+        "low": 9.54,
+        "close": 9.57,
+        "volume": 8147
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-10",
+        "open": 9.57,
+        "high": 9.61,
+        "low": 9.52,
+        "close": 9.59,
+        "volume": 2521
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-11",
+        "open": 9.58,
+        "high": 9.65,
+        "low": 9.54,
+        "close": 9.61,
+        "volume": 8872
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-12",
+        "open": 9.6,
+        "high": 9.67,
+        "low": 9.58,
+        "close": 9.65,
+        "volume": 4343
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-13",
+        "open": 9.65,
+        "high": 9.65,
+        "low": 9.65,
+        "close": 9.65,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-14",
+        "open": 9.65,
+        "high": 9.65,
+        "low": 9.65,
+        "close": 9.65,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-15",
+        "open": 9.65,
+        "high": 9.65,
+        "low": 9.65,
+        "close": 9.65,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-16",
+        "open": 9.65,
+        "high": 9.65,
+        "low": 9.65,
+        "close": 9.65,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-17",
+        "open": 9.64,
+        "high": 10.15,
+        "low": 9.58,
+        "close": 9.95,
+        "volume": 23724
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-18",
+        "open": 9.99,
+        "high": 9.99,
+        "low": 9.87,
+        "close": 9.94,
+        "volume": 5358
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-19",
+        "open": 9.9,
+        "high": 9.92,
+        "low": 9.7,
+        "close": 9.83,
+        "volume": 10972
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-20",
+        "open": 9.83,
+        "high": 9.83,
+        "low": 9.83,
+        "close": 9.83,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:SIILI",
+        "date": "2017-04-21",
+        "open": 9.83,
+        "high": 9.9,
+        "low": 9.83,
+        "close": 9.87,
+        "volume": 23557
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-22",
+        "open": 39.49,
+        "high": 39.63,
+        "low": 39.43,
+        "close": 39.48,
+        "volume": 6878
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-23",
+        "open": 39.84,
+        "high": 39.94,
+        "low": 39.74,
+        "close": 39.79,
+        "volume": 3132
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-24",
+        "open": 39.79,
+        "high": 39.79,
+        "low": 39.79,
+        "close": 39.79,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-25",
+        "open": 39.79,
+        "high": 39.79,
+        "low": 39.79,
+        "close": 39.79,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-26",
+        "open": 39.47,
+        "high": 39.61,
+        "low": 39.26,
+        "close": 39.61,
+        "volume": 9337
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-27",
+        "open": 39.71,
+        "high": 40.1,
+        "low": 39.69,
+        "close": 40.08,
+        "volume": 7180
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-28",
+        "open": 40.27,
+        "high": 40.79,
+        "low": 40.27,
+        "close": 40.74,
+        "volume": 7880
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-29",
+        "open": 40.91,
+        "high": 40.97,
+        "low": 40.72,
+        "close": 40.88,
+        "volume": 10020
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-30",
+        "open": 40.72,
+        "high": 40.92,
+        "low": 40.62,
+        "close": 40.64,
+        "volume": 17118
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-03-31",
+        "open": 40.64,
+        "high": 40.64,
+        "low": 40.64,
+        "close": 40.64,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-01",
+        "open": 40.64,
+        "high": 40.64,
+        "low": 40.64,
+        "close": 40.64,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-02",
+        "open": 40.91,
+        "high": 41.05,
+        "low": 40.87,
+        "close": 40.93,
+        "volume": 8406
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-03",
+        "open": 41,
+        "high": 41.39,
+        "low": 40.98,
+        "close": 41.39,
+        "volume": 5168
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-04",
+        "open": 41.57,
+        "high": 41.7,
+        "low": 41.27,
+        "close": 41.27,
+        "volume": 13343
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-05",
+        "open": 41.4,
+        "high": 41.5,
+        "low": 41.3,
+        "close": 41.33,
+        "volume": 7200
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-06",
+        "open": 40.73,
+        "high": 40.73,
+        "low": 40.31,
+        "close": 40.33,
+        "volume": 12659
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-07",
+        "open": 40.33,
+        "high": 40.33,
+        "low": 40.33,
+        "close": 40.33,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-08",
+        "open": 40.33,
+        "high": 40.33,
+        "low": 40.33,
+        "close": 40.33,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-09",
+        "open": 39.72,
+        "high": 39.74,
+        "low": 39.16,
+        "close": 39.55,
+        "volume": 9149
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-10",
+        "open": 40.05,
+        "high": 40.28,
+        "low": 39.98,
+        "close": 40.28,
+        "volume": 4792
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-11",
+        "open": 40.01,
+        "high": 40.08,
+        "low": 39.86,
+        "close": 39.97,
+        "volume": 11576
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-12",
+        "open": 39.7,
+        "high": 39.94,
+        "low": 39.69,
+        "close": 39.75,
+        "volume": 11068
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-13",
+        "open": 39.75,
+        "high": 39.75,
+        "low": 39.75,
+        "close": 39.75,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-14",
+        "open": 39.75,
+        "high": 39.75,
+        "low": 39.75,
+        "close": 39.75,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-15",
+        "open": 39.75,
+        "high": 39.75,
+        "low": 39.75,
+        "close": 39.75,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-16",
+        "open": 39.86,
+        "high": 40.1,
+        "low": 39.75,
+        "close": 40.1,
+        "volume": 4798
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-17",
+        "open": 39.74,
+        "high": 39.86,
+        "low": 39.54,
+        "close": 39.73,
+        "volume": 7371
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-18",
+        "open": 39.65,
+        "high": 39.65,
+        "low": 38.96,
+        "close": 38.96,
+        "volume": 12570
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-19",
+        "open": 39.31,
+        "high": 39.61,
+        "low": 39.31,
+        "close": 39.46,
+        "volume": 5125
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-20",
+        "open": 39.46,
+        "high": 39.46,
+        "low": 39.46,
+        "close": 39.46,
+        "volume": 0
+      },
+      {
+        "ticker": "NYSEARCA:RSXJ",
+        "date": "2017-04-21",
+        "open": 39.64,
+        "high": 39.64,
+        "low": 39.48,
+        "close": 39.4811,
+        "volume": 955
+      }
+    ]
   }
 }
