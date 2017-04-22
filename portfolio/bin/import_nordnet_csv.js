@@ -169,8 +169,8 @@ function load(filepath) {
                     throw new Error("Suspisiously similar transaction " + JSON.stringify(old[0]) + ' found already from DB.');
                 }
                 db('transactions').insert(data).then(() => {
-                    data.map(row => console.log('Adding', JSON.stringify(row)));
-                    console.log('Inserted ' + data.length + ' new transactions.');
+                    data.map(row => d('Adding', JSON.stringify(row)));
+                    d.info('Inserted ' + data.length + ' new transactions.');
                     Transaction.refresh()
                         .then(() => process.exit());
                 });
