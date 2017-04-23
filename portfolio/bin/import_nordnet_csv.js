@@ -171,9 +171,8 @@ function load(filepath) {
                 }
                 db('transactions').insert(data).then(() => {
                     data.map(row => d('Adding', JSON.stringify(row)));
-                    d.info('Inserted ' + data.length + ' new transactions.');
-                    Transaction.refresh()
-                        .then(() => process.exit());
+                    d.info('Inserted ' + data.length + ' new transactions (run bin/refresh.js to apply).');
+                    process.exit();
                 });
             });
         }).catch(err => {
