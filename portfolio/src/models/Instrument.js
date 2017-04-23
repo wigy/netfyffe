@@ -1,8 +1,22 @@
 const Model = require('objection').Model;
 
 class Instrument extends Model {
+
     static get tableName() {
         return 'instruments';
+    }
+
+    /**
+     * Construct a query that marks this instrument as moved out on `date`.
+     */
+    patchMoveOut(date) {
+        return Instrument
+            .query()
+            .patch({
+                sell_price: this.buy_price,
+                sold: date,
+            })
+            .where('id', this.id);
     }
 
     /**
@@ -88,24 +102,21 @@ class Instrument extends Model {
             .query()
             .whereNull('sold')
             .andWhere('account_id', account_id)
-            .andWhere('count', count)
             .andWhere('ticker', code)
+            .orderBy('bought')
             .then(matches => {
-                if (matches.length === 0) {
-                    throw new Error('Cannot find any bundle of ' + count + ' instruments ' + code + ' from account ' + account_id + ' to move out.');
+                let moved = [];
+                matches.forEach(instrument => {
+                    moved.push(instrument);
+                    count -= instrument.count;
+                    if (count <= 0) {
+                        return;
+                    }
+                });
+                if (moved.length && !count) {
+                    return Promise.all(moved.map(instrument => instrument.patchMoveOut(date)));
                 }
-                if (matches.length > 1) {
-                    throw new Error('Too many bundles (' +matches.length+ ') of ' + count + ' instruments ' + code + ' in account ' + account_id + ' to move out.');
-                }
-                let instrument = matches[0];
-                // TODO: Implement query as member function of Instrument class.
-                return Instrument
-                    .query()
-                    .patch({
-                        sell_price: instrument.buy_price,
-                        sold: date,
-                    })
-                    .where('id', instrument.id);
+                throw new Error('Cannot find any bundle of ' + count + ' instruments ' + code + ' from account ' + account_id + ' to move out.');
             });
     }
 
