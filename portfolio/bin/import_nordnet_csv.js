@@ -187,4 +187,4 @@ rp({uri: config.quotes, json: true}).then(data => {
     data.map(ticker => tickers[ticker.split(':')[1]] = ticker);
     // Then load CSV file.
     load(args.csv_file);
-});
+}).catch(err => d.error("Cannot connect to quotes:", err));
