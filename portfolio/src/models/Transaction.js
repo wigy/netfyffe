@@ -32,6 +32,13 @@ class Transaction extends Model {
                 case 'out':
                     return Instrument.moveOut(self.account_id, self.date, self.count, self.code);
 
+                case 'in':
+                    d(self);
+                    return Promise.reject("Unimplemented");
+
+                case 'cancel':
+                    return Instrument.cancelMoveOut(self.account_id, self.date, self.count, self.code);
+
                 case 'deposit':
                 case 'withdraw':
                 case 'cash-in':
@@ -72,6 +79,7 @@ class Transaction extends Model {
             .query()
             .where('applied', '=', false)
             .orderBy('date')
+            .orderBy('id')
             .then(data => {
                 data = data.map(trx => (() => trx.apply()));
                 return promise.seq(data);

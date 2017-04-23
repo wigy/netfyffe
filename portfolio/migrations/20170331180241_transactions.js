@@ -17,6 +17,7 @@ exports.up = function (knex, Promise) {
             'split',    // Split the instrument to new value.
             'out',      // Move an instrument to another account.
             'in',       // Receive an instrument from another account.
+            'cancel',   // Undo an instrument movement to another account.
             'cash-out', // Transfer cash to another account.
             'cash-in'   // Transfer cash from another account.
         ]).notNullable();

@@ -45,6 +45,7 @@ let types = {
     'ENNAKKOPIDÄTYS': 'tax',
     'OSINKO': 'divident',
     'AP OTTO': 'out',
+    'KORJAUS AP OTTO': 'cancel',
 };
 // Mapping from old tickers.
 let oldTickers = {

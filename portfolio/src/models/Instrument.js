@@ -46,6 +46,7 @@ class Instrument extends Model {
                     } else {
                         // Otherwise we need to split the instrument those that have been sold and those remaining.
                         let remainingBuy = Math.round(instrument.buy_price * ((instrument.count - count) / instrument.count));
+                        // TODO: Implement query as member function of Instrument class.
                         ops.push(Instrument
                             .query()
                             .patch({
@@ -56,6 +57,7 @@ class Instrument extends Model {
                             })
                             .where('id', instrument.id)
                         );
+                        // TODO: Implement query as member function of Instrument class.
                         ops.push(Instrument
                             .query()
                             .insert({
@@ -96,11 +98,43 @@ class Instrument extends Model {
                     throw new Error('Too many bundles (' +matches.length+ ') of ' + count + ' instruments ' + code + ' in account ' + account_id + ' to move out.');
                 }
                 let instrument = matches[0];
+                // TODO: Implement query as member function of Instrument class.
                 return Instrument
                     .query()
                     .patch({
                         sell_price: instrument.buy_price,
                         sold: date,
+                    })
+                    .where('id', instrument.id);
+            });
+    }
+
+    /**
+     * Cancel transfer of `count` copies of instruments with ticker `code` on specific `date` away from the account with the given `account_id`.
+     *
+     * Returns a promise that is resolved once canceling is complete.
+     */
+    static cancelMoveOut(account_id, date, count, code) {
+        return Instrument
+            .query()
+            .whereNotNull('sold')
+            .andWhere('account_id', account_id)
+            .andWhere('count', count)
+            .andWhere('ticker', code)
+            .then(matches => {
+                if (matches.length === 0) {
+                    throw new Error('Cannot find any out-bound movement bundle of ' + count + ' instruments ' + code + ' from account ' + account_id + '.');
+                }
+                if (matches.length > 1) {
+                    throw new Error('Too many bundles (' +matches.length+ ') of ' + count + ' instruments ' + code + ' in account ' + account_id + ' to cancel moving.');
+                }
+                let instrument = matches[0];
+                // TODO: Implement query as member function of Instrument class.
+                return Instrument
+                    .query()
+                    .patch({
+                        sell_price: null,
+                        sold: null,
                     })
                     .where('id', instrument.id);
             });
