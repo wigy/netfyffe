@@ -169,11 +169,18 @@ function load(filepath) {
                 if (old.length) {
                     throw new Error("Suspisiously similar transaction " + JSON.stringify(old[0]) + ' found already from DB.');
                 }
-                db('transactions').insert(data).then(() => {
-                    data.map(row => d('Adding', JSON.stringify(row)));
-                    d.info('Inserted ' + data.length + ' new transactions (run bin/refresh.js to apply).');
-                    process.exit();
-                });
+                // Split to the smaller bundles or sqlite will choke.
+                let bundles = [];
+                while(data.length) {
+                    let part = data.splice(0, 25);
+                    part.map(row => d('Adding', JSON.stringify(row)));
+                    bundles.push(db('transactions').insert(part).then(() => d.info('Inserted ' + part.length + ' new transactions.')));
+                }
+                Promise.all(bundles)
+                    .then(() => {
+                        d.info("All transactions added.");
+                        process.exit();
+                    });
             });
         }).catch(err => {
             d.error(err);
