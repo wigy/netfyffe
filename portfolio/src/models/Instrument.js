@@ -9,12 +9,25 @@ class Instrument extends Model {
     /**
      * Construct a query that marks this instrument as moved out on `date`.
      */
-    patchMoveOut(date) {
+    movedOut(date) {
         return Instrument
             .query()
             .patch({
                 sell_price: this.buy_price,
                 sold: date,
+            })
+            .where('id', this.id);
+    }
+
+    /**
+     * Construct a query that resets selling date and price.
+     */
+    canceledSelling() {
+        return Instrument
+            .query()
+            .patch({
+                sell_price: null,
+                sold: null,
             })
             .where('id', this.id);
     }
@@ -43,6 +56,7 @@ class Instrument extends Model {
             .andWhere('account_id', account_id)
             .andWhere('ticker', code)
             .orderBy('bought')
+            .orderBy('id')
             .then(having => {
                 let ops = [];
                 let remainingSell = amount;
@@ -98,25 +112,27 @@ class Instrument extends Model {
      * Returns a promise that is resolved once movement is complete.
      */
     static moveOut(account_id, date, count, code) {
+        let origCount = count;
         return Instrument
             .query()
             .whereNull('sold')
             .andWhere('account_id', account_id)
             .andWhere('ticker', code)
             .orderBy('bought')
+            .orderBy('id')
             .then(matches => {
                 let moved = [];
                 matches.forEach(instrument => {
-                    moved.push(instrument);
-                    count -= instrument.count;
                     if (count <= 0) {
                         return;
                     }
+                    moved.push(instrument);
+                    count -= instrument.count;
                 });
                 if (moved.length && !count) {
-                    return Promise.all(moved.map(instrument => instrument.patchMoveOut(date)));
+                    return Promise.all(moved.map(instrument => instrument.movedOut(date)));
                 }
-                throw new Error('Cannot find any bundle of ' + count + ' instruments ' + code + ' from account ' + account_id + ' to move out.');
+                throw new Error('Cannot find matching bundle(s) of ' + origCount + ' instruments ' + code + ' from account ' + account_id + ' to move out.');
             });
     }
 
@@ -139,15 +155,7 @@ class Instrument extends Model {
                 if (matches.length > 1) {
                     throw new Error('Too many bundles (' +matches.length+ ') of ' + count + ' instruments ' + code + ' in account ' + account_id + ' to cancel moving.');
                 }
-                let instrument = matches[0];
-                // TODO: Implement query as member function of Instrument class.
-                return Instrument
-                    .query()
-                    .patch({
-                        sell_price: null,
-                        sold: null,
-                    })
-                    .where('id', instrument.id);
+                return matches[0].canceledSelling();
             });
     }
 }
