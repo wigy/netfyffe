@@ -43,6 +43,32 @@ class Instrument extends Model {
     }
 
     /**
+     * Construct a pair of queries selling part of the instrument at the given price.
+     */
+    split(date, count, price) {
+        let remainingBuy = Math.round(this.buy_price * ((this.count - count) / this.count));
+        let sold = Instrument
+            .query()
+            .patch({
+                sold: date,
+                count: count,
+                buy_price: this.buy_price - remainingBuy,
+                sell_price: price
+            })
+            .where('id', this.id);
+        let remaining = Instrument
+            .query()
+            .insert({
+                account_id: this.account_id,
+                bought: this.bought,
+                buy_price: remainingBuy,
+                count: this.count - count,
+                ticker: this.ticker});
+
+        return Promise.all([sold, remaining]);
+    }
+
+    /**
      * Buy `count` instruments with ticker `code` for an `amount` on specific `date` to the account with the given `account_id`.
      *
      * Returns a promise that is resolved once deposit complete.
@@ -78,29 +104,8 @@ class Instrument extends Model {
                         remainingSell -= sellPrice;
                         ops.push(instrument.soldFor(date, sellPrice));
                     } else {
-                        // Otherwise we need to split the instrument those that have been sold and those remaining.
-                        let remainingBuy = Math.round(instrument.buy_price * ((instrument.count - count) / instrument.count));
-                        // TODO: Implement query as member function of Instrument class.
-                        ops.push(Instrument
-                            .query()
-                            .patch({
-                                sold: date,
-                                count: count,
-                                buy_price: instrument.buy_price - remainingBuy,
-                                sell_price: remainingSell
-                            })
-                            .where('id', instrument.id)
-                        );
-                        // TODO: Implement query as member function of Instrument class.
-                        ops.push(Instrument
-                            .query()
-                            .insert({
-                                account_id: account_id,
-                                bought: instrument.bought,
-                                buy_price: remainingBuy,
-                                count: instrument.count - count,
-                                ticker: code})
-                        );
+                        // Otherwise we need to split the instrument to two: those that have been sold and those remaining.
+                        ops.push(instrument.split(date, count, remainingSell));
                     }
 
                     count -= instrument.count;
