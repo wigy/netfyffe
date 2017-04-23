@@ -1,4 +1,5 @@
 const Model = require('objection').Model;
+const d = require('neat-dump');
 
 class Instrument extends Model {
 
@@ -98,6 +99,9 @@ class Instrument extends Model {
                 let remainingSell = amount;
                 // Go through instruments we own starting from the oldest.
                 having.forEach(instrument => {
+                    if (count <= 0) {
+                        return;
+                    }
                     if (count >= instrument.count) {
                         // If whole bundle is sold, mark it as sold and update sell price and sell date.
                         let sellPrice = count > instrument.count ? Math.round(instrument.count * amount/count) : remainingSell;
@@ -109,9 +113,6 @@ class Instrument extends Model {
                     }
 
                     count -= instrument.count;
-                    if (count <= 0) {
-                        return;
-                    }
                 });
                 return Promise.all(ops);
             })
