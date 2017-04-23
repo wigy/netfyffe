@@ -44,6 +44,21 @@ class Account extends Model {
     }
 
     /**
+     * Get the total count of instruments owned on the given `date`.
+     *
+     * The return value is an object with ticker codes as keys and counts per ticker as value.
+     */
+    instrumentsByTicker(date) {
+
+        return this.instruments(date)
+            .then(instruments => {
+                let ret = {};
+                instruments.forEach(inst => ret[inst.ticker] = (ret[inst.ticker] || 0) + inst.count);
+                return ret;
+            })
+    }
+
+    /**
      * Find the account with the given ID and cache it for future.
      *
      * Returns promise resolved with the account or undefined if no such account.

@@ -25,6 +25,13 @@ describe('Transaction', function() {
             {account_id: 1, date: '2017-02-04', type: 'sell', code: 'HEL:FUM1V', count: 200, amount: 220000},
             {account_id: 1, date: '2017-02-05', type: 'sell', code: 'HEL:PIHLIS', count: 15, amount: 15000},
 
+/*
+TODO: This will break.
+            {account_id: 1, date: '2017-02-01', type: 'buy', code: 'HEL:OREIT', count: 20, amount: 2000},
+            {account_id: 1, date: '2017-02-02', type: 'buy', code: 'HEL:OREIT', count: 10, amount: 1000},
+            {account_id: 1, date: '2017-02-03', type: 'sell', code: 'HEL:OREIT', count: 1, amount: -100},
+            {account_id: 1, date: '2017-02-04', type: 'sell', code: 'HEL:OREIT', count: 29, amount: -2900},
+*/
         ]))
         .then(() => Transaction.refresh())
         .then(() => done());
@@ -62,30 +69,25 @@ describe('Transaction', function() {
     describe('buying and selling', function() {
 
         it('shows correct balance and instruments', function(done) {
-            function counts(instruments) {
-                let ret = {};
-                instruments.forEach(inst => ret[inst.ticker] = (ret[inst.ticker] || 0) + inst.count);
-                return ret;
-            }
             Account.find(1)
                 .then(acc => {
                     Promise.all([
-                        acc.balance('2017-02-01'), acc.instruments('2017-02-01'),
-                        acc.balance('2017-02-02'), acc.instruments('2017-02-02'),
-                        acc.balance('2017-02-03'), acc.instruments('2017-02-03'),
-                        acc.balance('2017-02-04'), acc.instruments('2017-02-04'),
-                        acc.balance('2017-02-05'), acc.instruments('2017-02-05'),
+                        acc.balance('2017-02-01'), acc.instrumentsByTicker('2017-02-01'),
+                        acc.balance('2017-02-02'), acc.instrumentsByTicker('2017-02-02'),
+                        acc.balance('2017-02-03'), acc.instrumentsByTicker('2017-02-03'),
+                        acc.balance('2017-02-04'), acc.instrumentsByTicker('2017-02-04'),
+                        acc.balance('2017-02-05'), acc.instrumentsByTicker('2017-02-05'),
                     ]).then(res => {
                         assert(res[0] == 500000, 'balance 2017-02-01');
                         assert(res[2] == 240000, 'balance 2017-02-02');
                         assert(res[4] == 230000, 'balance 2017-02-03');
                         assert(res[6] == 450000, 'balance 2017-02-04');
                         assert(res[8] == 465000, 'balance 2017-02-05');
-                        assert.deepEqual(counts(res[1]), {}, 'instruments 2017-02-01');
-                        assert.deepEqual(counts(res[3]), {'HEL:FUM1V': 250, 'HEL:PIHLIS': 10}, 'instruments 2017-02-02');
-                        assert.deepEqual(counts(res[5]), {'HEL:FUM1V': 250, 'HEL:PIHLIS': 20}, 'instruments 2017-02-03');
-                        assert.deepEqual(counts(res[7]), {'HEL:FUM1V': 50, 'HEL:PIHLIS': 20}, 'instruments 2017-02-04');
-                        assert.deepEqual(counts(res[9]), {'HEL:FUM1V': 50, 'HEL:PIHLIS': 5}, 'instruments 2017-02-05');
+                        assert.deepEqual(res[1], {}, 'instruments 2017-02-01');
+                        assert.deepEqual(res[3], {'HEL:FUM1V': 250, 'HEL:PIHLIS': 10}, 'instruments 2017-02-02');
+                        assert.deepEqual(res[5], {'HEL:FUM1V': 250, 'HEL:PIHLIS': 20}, 'instruments 2017-02-03');
+                        assert.deepEqual(res[7], {'HEL:FUM1V': 50, 'HEL:PIHLIS': 20}, 'instruments 2017-02-04');
+                        assert.deepEqual(res[9], {'HEL:FUM1V': 50, 'HEL:PIHLIS': 5}, 'instruments 2017-02-05');
                         done();
                     });
                 });
