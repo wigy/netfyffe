@@ -33,6 +33,16 @@ class Instrument extends Model {
     }
 
     /**
+     * Construct a query marking the instrument as sold.
+     */
+    soldFor(date, price) {
+        return Instrument
+            .query()
+            .patch({sold: date, sell_price: price})
+            .where('id', this.id);
+    }
+
+    /**
      * Buy `count` instruments with ticker `code` for an `amount` on specific `date` to the account with the given `account_id`.
      *
      * Returns a promise that is resolved once deposit complete.
@@ -66,11 +76,7 @@ class Instrument extends Model {
                         // If whole bundle is sold, mark it as sold and update sell price and sell date.
                         let sellPrice = count > instrument.count ? Math.round(instrument.count * amount/count) : remainingSell;
                         remainingSell -= sellPrice;
-                        ops.push(Instrument
-                            .query()
-                            .patch({sold: date, sell_price: sellPrice})
-                            .where('id', instrument.id)
-                        );
+                        ops.push(instrument.soldFor(date, sellPrice));
                     } else {
                         // Otherwise we need to split the instrument those that have been sold and those remaining.
                         let remainingBuy = Math.round(instrument.buy_price * ((instrument.count - count) / instrument.count));
