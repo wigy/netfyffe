@@ -1,5 +1,5 @@
 {
-  "date": "2017-04-21T15:04:35.362Z",
+  "date": "2017-04-24T12:27:11.416Z",
   "version": "1.0.2",
   "tables": [
     "tickers",
@@ -23,7 +23,7 @@
     ]
   },
   "rows": {
-    "tickers": 54,
+    "tickers": 59,
     "quotes": 124
   },
   "data": {
@@ -35,6 +35,12 @@
         "currency": "DKK"
       },
       {
+        "ticker": "FRA:DXET",
+        "name": "db x-trackers EURO STOXX 50",
+        "country": "EUR",
+        "currency": "EUR"
+      },
+      {
         "ticker": "FRA:DXSU",
         "name": "X-Tr. EM Liquid Euro Bond",
         "country": "EM",
@@ -44,6 +50,18 @@
         "ticker": "FRA:EOAN",
         "name": "E.ON SE",
         "country": "GER",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "FRA:EXH4",
+        "name": "iShares STOXX 600 Industrial",
+        "country": "EUR",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "FRA:IS3N",
+        "name": "iShares Core MSCI EM",
+        "country": "EM",
         "currency": "EUR"
       },
       {
@@ -101,7 +119,7 @@
         "currency": "EUR"
       },
       {
-        "ticker": "HEL:KESBV",
+        "ticker": "HEL:KESKOB",
         "name": "Kesko B",
         "country": "FIN",
         "currency": "EUR"
@@ -157,6 +175,12 @@
       {
         "ticker": "HEL:OREITN0116",
         "name": "Orava Asuntorahasto uudet",
+        "country": "FIN",
+        "currency": "EUR"
+      },
+      {
+        "ticker": "HEL:PIHLIS",
+        "name": "Pihlajalinna Oyj",
         "country": "FIN",
         "currency": "EUR"
       },
@@ -293,6 +317,12 @@
         "currency": "USD"
       },
       {
+        "ticker": "NYSEARCA:MXI",
+        "name": "iShares Global Materials",
+        "country": "ALL",
+        "currency": "USD"
+      },
+      {
         "ticker": "NYSEARCA:NGE",
         "name": "Global X MSCI Nigeria",
         "country": "NGA",
@@ -341,7 +371,7 @@
         "currency": "EUR"
       },
       {
-        "ticker": "X:UB",
+        "ticker": "X:UNIAV",
         "name": "United Bankers",
         "country": "FIN",
         "currency": "EUR"

@@ -43,15 +43,36 @@ let types = {
     'VALUUTAN MYYNTI': 'cash-out',
     'VALUUTAN OSTO': 'cash-in',
     'ENNAKKOPIDÄTYS': 'tax',
+    'GERMAN SOL TAX DIV': 'tax',
+    'PER ULK KUPONKIVERO': 'cash-cancel',
+    'OSINGON PERUUTUS': 'cash-cancel',
     'OSINKO': 'divident',
     'AP OTTO': 'out',
+    'JÄTTÖ SIIRTO': 'in',
     'KORJAUS AP OTTO': 'cancel',
+    'KORJAUS AP JÄTTÖ': 'cancel',
+    'DESIM. ULOSKIRJ. KÄT': 'split-cash',
+    'VAIHTO AP-OTTO': 'split-out',
+    'VAIHTO AP-JÄTTÖ': 'split-in',
+    'DESIM KIRJAUS OTTO': 'DROP',
+    'LUNASTUS AP OTTO': 'DROP',
+    'LUNASTUS AP KÄT.': 'sell',
 };
 // Mapping from old tickers.
 let oldTickers = {
     // TODO: This could be in quote-service.
     'UPM1V': 'UPM',
+    'CPMBV': 'CAPMAN',
+    'MEO1V': 'METSO',
+    'KESBV': 'KESKOB',
+    'NOVO B': 'NOVO-B',
+    'OKMETIC OSTOTARJOUSOSAKE': 'OKM1V',
 };
+// Tickers splitted.
+let splitTickers = {
+    // TODO: How to get these?
+    'NGE.US.OLD/X': 'NGE',
+}
 // Mapping from few funds.
 let funds = {
     // TODO: This should be in quote-service.
@@ -73,6 +94,9 @@ function convert(line) {
     if (ticker !== '') {
         if (oldTickers[ticker]) {
             ticker = oldTickers[ticker];
+        }
+        if (splitTickers[ticker]) {
+            ticker = splitTickers[ticker];
         }
         if (funds[ticker]) {
             ticker = funds[ticker];
@@ -97,7 +121,11 @@ function convert(line) {
     if (!types[type]) {
         throw Error('Cannot recognize transaction type ' + type);
     }
+
     type = types[type];
+    if (type === 'DROP') {
+        return null;
+    }
 
     return {
         account_id: currency, // To be replaced later account ID.
@@ -149,7 +177,10 @@ function load(filepath) {
         let data = [];
         output.splice(0,1);
         output.forEach(line => {
-            data.push(convert(line));
+            let converted = convert(line);
+            if (converted) {
+                data.push(converted);
+            }
         })
 
         // Check and create accounts if needed.
@@ -184,7 +215,7 @@ function load(filepath) {
             });
         }).catch(err => {
             d.error(err);
-            process.exit();
+            process.exit(1);
         });
     });
 }
@@ -194,4 +225,4 @@ rp({uri: config.quotes, json: true}).then(data => {
     data.map(ticker => tickers[ticker.split(':')[1]] = ticker);
     // Then load CSV file.
     load(args.csv_file);
-}).catch(err => d.error("Cannot connect to quotes:", err));
+}).catch(err => {d.error("Cannot connect to quotes:", err); process.exit(1)});

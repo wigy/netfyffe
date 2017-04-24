@@ -33,7 +33,6 @@ class Transaction extends Model {
                     return Instrument.moveOut(self.account_id, self.date, self.count, self.code);
 
                 case 'in':
-                    d(self);
                     return Promise.reject("Unimplemented");
 
                 case 'cancel':
@@ -43,6 +42,7 @@ class Transaction extends Model {
                 case 'withdraw':
                 case 'cash-in':
                 case 'cash-out':
+                case 'cash-cancel':
                 case 'interest':
                 case 'tax':
                 case 'divident':
