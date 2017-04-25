@@ -1,4 +1,6 @@
+const Bank = require('./Bank');
 const Account = require('./Account');
+const AccountGroup= require('./AccountGroup');
 const Transaction = require('./Transaction');
 const Balance = require('./Balance');
 const query = require('../lib/db/query');
@@ -7,9 +9,15 @@ const assert = require('assert');
 describe('Transaction', function() {
 
     before(function(done) {
-        query.insert(Account, [
-            {id: 1, name: 'Test account', bank: 'Test Bank', code: 'ACC001', currency: 'EUR'},
+        query.insert(Bank, [
+            {id: 1, name: 'Test Bank'},
         ])
+        .then(() => query.insert(AccountGroup, [
+            {id: 1, bank_id: 1, name: 'Test account', code: 'ACC001'},
+        ]))
+        .then(() => query.insert(Account, [
+            {id: 1, account_group_id: 1, currency: 'EUR'},
+        ]))
         .then(() => query.insert(Transaction, [
             // Test buying and some selling.
             {account_id: 1, date: '2017-02-01', type: 'deposit', amount: 500000},
@@ -33,7 +41,7 @@ describe('Transaction', function() {
     });
 
     after(function(done) {
-        Account.delete(1).then(() => done());
+        Bank.delete(1).then(() => done());
     });
 
     describe('buying and selling', function() {
