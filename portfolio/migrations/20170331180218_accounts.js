@@ -1,3 +1,4 @@
+// TODO: Split to Bank and AccountGroup
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('accounts', function (table) {
 
