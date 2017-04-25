@@ -10,7 +10,7 @@
 const ArgumentParser = require('argparse').ArgumentParser;
 const parser = new ArgumentParser({
   addHelp: true,
-  description: 'Utility to load and save knex-based databases.'
+  description: 'Utility to import CSV data from Nordnet account.'
 });
 parser.addArgument('account_name');
 parser.addArgument('account_code');
