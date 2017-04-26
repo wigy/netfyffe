@@ -8,54 +8,48 @@ const assert = require('assert');
 
 describe('Instrument', function() {
 
+    let account = null;
+
     before(function(done) {
-        query.insert(Bank, [
-            {id: 1, name: 'Test Bank'},
-        ])
-        .then(() => query.insert(AccountGroup, [
-            {id: 1, bank_id: 1, name: 'Test account', code: 'ACC001'},
-        ]))
-        .then(() => query.insert(Account, [
-            {id: 1, account_group_id: 1, currency: 'EUR'},
-        ]))
-        .then(() => query.insert(Transaction, [
-            {account_id: 1, date: '2017-01-01', type: 'buy', code: 'HEL:SIILI', count: 100, amount: -100},
-            {account_id: 1, date: '2017-01-02', type: 'out', code: 'HEL:SIILI', count: 100, amount: 0},
-            {account_id: 1, date: '2017-01-02', type: 'cancel', code: 'HEL:SIILI', count: 100, amount: 0},
-            {account_id: 1, date: '2017-01-03', type: 'buy', code: 'HEL:SIILI', count: 100, amount: -100},
-            {account_id: 1, date: '2017-01-04', type: 'out', code: 'HEL:SIILI', count: 100, amount: 0},
-        ]))
+        Account.findOrCreate('Test Bank', 'Test account', 'ACC001', 'EUR')
+        .then(acc => {
+            account = acc;
+            return query.insert(Transaction, [
+                {account_id: account.id, date: '2017-01-01', type: 'buy', code: 'HEL:SIILI', count: 100, amount: -100},
+                {account_id: account.id, date: '2017-01-02', type: 'out', code: 'HEL:SIILI', count: 100, amount: 0},
+                {account_id: account.id, date: '2017-01-02', type: 'cancel', code: 'HEL:SIILI', count: 100, amount: 0},
+                {account_id: account.id, date: '2017-01-03', type: 'buy', code: 'HEL:SIILI', count: 100, amount: -100},
+                {account_id: account.id, date: '2017-01-04', type: 'out', code: 'HEL:SIILI', count: 100, amount: 0},
+            ]);
+        })
         .then(() => Transaction.refresh())
         .then(() => done());
     });
 
     after(function(done) {
-        Bank.delete(1)
+        Account.delete(account.id)
             .then(() => done());
     });
 
     describe('moving in and out', function() {
 
         it('ends up with correct count', function(done) {
-            Account.find(1)
-                .then(acc => {
-                    Promise.all([
-                        acc.instrumentsByTicker('2016-31-12'),
-                        acc.instrumentsByTicker('2017-01-01'),
-                        acc.instrumentsByTicker('2017-01-02'),
-                        acc.instrumentsByTicker('2017-01-03'),
-                        acc.instrumentsByTicker('2017-01-04'),
-                        acc.instrumentsByTicker('2017-01-05'),
-                    ]).then(res => {
-                        assert.deepEqual(res[0], {}, 'instruments 2016-31-12');
-                        assert.deepEqual(res[1], {'HEL:SIILI': 100}, 'instruments 2017-01-01');
-                        assert.deepEqual(res[2], {'HEL:SIILI': 100}, 'instruments 2017-01-02');
-                        assert.deepEqual(res[3], {'HEL:SIILI': 200}, 'instruments 2017-01-03');
-                        assert.deepEqual(res[4], {'HEL:SIILI': 100}, 'instruments 2017-01-04');
-                        assert.deepEqual(res[5], {'HEL:SIILI': 100}, 'instruments 2017-01-05');
-                        done();
-                    });
-                });
+            Promise.all([
+                account.instrumentsByTicker('2016-31-12'),
+                account.instrumentsByTicker('2017-01-01'),
+                account.instrumentsByTicker('2017-01-02'),
+                account.instrumentsByTicker('2017-01-03'),
+                account.instrumentsByTicker('2017-01-04'),
+                account.instrumentsByTicker('2017-01-05'),
+            ]).then(res => {
+                assert.deepEqual(res[0], {}, 'instruments 2016-31-12');
+                assert.deepEqual(res[1], {'HEL:SIILI': 100}, 'instruments 2017-01-01');
+                assert.deepEqual(res[2], {'HEL:SIILI': 100}, 'instruments 2017-01-02');
+                assert.deepEqual(res[3], {'HEL:SIILI': 200}, 'instruments 2017-01-03');
+                assert.deepEqual(res[4], {'HEL:SIILI': 100}, 'instruments 2017-01-04');
+                assert.deepEqual(res[5], {'HEL:SIILI': 100}, 'instruments 2017-01-05');
+                done();
+            });
         });
     });
 });

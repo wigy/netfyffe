@@ -1,6 +1,7 @@
 const Model = require('objection').Model;
 const Balance = require('./Balance');
 const Instrument = require('./Instrument');
+const query = require('../lib/db/query');
 const d = require('neat-dump');
 
 class Account extends Model {
@@ -75,6 +76,18 @@ class Account extends Model {
                 }
                 return Account.cache[id];
             });
+    }
+
+    /**
+     * Create an account, account group and bank if needed.
+     *
+     * Returns a promise resolving with the account.
+     */
+    static findOrCreate(bank, name, code, currency) {
+        const AccountGroup = require('./AccountGroup');
+        const query = require('../lib/db/query');
+        return AccountGroup.findOrCreate(bank, name, code)
+            .then(group => query.findOrCreate(Account, {account_group_id: group.id, currency: currency}));
     }
 
     /**

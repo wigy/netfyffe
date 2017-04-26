@@ -3,6 +3,8 @@ exports.up = function (knex, Promise) {
 
         table.increments('id').primary();
         table.string('name', 256).notNullable();
+
+        table.unique(['name']);
     });
 };
 

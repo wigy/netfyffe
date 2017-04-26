@@ -1,9 +1,19 @@
 const Model = require('objection').Model;
+const query = require('../lib/db/query');
 
 class Bank extends Model {
 
     static get tableName() {
         return 'banks';
+    }
+
+    /**
+     * Create a bank if needed.
+     *
+     * Returns a promise resolving with bank.
+     */
+    static findOrCreate(bank) {
+        return query.findOrCreate(Bank, {name: bank});
     }
 
     /**

@@ -146,17 +146,8 @@ function checkAccounts(currencies) {
     let accounts = [];
     let existing = [];
     currencies.map(cur => accounts.push({name: args.account_name, code: args.account_code, currency: cur}));
-    return Promise.all(accounts.map(acc => db.select('*').from('accounts').where(acc).then(acc => {
-        if (acc.length) {
-            accountIds[acc[0].currency] = acc[0].id;
-            existing.push(acc[0].currency);
-        }
-    }))).then(() => {
-        currencies = currencies.filter(cur => existing.indexOf(cur) < 0);
-        return Promise.all(currencies.map(cur => db('accounts').insert(
-            {bank: 'Nordnet', name: args.account_name, code: args.account_code, currency: cur}
-        ).then(acc => accountIds[cur] = parseInt(acc))));
-    });
+    return Promise.all(accounts.map(acc => Account.findOrCreate('Nordnet', acc.name, acc.code, acc.currency)))
+        .then(accs => accs.map(acc => accountIds[acc.currency] = acc.id));
 }
 
 /**

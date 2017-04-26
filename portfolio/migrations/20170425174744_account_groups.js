@@ -5,6 +5,8 @@ exports.up = function (knex, Promise) {
         table.integer('bank_id').unsigned().notNullable();
         table.string('name', 256).notNullable();
         table.string('code', 16).notNullable();
+
+        table.unique(['bank_id', 'name']);
     });
 };
 

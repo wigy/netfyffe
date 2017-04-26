@@ -1,6 +1,7 @@
 /**
  * Utilities for database handling and querying.
  */
+const objection = require('objection');
 const Account = require('../../models/Account');
 const Balance = require('../../models/Balance');
 const Instrument = require('../../models/Instrument');
@@ -13,6 +14,27 @@ function insert(model, entries) {
         entries = [entries];
     }
     return Promise.all(entries.map(entry => model.query().insert(entry)));
+}
+
+/**
+ * Find an instance or create one if it does not exist.
+ *
+ * Returns promise resolving with the instance found or created.
+ */
+function findOrCreate(model, members) {
+    return objection.transaction(model, model => {
+        return model.query()
+            .where(members)
+            .then(data => {
+                if (data.length > 1) {
+                    throw new Error("Too many matches in table '" + model.tableName + "' when looking for " + JSON.stringify(members));
+                }
+                if (data.length) {
+                    return data[0];
+                }
+                return model.query().insert(members);
+            });
+    });
 }
 
 /**
@@ -39,4 +61,4 @@ function fyffe() {
     });
 }
 
-module.exports = {insert, fyffe};
+module.exports = {insert, fyffe, findOrCreate};

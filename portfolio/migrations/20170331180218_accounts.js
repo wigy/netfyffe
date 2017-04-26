@@ -5,7 +5,7 @@ exports.up = function (knex, Promise) {
         table.integer('account_group_id').unsigned().notNullable();
         table.string('currency', 3).notNullable();
 
-        table.unique(['bank', 'name', 'currency']);
+        table.unique(['account_group_id', 'currency']);
     });
 };
 
