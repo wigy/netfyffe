@@ -1,17 +1,13 @@
 {
-  "name": "angular-quickstart",
-  "version": "1.0.0",
-  "description": "QuickStart package.json from the documentation, supplemented with testing support",
+  "name": "netfyffe-ui",
+  "version": "0.0.1",
+  "description": "User interfacce to access portfolio.",
   "scripts": {
     "build": "tsc -p src/",
     "build:watch": "tsc -p src/ -w",
     "serve": "lite-server -c=bs-config.js",
     "prestart": "npm run build",
     "start": "concurrently \"npm run build:watch\" \"npm run serve\"",
-    "preprotractor": "webdriver-manager update",
-    "protractor": "protractor protractor.config.js",
-    "pretest": "npm run build",
-    "pretest:once": "npm run build",
     "lint": "tslint ./src/**/*.ts -t verbose"
   },
   "keywords": [],
