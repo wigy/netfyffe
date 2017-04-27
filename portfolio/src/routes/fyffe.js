@@ -4,7 +4,7 @@ const db = require('../db');
 const query = require('../lib/db/query');
 
 /**
- * @api {get} /fyffe Collect all data needed to calculate value of the portfolio.
+ * @api {get} /fyffe Collect all data needed to calculate cash value of the portfolio.
  * @apiName AccountHistoricalValues
  * @apiGroup Portfolio
  *
