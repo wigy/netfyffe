@@ -1,5 +1,5 @@
 const express = require('express');
-const industries = express.Router();
+const router = express.Router();
 const db = require('../db');
 
 const INDUSTRIES = [
@@ -21,8 +21,8 @@ const INDUSTRIES = [
  *
  * https://en.wikipedia.org/wiki/Global_Industry_Classification_Standard
  */
-industries.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send(INDUSTRIES);
 });
 
-module.exports = industries;
+module.exports = router;
