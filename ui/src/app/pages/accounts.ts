@@ -10,6 +10,7 @@ export class AccountsComponent implements OnInit  {
   }
 
   ngOnInit(): void {
-    console.log(this.portfolio.getPortfolio());
+    this.portfolio.getPortfolio()
+      .then((data: Object[]) => console.log(data));
   }
 }

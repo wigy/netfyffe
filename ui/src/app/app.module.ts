@@ -1,6 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpModule }    from '@angular/http';
 
 import { AppComponent }  from './app.component';
 import { MenuComponent }  from './components/menu.component';
@@ -23,7 +24,8 @@ class AppRoutingModule {}
 @NgModule({
   imports: [
     AppRoutingModule,
-    BrowserModule
+    BrowserModule,
+    HttpModule,
   ],
   declarations: [
     AppComponent,
@@ -32,7 +34,7 @@ class AppRoutingModule {}
     MenuComponent,
   ],
   providers: [
-    PortfolioService
+    PortfolioService,
   ],
   bootstrap: [
     AppComponent
