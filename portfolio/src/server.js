@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/fyffe', require('./routes/fyffe'));
+app.use('/account_group', require('./routes/account_group'));
 
 app.listen(config.port, function () {
   d.info('App listening on port ' + config.port);

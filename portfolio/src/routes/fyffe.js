@@ -1,5 +1,5 @@
 const express = require('express');
-const fyffe = express.Router();
+const router = express.Router();
 const db = require('../db');
 const query = require('../lib/db/query');
 
@@ -10,7 +10,7 @@ const query = require('../lib/db/query');
  *
  * TODO: Docs.
  */
-fyffe.get('/', (req, res) => {
+router.get('/', (req, res) => {
 
     query.fyffe()
         .then(results => res.send(results))
@@ -20,4 +20,4 @@ fyffe.get('/', (req, res) => {
         });
 });
 
-module.exports = fyffe;
+module.exports = router;
