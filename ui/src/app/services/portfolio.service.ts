@@ -21,6 +21,7 @@ export class PortfolioService {
   }
 
   getAccountGroup(id: Number): Promise<AccountGroup> {
+    // TODO: Wrap into AccountGroup object (add data to API as well).
     return this.http.get(this.url + '/account_group/' + id)
       .toPromise()
       .then(response => response.json())

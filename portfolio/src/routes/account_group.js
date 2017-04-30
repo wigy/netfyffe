@@ -75,23 +75,27 @@ router.get('/', (req, res) => {
  */
 router.get('/:id', (req, res) => {
     let id = req.params.id;
-    Account.query()
-        .where('account_group_id', id)
-        .orderBy('currency')
-        .then(accounts => {
-            return Promise.all(accounts.map(account =>
-                Transaction
-                    .query()
-                    .where('account_id', account.id)
-                    .orderBy('date')
-                    .then(txs => {return {account: account, transactions: txs}})
-            ));
-        })
-        .then(data => res.send(data))
-        .catch(err => {
-            d.error(err);
-            res.status(500).send({error: 'FetchFailed'});
-        });
+    Promise.all([
+        AccountGroup.query()
+            .where('id', id),
+        Account.query()
+            .where('account_group_id', id)
+            .orderBy('currency')
+            .then(accounts => {
+                return Promise.all(accounts.map(account =>
+                    Transaction
+                        .query()
+                        .where('account_id', account.id)
+                        .orderBy('date')
+                        .then(txs => {account.transactions = txs; return account;})
+                ));
+            })
+    ])
+    .then(data => {let group = data[0][0]; group.accounts = data[1]; res.send(group);})
+    .catch(err => {
+        d.error(err);
+        res.status(500).send({error: 'FetchFailed'});
+    });
 });
 
 module.exports = router;
