@@ -1,6 +1,4 @@
 const Model = require('objection').Model;
-const Balance = require('./Balance');
-const Instrument = require('./Instrument');
 const query = require('../lib/db/query');
 const d = require('neat-dump');
 
@@ -14,6 +12,8 @@ class Account extends Model {
      * Get the balance of the account on the given `date`.
      */
     balance(date) {
+        const Balance = require('./Balance');
+
         return Balance
             .query()
             .where('account_id', this.id)
@@ -27,6 +27,8 @@ class Account extends Model {
      * Get the list of instruments owned on the given `date`.
      */
     instruments(date) {
+        const Instrument = require('./Instrument');
+
         return Promise.all([
             Instrument
                 .query()
@@ -99,6 +101,7 @@ class Account extends Model {
 
         const Instrument = require('./Instrument');
         const Transaction = require('./Transaction');
+        const Balance = require('./Balance');
 
         return Transaction
             .query()
@@ -130,6 +133,8 @@ class Account extends Model {
      * Returns a promise that is resolved once deposit complete.
      */
     static deposit(id, date, amount) {
+        const Balance = require('./Balance');
+
         let total = amount;
         return Account.find(id)
             .then(acc => acc.balance(date))

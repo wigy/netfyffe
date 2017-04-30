@@ -1,6 +1,4 @@
 const Model = require('objection').Model;
-const Account = require('./Account');
-const Instrument = require('./Instrument');
 const promise = require('../lib/async/promise');
 const lockfile = require('lockfile');
 const d = require('neat-dump');
@@ -17,6 +15,9 @@ class Transaction extends Model {
      * Returns a promise that resolves to null or transaction ID if successfully applied.
      */
     apply() {
+        const Account = require('./Account');
+        const Instrument = require('./Instrument');
+
         d.info('Applying', this.date,'transaction', '#' + this.id, this.type, this.code ? '[' + this.code + ' x ' + this.count + ']' : '[]', this.amount/100, 'to account', '#' + this.account_id);
 
         function implementation(self) {
