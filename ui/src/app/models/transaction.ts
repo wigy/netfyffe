@@ -10,13 +10,13 @@ export class Transaction {
     options: Object;
 
     constructor(data: any) {
-        this.id = data.id;
-        this.account_id = data.account_id;
-        this.date = data.date;
-        this.type = data.type;
-        this.code = data.code;
-        this.count = data.count;
-        this.amount = data.amount;
+        this.id = data.id || null;
+        this.account_id = data.account_id || null;
+        this.date = data.date || null;
+        this.type = data.type || null;
+        this.code = data.code || null;
+        this.count = data.count || null;
+        this.amount = data.amount || null;
         // TODO: Hmm? Does not work
 //        this.options = JSON.parse(data.options);
     }

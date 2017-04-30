@@ -11,12 +11,13 @@ export class AccountComponent implements OnInit  {
   accountGroup: AccountGroup;
 
   constructor(private portfolio: PortfolioService, private route: ActivatedRoute) {
+    this.accountGroup = new AccountGroup({});
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(
       (params: Params) => this.portfolio.getAccountGroup(params['id'])
-        .then(data => console.log(data))
+        .then(group => this.accountGroup = group)
     )
   }
 }

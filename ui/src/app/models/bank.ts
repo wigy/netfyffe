@@ -4,7 +4,7 @@ export class Bank {
     name: string;
 
     constructor(data: any) {
-        this.id = data.id;
-        this.name = data.name;
+        this.id = data.id || null;
+        this.name = data.name || null;
     }
 }
