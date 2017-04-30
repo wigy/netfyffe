@@ -4,9 +4,10 @@ const db = require('../db');
 const Bank = require('../models/Bank');
 const Account = require('../models/Account');
 const AccountGroup= require('../models/AccountGroup');
+const Transaction= require('../models/Transaction');
 
 /**
- * @api {get} /account Collect full account description data.
+ * @api {get} /account Collect account description data for all accounts in all groups.
  * @apiName Accounts
  * @apiGroup Portfolio
  *
@@ -48,12 +49,10 @@ router.get('/', (req, res) => {
         data[1].map(account => {
             accounts[account.account_group_id] = accounts[account.account_group_id] || [];
             accounts[account.account_group_id].push(account);
-            delete account.account_group_id;
         });
         res.send(data[2].map(group => {
             group.bank = banks[group.bank_id];
             group.accounts = accounts[group.id];
-            delete group.bank_id;
             return group;
         }));
     })
@@ -61,6 +60,38 @@ router.get('/', (req, res) => {
         d.error(err);
         res.status(500).send({error: 'FetchFailed'});
     });
+});
+
+/**
+ * @api {get} /account/:id Collect full account description data.
+ * @apiName AccountDetail
+ * @apiGroup Portfolio
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [
+ * TODO: Fill in
+ *     ]
+ */
+router.get('/:id', (req, res) => {
+    let id = req.params.id;
+    Account.query()
+        .where('account_group_id', id)
+        .orderBy('currency')
+        .then(accounts => {
+            return Promise.all(accounts.map(account =>
+                Transaction
+                    .query()
+                    .where('account_id', account.id)
+                    .orderBy('date')
+                    .then(txs => {return {account: account, transactions: txs}})
+            ));
+        })
+        .then(data => res.send(data))
+        .catch(err => {
+            d.error(err);
+            res.status(500).send({error: 'FetchFailed'});
+        });
 });
 
 module.exports = router;
