@@ -15,7 +15,8 @@ export class AccountComponent implements OnInit  {
 
   ngOnInit(): void {
     this.route.params.subscribe(
-      (params: Params) => console.log(params)
+      (params: Params) => this.portfolio.getAccountGroup(params['id'])
+        .then(data => console.log(data))
     )
   }
 }

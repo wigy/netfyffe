@@ -13,7 +13,7 @@ export class AccountsComponent implements OnInit  {
   }
 
   ngOnInit(): void {
-    this.portfolio.getAccounts()
+    this.portfolio.getAccountGroups()
       .then((data: AccountGroup[]) => this.accountGroups = data);
   }
 }
