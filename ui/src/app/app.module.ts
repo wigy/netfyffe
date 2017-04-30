@@ -7,11 +7,13 @@ import { AppComponent }  from './app.component';
 import { MenuComponent }  from './components/menu.component';
 import { DashboardComponent } from './pages/dashboard';
 import { AccountsComponent }   from './pages/accounts';
+import { AccountComponent }   from './pages/account';
 import { PortfolioService } from './services/portfolio.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard',  component: DashboardComponent },
+  { path: 'accounts/:id',  component: AccountComponent },
   { path: 'accounts',  component: AccountsComponent },
 ];
 
@@ -31,6 +33,7 @@ class AppRoutingModule {}
     AppComponent,
     DashboardComponent,
     AccountsComponent,
+    AccountComponent,
     MenuComponent,
   ],
   providers: [

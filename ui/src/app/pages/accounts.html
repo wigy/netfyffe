@@ -1,5 +1,5 @@
 <h2>Accounts</h2>
 
 <div *ngFor="let group of accountGroups">
-    {{group.name}}
+    <a [routerLink]="[ '/accounts/', group.id ]">{{group.name}}</a>
 </div>
