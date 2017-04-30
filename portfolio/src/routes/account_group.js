@@ -10,7 +10,29 @@ const AccountGroup= require('../models/AccountGroup');
  * @apiName Accounts
  * @apiGroup Portfolio
  *
- * TODO: Docs.
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [
+ *         {
+ *             "id": 1,
+ *             "name": "My Account",
+ *             "code": "123456",
+ *             "bank": {
+ *                 "id": 1,
+ *                 "name": "Bank inc."
+ *             },
+ *             "accounts": [
+ *                 {
+ *                     "id": 1,
+ *                     "currency": "EUR"
+ *                 },
+ *                 {
+ *                     "id": 2,
+ *                     "currency": "USD"
+ *                 }
+ *             ]
+ *         }
+ *     ]
  */
 router.get('/', (req, res) => {
 
