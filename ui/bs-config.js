@@ -1,5 +1,3 @@
-let proxy = require('http-proxy-middleware');
-
 module.exports = {
   "server": {
     "baseDir": "src",
