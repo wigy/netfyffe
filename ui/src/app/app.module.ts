@@ -2,6 +2,8 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule }    from '@angular/http';
+import { BrowserAnimationsModule }    from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppComponent }  from './app.component';
 import { MenuComponent }  from './components/menu.component';
@@ -29,6 +31,8 @@ class AppRoutingModule {}
     AppRoutingModule,
     BrowserModule,
     HttpModule,
+    NgxChartsModule,
+    BrowserAnimationsModule,
   ],
   declarations: [
     AppComponent,

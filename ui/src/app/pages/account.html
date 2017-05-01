@@ -1,6 +1,7 @@
 <h2>{{accountGroup.name}} ({{accountGroup.code}})</h2>
 
 <history-graph [accounts]="[accountGroup]"></history-graph>
+<div style="clear:both"></div>
 
 <div *ngFor="let account of accountGroup.accounts">
     <h3>{{account.currency}}</h3>
