@@ -5,6 +5,7 @@ import { HttpModule }    from '@angular/http';
 
 import { AppComponent }  from './app.component';
 import { MenuComponent }  from './components/menu.component';
+import { HistoryGraphComponent }  from './components/history_graph.component';
 import { DashboardComponent } from './pages/dashboard';
 import { AccountsComponent }   from './pages/accounts';
 import { AccountComponent }   from './pages/account';
@@ -35,6 +36,7 @@ class AppRoutingModule {}
     AccountsComponent,
     AccountComponent,
     MenuComponent,
+    HistoryGraphComponent,
   ],
   providers: [
     PortfolioService,
