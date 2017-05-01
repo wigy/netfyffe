@@ -5,18 +5,18 @@ import { AccountGroup } from '../models/account_group';
   selector: 'history-graph',
   template: `
     <ngx-charts-line-chart
-      [view]="view"
+      [view]="[800, 400]"
       [scheme]="colorScheme"
-      [results]="multi"
-      [gradient]="gradient"
-      [xAxis]="showXAxis"
-      [yAxis]="showYAxis"
-      [legend]="showLegend"
-      [showXAxisLabel]="showXAxisLabel"
-      [showYAxisLabel]="showYAxisLabel"
-      [xAxisLabel]="xAxisLabel"
-      [yAxisLabel]="yAxisLabel"
-      [autoScale]="autoScale"
+      [results]="data"
+      [gradient]="false"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Year"
+      yAxisLabel="Population"
+      [autoScale]="true"
       (select)="onSelect($event)">
     </ngx-charts-line-chart>
   `
@@ -25,48 +25,21 @@ export class HistoryGraphComponent  {
 
   @Input() accounts: AccountGroup[];
 
-  single: any[];
-  multi: any[];
-
-  view: any[] = [700, 400];
-
-  // options
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = true;
-  showXAxisLabel = true;
-  xAxisLabel = 'Country';
-  showYAxisLabel = true;
-  yAxisLabel = 'Population';
+  data: any[];
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  // line, area
-  autoScale = true;
-
   constructor() {
-    this.single = [
-      {
-        "name": "Germany",
-        "value": 8940000
-      },
-      {
-        "name": "USA",
-        "value": 5000000
-      },
-      {
-        "name": "France",
-        "value": 7200000
-      }
-    ];
-
-    this.multi = [
+    this.data = [
       {
         "name": "Germany",
         "series": [
+          {
+            "name": "2009",
+            "value": 7200000
+          },
           {
             "name": "2010",
             "value": 7300000
@@ -82,6 +55,10 @@ export class HistoryGraphComponent  {
         "name": "USA",
         "series": [
           {
+            "name": "2009",
+            "value": 7200000
+          },
+          {
             "name": "2010",
             "value": 7870000
           },
@@ -95,6 +72,10 @@ export class HistoryGraphComponent  {
       {
         "name": "France",
         "series": [
+          {
+            "name": "2009",
+            "value": 7200000
+          },
           {
             "name": "2010",
             "value": 5000002
