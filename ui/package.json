@@ -24,6 +24,7 @@
     "@angular/router": "~4.0.0",
     "angular-in-memory-web-api": "~0.3.0",
     "core-js": "^2.4.1",
+    "neat-dump": "^1.0.13",
     "rxjs": "5.0.1",
     "systemjs": "0.19.40",
     "zone.js": "^0.8.4"
