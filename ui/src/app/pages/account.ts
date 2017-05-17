@@ -20,6 +20,7 @@ export class AccountComponent implements OnInit  {
       this.portfolio.getAccountGroup(+params['id'])
         .then(group => {
           this.accountGroup = group;
+          // TODO: Use ngZones here?
           group.accounts.forEach((account: Account) => {
             this.portfolio.getBalances(account.id)
               .then(balances => account['balances'] = balances);

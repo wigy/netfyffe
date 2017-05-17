@@ -1,11 +1,11 @@
 export class Instrument {
 
-    ticker: string;
-    count: Number;
-    buy_price: Number;
-    sell_price: Number;
-    bought: Date;
-    sold: Date;
+    public ticker: string;
+    public count: Number;
+    public buy_price: Number;
+    public sell_price: Number;
+    public bought: Date;
+    public sold: Date;
 
     constructor(data: any) {
         this.ticker = data.ticker || null;

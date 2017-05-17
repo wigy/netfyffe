@@ -3,11 +3,11 @@ import { Account } from './account';
 
 export class AccountGroup {
 
-    id: number;
-    name: string;
-    code: string;
-    bank: Bank;
-    accounts: Account[];
+    public id: number;
+    public name: string;
+    public code: string;
+    public bank: Bank;
+    public accounts: Account[];
 
     constructor(data: any) {
         this.id = data.id || null;
