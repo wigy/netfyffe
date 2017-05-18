@@ -21,11 +21,27 @@ export class PortfolioService {
       .then(data => data.map((item: Object) => new AccountGroup(item)))
   }
 
+  /**
+   * Get the account group with all accounts and their contents.
+   */
   getAccountGroup(id: Number): Promise<AccountGroup> {
     return this.http.get(this.url + '/account_group/' + id)
       .toPromise()
       .then(response => response.json())
-      .then(data => new AccountGroup(data));
+      .then(data => new AccountGroup(data))
+      .then(group => {
+        return Promise.all(group.accounts.map((account: Account) => Promise.all([
+          this.getBalances(account.id),
+          this.getInstruments(account.id)
+        ])))
+        .then(data => {
+          data.forEach((accdata, i) => {
+            group.accounts[i].balances = accdata[0];
+            group.accounts[i].instruments = accdata[1];
+          });
+          return group;
+        });
+      });
   }
 
   /**

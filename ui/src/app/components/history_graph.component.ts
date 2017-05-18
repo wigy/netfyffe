@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { AccountGroup } from '../models/account_group';
 
 @Component({
@@ -21,17 +21,20 @@ import { AccountGroup } from '../models/account_group';
     </ngx-charts-line-chart>
   `
 })
-export class HistoryGraphComponent  {
+export class HistoryGraphComponent implements OnChanges {
 
-  @Input() accounts: AccountGroup[];
-
-  data: any[];
+  @Input() data: any[];
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  constructor() {
+  onSelect(event: any) {
+    console.log(event);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    d(this.data);
     this.data = [
       {
         "name": "Germany",
@@ -87,8 +90,5 @@ export class HistoryGraphComponent  {
         ]
       }
     ];
-  }
-  onSelect(event: any) {
-    console.log(event);
   }
 }

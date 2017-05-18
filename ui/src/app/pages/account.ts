@@ -10,6 +10,7 @@ import { Account } from '../models/account';
 export class AccountComponent implements OnInit  {
 
   accountGroup: AccountGroup;
+  data: any[];
 
   constructor(private portfolio: PortfolioService, private route: ActivatedRoute) {
     this.accountGroup = new AccountGroup({});
@@ -20,12 +21,6 @@ export class AccountComponent implements OnInit  {
       this.portfolio.getAccountGroup(+params['id'])
         .then(group => {
           this.accountGroup = group;
-          group.accounts.forEach((account: Account) => {
-            this.portfolio.getBalances(account.id)
-              .then(balances => account['balances'] = balances);
-            this.portfolio.getInstruments(account.id)
-              .then(instruments => account['instruments'] = instruments);
-          });
         });
     });
   }
