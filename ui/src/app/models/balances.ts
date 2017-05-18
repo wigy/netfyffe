@@ -6,8 +6,11 @@ export class Balances {
         this.balances = data || {};
     }
 
+    /**
+     * Calculate first day that has a balance recording.
+     */
     firstDate(): string {
-        // TODO: Implement.
-        return '2001-01-01';
+        let keys = Object.keys(this.balances);
+        return keys.length ? keys[0] : new Date().toISOString().substr(0, 10);
     }
 }

@@ -22,6 +22,7 @@ export class AccountComponent implements OnInit  {
       this.portfolio.getAccountGroup(+params['id'])
         .then(group => {
           this.accountGroup = group;
+          d(group.values())
         });
     });
   }

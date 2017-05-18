@@ -47,7 +47,7 @@ function fyffe() {
     return Promise.all([
         Account.cacheAll(),
         Balance.query().orderBy('date'),
-        Instrument.query()
+        Instrument.query().orderBy('bought')
     ]).then(all => {
         let results = {};
         results.accounts = Object.keys(all[0]).map(id => all[0][id]);

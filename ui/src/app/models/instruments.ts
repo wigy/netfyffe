@@ -9,7 +9,8 @@ export class Instruments {
     }
 
     firstDate(): string {
-        // TODO: Implement.
-        return '2001-01-01';
+        // Note that days are ordered.
+        let days = this.instruments.map(instr => instr.bought);
+        return days.length ? days[0] : (new Date().toISOString().substr(0, 10));
     }
 }

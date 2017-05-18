@@ -3,9 +3,9 @@ export class Instrument {
     public ticker: string;
     public count: Number;
     public buy_price: Number;
-    public sell_price: Number;
-    public bought: Date;
-    public sold: Date;
+    public sell_price?: Number;
+    public bought: string;
+    public sold?: string;
 
     constructor(data: any) {
         this.ticker = data.ticker || null;
