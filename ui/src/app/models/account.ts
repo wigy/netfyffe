@@ -19,6 +19,9 @@ export class Account {
         this.instruments = new Instruments(data.instruments);
     }
 
+    /**
+     * Calculate first day that this account has activities.
+     */
     firstDate(): string {
         let a = this.balances.firstDate();
         let b = this.instruments.firstDate();
@@ -29,8 +32,8 @@ export class Account {
      * Calculate daily valuations for this account.
      */
     values(from?: string, to?: string) {
-        // TODO: Implement.
         from = from || this.firstDate();
-        return from;
+        to = to || new Date().toISOString().substr(0, 10);
+        return [from, to];
     }
 }
