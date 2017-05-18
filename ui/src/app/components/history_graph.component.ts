@@ -12,8 +12,7 @@ export class HistoryGraphComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (this.accounts[0].accounts.length) {
       let account = this.accounts[0].accounts[0];
-      // TODO: Think about fetching balances, since they come late and are not updated here.
-      account.values();
+      d(account.values());
     }
   }
 }

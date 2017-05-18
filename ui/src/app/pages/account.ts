@@ -18,16 +18,16 @@ export class AccountComponent implements OnInit  {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.portfolio.getAccountGroup(+params['id'])
-        .then(group => {
-          this.accountGroup = group;
-          // TODO: Use ngZones here?
-          group.accounts.forEach((account: Account) => {
-            this.portfolio.getBalances(account.id)
-              .then(balances => account['balances'] = balances);
-            this.portfolio.getInstruments(account.id)
-              .then(instruments => account['instruments'] = instruments);
-          });
-        });
+        .then(group => Promise.all(group.accounts.map(account => Promise.all([
+                this.portfolio.getBalances(account.id),
+                this.portfolio.getInstruments(account.id)
+          ])
+          .then(data => {
+            account.balances = data[0];
+            account.instruments = data[1];
+            return account;
+          }))
+        ).then(() => this.accountGroup = group));
     });
   }
 }
