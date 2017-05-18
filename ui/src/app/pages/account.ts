@@ -10,15 +10,19 @@ import { Account } from '../models/account';
 export class AccountComponent implements OnInit  {
 
   accountGroup: AccountGroup;
+  data: any[];
 
   constructor(private portfolio: PortfolioService, private route: ActivatedRoute) {
     this.accountGroup = new AccountGroup({});
+    this.data = [];
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.portfolio.getAccountGroup(+params['id'])
-        .then(group => this.accountGroup = group);
+        .then(group => {
+          this.accountGroup = group;
+        });
     });
   }
 }
