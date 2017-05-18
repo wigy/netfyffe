@@ -18,16 +18,7 @@ export class AccountComponent implements OnInit  {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.portfolio.getAccountGroup(+params['id'])
-        .then(group => Promise.all(group.accounts.map(account => Promise.all([
-                this.portfolio.getBalances(account.id),
-                this.portfolio.getInstruments(account.id)
-          ])
-          .then(data => {
-            account.balances = data[0];
-            account.instruments = data[1];
-            return account;
-          }))
-        ).then(() => this.accountGroup = group));
+        .then(group => this.accountGroup = group);
     });
   }
 }
