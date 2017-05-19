@@ -31,7 +31,7 @@ export class Account {
     /**
      * Calculate daily valuations for this account.
      */
-    values(from?: string, to?: string) {
+    values(from?: string, to?: string): any[] {
         from = from || this.firstDate();
         to = to || new Date().toISOString().substr(0, 10);
         let ret = this.balances.values(from, to);
