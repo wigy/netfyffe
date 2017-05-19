@@ -14,8 +14,8 @@ import { AccountGroup } from '../models/account_group';
       [legend]="true"
       [showXAxisLabel]="true"
       [showYAxisLabel]="true"
-      xAxisLabel="Year"
-      yAxisLabel="Population"
+      xAxisLabel="Date"
+      yAxisLabel="Value"
       [autoScale]="true"
       (select)="onSelect($event)">
     </ngx-charts-line-chart>
@@ -34,61 +34,8 @@ export class HistoryGraphComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    d(this.data);
-    this.data = [
-      {
-        "name": "Germany",
-        "series": [
-          {
-            "name": "2009",
-            "value": 7200000
-          },
-          {
-            "name": "2010",
-            "value": 7300000
-          },
-          {
-            "name": "2011",
-            "value": 8940000
-          }
-        ]
-      },
-
-      {
-        "name": "USA",
-        "series": [
-          {
-            "name": "2009",
-            "value": 7200000
-          },
-          {
-            "name": "2010",
-            "value": 7870000
-          },
-          {
-            "name": "2011",
-            "value": 8270000
-          }
-        ]
-      },
-
-      {
-        "name": "France",
-        "series": [
-          {
-            "name": "2009",
-            "value": 7200000
-          },
-          {
-            "name": "2010",
-            "value": 5000002
-          },
-          {
-            "name": "2011",
-            "value": 5800000
-          }
-        ]
-      }
-    ];
+    if(changes['data'].currentValue) {
+      this.data = changes['data'].currentValue;
+    }
   }
 }
