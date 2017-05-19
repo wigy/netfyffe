@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PortfolioService } from '../services/portfolio.service';
-import { AccountGroup } from '../models/account_group';
-import { Account } from '../models/account';
+import { Portfolio } from '../models/portfolio';
+import { Moment } from '../models/moment';
 
 @Component({
-  templateUrl: './account.html',
+  templateUrl: './history.html',
 })
-export class AccountComponent implements OnInit  {
+export class HistoryComponent implements OnInit  {
 
-  accountGroup: AccountGroup;
+  portfolio: Portfolio;
   data: any[];
 
   constructor(private portfolioService: PortfolioService, private route: ActivatedRoute) {
-    this.accountGroup = new AccountGroup({});
+    this.portfolio = new Portfolio();
     this.data = [];
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.portfolioService.getAccountGroup(+params['id'])
-        .then(group => {
-          this.accountGroup = group;
-          this.data = group.values();
+      this.portfolioService.getPortfolio()
+        .then(portfolio => {
+          this.portfolio = portfolio;
+          d(new Moment())
         });
     });
   }

@@ -4,11 +4,11 @@ import { Instruments } from './instruments';
 
 export class Account {
 
-    public id: number;
-    public currency: string;
-    public transactions: Transaction[];
-    public balances: Balances;
-    public instruments: Instruments;
+    id: number;
+    currency: string;
+    transactions: Transaction[];
+    balances: Balances;
+    instruments: Instruments;
 
     constructor(data: any) {
         this.id = data.id || null;
