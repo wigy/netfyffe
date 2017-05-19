@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { PortfolioService } from '../services/portfolio.service';
 import { Portfolio } from '../models/portfolio';
-import { Moment } from '../models/moment';
+import { Dates } from '../models/dates';
 
 @Component({
   templateUrl: './history.html',
@@ -22,7 +22,7 @@ export class HistoryComponent implements OnInit  {
       this.portfolioService.getPortfolio()
         .then(portfolio => {
           this.portfolio = portfolio;
-          d(new Moment())
+          d(new Dates())
         });
     });
   }
