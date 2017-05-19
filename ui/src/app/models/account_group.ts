@@ -21,6 +21,6 @@ export class AccountGroup {
      * Calculate daily valuations for all accounts in this group.
      */
     values(from?: string, to?: string) {
-        d(this.accounts.map(acc => acc.values()))
+        return this.accounts.map(acc => new Object({name: acc.currency, series: acc.values()}));
     }
 }

@@ -34,6 +34,7 @@ export class Account {
     values(from?: string, to?: string) {
         from = from || this.firstDate();
         to = to || new Date().toISOString().substr(0, 10);
-        return [from, to];
+        let ret = this.balances.values(from, to);
+        return ret;
     }
 }
