@@ -14,6 +14,7 @@ export class AccountComponent implements OnInit  {
 
   constructor(private portfolio: PortfolioService, private route: ActivatedRoute) {
     this.accountGroup = new AccountGroup({});
+    this.data = [];
   }
 
   ngOnInit(): void {

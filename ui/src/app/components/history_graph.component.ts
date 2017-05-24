@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AccountGroup } from '../models/account_group';
 
 @Component({
@@ -21,7 +21,7 @@ import { AccountGroup } from '../models/account_group';
     </ngx-charts-line-chart>
   `
 })
-export class HistoryGraphComponent implements OnChanges {
+export class HistoryGraphComponent {
 
   @Input() data: any[];
 
@@ -31,11 +31,5 @@ export class HistoryGraphComponent implements OnChanges {
 
   onSelect(event: any) {
     console.log(event);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if(changes['data'].currentValue) {
-      this.data = changes['data'].currentValue;
-    }
   }
 }
