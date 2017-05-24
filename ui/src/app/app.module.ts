@@ -11,6 +11,7 @@ import { HistoryGraphComponent }  from './components/history_graph.component';
 import { DashboardComponent } from './pages/dashboard';
 import { AccountsComponent }   from './pages/accounts';
 import { AccountComponent }   from './pages/account';
+import { HistoryComponent }   from './pages/history';
 import { PortfolioService } from './services/portfolio.service';
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'dashboard',  component: DashboardComponent },
   { path: 'accounts/:id',  component: AccountComponent },
   { path: 'accounts',  component: AccountsComponent },
+  { path: 'history',  component: HistoryComponent },
 ];
 
 @NgModule({
@@ -40,6 +42,7 @@ class AppRoutingModule {}
     AccountsComponent,
     AccountComponent,
     MenuComponent,
+    HistoryComponent,
     HistoryGraphComponent,
   ],
   providers: [

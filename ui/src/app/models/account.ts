@@ -4,11 +4,11 @@ import { Instruments } from './instruments';
 
 export class Account {
 
-    public id: number;
-    public currency: string;
-    public transactions: Transaction[];
-    public balances: Balances;
-    public instruments: Instruments;
+    id: number;
+    currency: string;
+    transactions: Transaction[];
+    balances: Balances;
+    instruments: Instruments;
 
     constructor(data: any) {
         this.id = data.id || null;
@@ -31,7 +31,7 @@ export class Account {
     /**
      * Calculate daily valuations for this account.
      */
-    values(from?: string, to?: string) {
+    values(from?: string, to?: string): any[] {
         from = from || this.firstDate();
         to = to || new Date().toISOString().substr(0, 10);
         let ret = this.balances.values(from, to);

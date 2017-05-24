@@ -1,6 +1,6 @@
 export class Balances {
 
-    public balances: Object;
+    balances: Object;
 
     constructor(data: any) {
         this.balances = data || {};

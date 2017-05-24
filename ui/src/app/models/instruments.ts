@@ -2,7 +2,7 @@ import { Instrument } from './instrument';
 
 export class Instruments {
 
-    public instruments: Instrument[];
+    instruments: Instrument[];
 
     constructor(data: Instrument[]) {
         this.instruments = data ? data.map((instr: Object) => new Instrument(instr)) : [];

@@ -6,6 +6,7 @@ import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 import { Balances } from '../models/balances';
 import { Instruments } from '../models/instruments';
+import { Portfolio } from '../models/portfolio';
 
 @Injectable()
 export class PortfolioService {
@@ -14,6 +15,18 @@ export class PortfolioService {
 
   constructor(private http: Http) { }
 
+  getPortfolio(): Promise<Portfolio> {
+    return this.getAccountGroups()
+      .then(groups => {
+        let ret = new Portfolio();
+        ret.groups = groups;
+        return ret;
+      });
+  }
+
+  /**
+   * Collect all account groups.
+   */
   getAccountGroups(): Promise<AccountGroup[]> {
     return this.http.get(this.url + '/account_group')
       .toPromise()
@@ -48,7 +61,7 @@ export class PortfolioService {
    * Get Balances instance for the given account with the `id`.
    */
   getBalances(id: Number): Promise<Balances> {
-  // TODO: This service could cache data as per ID and refresh it only when day has changed.
+  // TODO: Move main fetching to separate getFyffe() function caching data until day has changed.
     return this.http.get(this.url + '/fyffe/')
       .toPromise()
       .then(response => response.json())
@@ -59,7 +72,7 @@ export class PortfolioService {
    * Get Instruments instance for the given account with the `id`.
    */
   getInstruments(id: Number): Promise<Instruments> {
-  // TODO: This service could cache data as per ID and refresh it only when day has changed.
+  // TODO: Move main fetching to separate getFyffe() function caching data until day has changed.
     return this.http.get(this.url + '/fyffe/')
       .toPromise()
       .then(response => response.json())
