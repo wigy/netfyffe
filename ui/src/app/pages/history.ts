@@ -22,7 +22,7 @@ export class HistoryComponent implements OnInit  {
       this.portfolioService.getPortfolio()
         .then(portfolio => {
           this.portfolio = portfolio;
-          d(new Dates())
+          d(Dates.make('1Y').toArray())
         });
     });
   }
