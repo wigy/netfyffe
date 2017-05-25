@@ -1,0 +1,285 @@
+{
+  "date": "2017-05-25T09:22:38.230Z",
+  "version": "1.0.3",
+  "tables": [
+    "accounts",
+    "transactions",
+    "balances",
+    "instruments",
+    "account_groups",
+    "banks"
+  ],
+  "columns": {
+    "accounts": [
+      "id",
+      "account_group_id",
+      "currency"
+    ],
+    "transactions": [
+      "id",
+      "date",
+      "account_id",
+      "code",
+      "amount",
+      "applied",
+      "count",
+      "options",
+      "type"
+    ],
+    "balances": [
+      "id",
+      "account_id",
+      "date",
+      "balance"
+    ],
+    "instruments": [
+      "id",
+      "ticker",
+      "account_id",
+      "bought",
+      "buy_price",
+      "count",
+      "sell_price",
+      "sold"
+    ],
+    "account_groups": [
+      "id",
+      "bank_id",
+      "name",
+      "code"
+    ],
+    "banks": [
+      "id",
+      "name"
+    ]
+  },
+  "rows": {
+    "accounts": 5,
+    "transactions": 8,
+    "balances": 8,
+    "instruments": 3,
+    "account_groups": 2,
+    "banks": 1
+  },
+  "data": {
+    "accounts": [
+      {
+        "id": 1,
+        "account_group_id": 1,
+        "currency": "EUR"
+      },
+      {
+        "id": 2,
+        "account_group_id": 2,
+        "currency": "EUR"
+      },
+      {
+        "id": 3,
+        "account_group_id": 2,
+        "currency": "USD"
+      },
+      {
+        "id": 4,
+        "account_group_id": 2,
+        "currency": "SEK"
+      },
+      {
+        "id": 5,
+        "account_group_id": 2,
+        "currency": "DKK"
+      }
+    ],
+    "transactions": [
+      {
+        "id": 1,
+        "account_id": 1,
+        "date": "2016-08-01",
+        "type": "deposit",
+        "code": null,
+        "count": 0,
+        "amount": 200000,
+        "options": "{}",
+        "applied": 1
+      },
+      {
+        "id": 2,
+        "account_id": 1,
+        "date": "2016-08-03",
+        "type": "buy",
+        "code": "HEL:NOKIA",
+        "count": 100,
+        "amount": -50200,
+        "options": "{}",
+        "applied": 1
+      },
+      {
+        "id": 3,
+        "account_id": 1,
+        "date": "2016-09-14",
+        "type": "buy",
+        "code": "HEL:UPM",
+        "count": 56,
+        "amount": -100964,
+        "options": "{}",
+        "applied": 1
+      },
+      {
+        "id": 5,
+        "account_id": 1,
+        "date": "2017-03-24",
+        "type": "sell",
+        "code": "HEL:UPM",
+        "count": 35,
+        "amount": 77945,
+        "options": "{}",
+        "applied": 1
+      },
+      {
+        "id": 6,
+        "account_id": 2,
+        "date": "2016-08-01",
+        "type": "deposit",
+        "code": null,
+        "count": 0,
+        "amount": 10000,
+        "options": "{}",
+        "applied": 1
+      },
+      {
+        "id": 7,
+        "account_id": 3,
+        "date": "2016-08-01",
+        "type": "deposit",
+        "code": null,
+        "count": 0,
+        "amount": 10000,
+        "options": "{}",
+        "applied": 1
+      },
+      {
+        "id": 8,
+        "account_id": 4,
+        "date": "2016-08-01",
+        "type": "deposit",
+        "code": null,
+        "count": 0,
+        "amount": 10000,
+        "options": "{}",
+        "applied": 1
+      },
+      {
+        "id": 9,
+        "account_id": 5,
+        "date": "2016-08-01",
+        "type": "deposit",
+        "code": null,
+        "count": 0,
+        "amount": 10000,
+        "options": "{}",
+        "applied": 1
+      }
+    ],
+    "balances": [
+      {
+        "id": 1,
+        "account_id": 1,
+        "date": "2016-08-01",
+        "balance": 200000
+      },
+      {
+        "id": 2,
+        "account_id": 2,
+        "date": "2016-08-01",
+        "balance": 10000
+      },
+      {
+        "id": 3,
+        "account_id": 3,
+        "date": "2016-08-01",
+        "balance": 10000
+      },
+      {
+        "id": 4,
+        "account_id": 4,
+        "date": "2016-08-01",
+        "balance": 10000
+      },
+      {
+        "id": 5,
+        "account_id": 5,
+        "date": "2016-08-01",
+        "balance": 10000
+      },
+      {
+        "id": 6,
+        "account_id": 1,
+        "date": "2016-08-03",
+        "balance": 149800
+      },
+      {
+        "id": 7,
+        "account_id": 1,
+        "date": "2016-09-14",
+        "balance": 48836
+      },
+      {
+        "id": 8,
+        "account_id": 1,
+        "date": "2017-03-24",
+        "balance": 126781
+      }
+    ],
+    "instruments": [
+      {
+        "id": 1,
+        "account_id": 1,
+        "ticker": "HEL:NOKIA",
+        "count": 100,
+        "buy_price": 50200,
+        "sell_price": null,
+        "bought": "2016-08-03",
+        "sold": null
+      },
+      {
+        "id": 2,
+        "account_id": 1,
+        "ticker": "HEL:UPM",
+        "count": 35,
+        "buy_price": 63102,
+        "sell_price": 77945,
+        "bought": "2016-09-14",
+        "sold": "2017-03-24"
+      },
+      {
+        "id": 3,
+        "account_id": 1,
+        "ticker": "HEL:UPM",
+        "count": 21,
+        "buy_price": 37862,
+        "sell_price": null,
+        "bought": "2016-09-14",
+        "sold": null
+      }
+    ],
+    "account_groups": [
+      {
+        "id": 1,
+        "bank_id": 1,
+        "name": "Sample Account A",
+        "code": "12345"
+      },
+      {
+        "id": 2,
+        "bank_id": 1,
+        "name": "Sample Account B",
+        "code": "67890"
+      }
+    ],
+    "banks": [
+      {
+        "id": 1,
+        "name": "Sample Bank"
+      }
+    ]
+  }
+}
