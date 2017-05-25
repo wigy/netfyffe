@@ -42,9 +42,11 @@ export class Query {
      * Construct a query.
      */
     public static build(day: string) : Query;
-    public static build(day: string|Dates) : Query {
+    public static build(day: Dates) : Query;
+    public static build(day: string, day2: string) : Query;
+    public static build(day: string|Dates, day2?: string) : Query {
         if (!(day instanceof Dates)) {
-            day = new Dates(day);
+            day = day2 ? new Dates(day, day2) : new Dates(day);
         }
         let ret = new Query(day);
         return ret;

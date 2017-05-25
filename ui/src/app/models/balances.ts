@@ -61,9 +61,16 @@ export class Balances {
             throw Error('Cannot query `Balances` without defining currency in the query.');
         }
         if (query.dates.isSingleDay()) {
-            let data = {};
-            data[query.currency] = this.closing(query.dates);
-            return new Values({closing: data, opening: {}, change: {}});
+            let closing = {};
+            closing[query.currency] = this.closing(query.dates);
+            return new Values({closing: closing, opening: {}});
+        }
+        if (query.dates.isDateRange()) {
+            let closing = {};
+            closing[query.currency] = this.closing(query.dates);
+            let opening = {};
+            opening[query.currency] = this.opening(query.dates);
+            return new Values({closing: closing, opening: opening});
         }
         throw Error('Query not yet implemented.');
     }

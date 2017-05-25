@@ -84,6 +84,13 @@ export class Dates {
   }
 
   /**
+   * Check if this date collection has exactly two dates.
+   */
+  public isDateRange(): boolean {
+    return this.dates.length === 2;
+  }
+
+  /**
    * Check if this is just a single date and it points to today.
    */
   public isToday(): boolean {
