@@ -2,9 +2,11 @@
 <h3>Recent</h3>
 <div *ngFor="let dates of recentDates">
     {{dates.name}}
+    {{portfolio.query(dates)|json}}
 </div>
 
 <h3>Quarters</h3>
 <div *ngFor="let dates of quarterDates">
     {{dates.name}}
+    {{portfolio.query(dates)|json}}
 </div>
