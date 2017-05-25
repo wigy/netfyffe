@@ -11,10 +11,14 @@ export class HistoryComponent implements OnInit  {
 
   portfolio: Portfolio;
   data: any[];
+  recentDates: Dates[];
+  quarterDates: Dates[];
 
   constructor(private portfolioService: PortfolioService, private route: ActivatedRoute) {
     this.portfolio = new Portfolio();
     this.data = [];
+    this.recentDates = Dates.make(['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
+    this.quarterDates = [];
   }
 
   ngOnInit(): void {
@@ -22,7 +26,8 @@ export class HistoryComponent implements OnInit  {
       this.portfolioService.getPortfolio()
         .then(portfolio => {
           this.portfolio = portfolio;
-          d(Dates.make('2017Q3').toArray())
+          // TODO: Calculate quarter dates applicapable to the portfolio.
+          this.quarterDates = Dates.make(['2016Q1', '2016Q2', '2016Q3', '2016Q4', '2017Q1', '2016Q2']);
         });
     });
   }

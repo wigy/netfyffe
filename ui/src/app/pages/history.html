@@ -1,5 +1,10 @@
 <h2>History</h2>
 <h3>Recent</h3>
-1D 1W 1M 3M YTD 1Y
+<div *ngFor="let dates of recentDates">
+    {{dates.name}}
+</div>
 
 <h3>Quarters</h3>
+<div *ngFor="let dates of quarterDates">
+    {{dates.name}}
+</div>

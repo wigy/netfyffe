@@ -77,17 +77,40 @@ export class Dates {
   }
 
   /**
+   * Get the first date as string.
+   */
+  get from(): string {
+    return this.dates.length ? this.dates[0].format('YYYY-MM-DD') : null;
+  }
+
+  /**
+   * Get the second date as string.
+   */
+  get to(): string {
+    return this.dates.length > 1 ? this.dates[1].format('YYYY-MM-DD') : null;
+  }
+
+  /**
    * Construct a date collection for the given purpose:
    *
    * `1D` - Two dates: yesterday and today.
    * `1W` - Two dates: a week ago and today.
    * `1M` - Two dates: a month ago and today.
    * `3M` - Two dates: three months ago and today.
+   * `6M` - Two dates: six months ago and today.
    * `YTD` - Two dates: first of January and today.
    * `1Y` - Two dates: an year ago and today.
+   * `3Y` - Two dates: three years ago and today.
+   * `5Y` - Two dates: five years ago and today.
    * `2015Q3` - Tow dates: the first and the last day of the quarter.
    */
-  public static make(what: string): Dates {
+  public static make(what: string): Dates;
+  public static make(what: string[]): Dates[];
+  public static make(what: string|string[]): Dates|Dates[] {
+
+    if (what instanceof Array) {
+      return what.map(w => Dates.make(w));
+    }
 
     let ret: Dates;
 
@@ -117,11 +140,23 @@ export class Dates {
       case '1M':
         ret.dates[0].subtract(1, 'months');
         break;
+      case '3M':
+        ret.dates[0].subtract(3, 'months');
+        break;
+      case '6M':
+        ret.dates[0].subtract(6, 'months');
+        break;
       case 'YTD':
         ret.dates[0] = moment(ret.dates[0].format('YYYY-01-01'));
         break;
       case '1Y':
         ret.dates[0].subtract(1, 'years');
+        break;
+      case '3Y':
+        ret.dates[0].subtract(3, 'years');
+        break;
+      case '5Y':
+        ret.dates[0].subtract(5, 'years');
         break;
       default:
         throw Error(`Don't know how to construct Dates for '${what}'.`);
