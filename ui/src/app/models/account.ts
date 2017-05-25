@@ -45,8 +45,11 @@ export class Account {
      * Calculate valuations for this account.
      */
     public query(query: Query): Values {
-        let b = this.balances.query(query);
-        let i = this.instruments.query(query);
+        if (!query.acceptsCurrency(this.currency)) {
+            return new Values()
+        }
+        let b = this.balances.query(query.withCurrency(this.currency));
+        let i = this.instruments.query(query.withCurrency(this.currency));
         return b.merge(i);
     }
 }

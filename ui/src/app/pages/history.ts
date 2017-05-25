@@ -31,9 +31,11 @@ export class HistoryComponent implements OnInit  {
           this.quarterDates = Dates.make(['2016Q1', '2016Q2', '2016Q3', '2016Q4', '2017Q1', '2016Q2']);
 
           // TODO: Just testing here.
-          let q = Query.build('2016-06-01');
-          d(portfolio)
-          d(portfolio.query(q));
+          let q1 = Query.build('2016-06-01');
+          let q2 = Query.build('2016-08-04');
+          let q3 = Query.build('2016-08-03');
+          let q4 = Query.build('2017-05-24');
+          d(portfolio.query(q2));
 
         });
     });

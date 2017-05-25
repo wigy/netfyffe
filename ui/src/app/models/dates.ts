@@ -77,16 +77,37 @@ export class Dates {
   }
 
   /**
-   * Get the first date as string.
+   * Check if this date collection represents a single day.
    */
-  get from(): string {
+  public isSingleDay(): boolean {
+    return this.dates.length === 1;
+  }
+
+  /**
+   * Check if this is just a single date and it points to today.
+   */
+  public isToday(): boolean {
+    return moment().format('YYYY-MM-DD') === this.first;
+  }
+
+  /**
+   * Construct new `Dates` which is one day before the current.
+   */
+  public dayBefore(): Dates {
+    return this.dates.length ? new Dates(this.dates[0].subtract(1, 'days').format('YYYY-MM-DD')) : null;
+  }
+
+  /**
+   * Get the first date as a string `YYYY-DD-MM`.
+   */
+  get first(): string {
     return this.dates.length ? this.dates[0].format('YYYY-MM-DD') : null;
   }
 
   /**
-   * Get the second date as string.
+   * Get the second date as a string `YYYY-DD-MM`.
    */
-  get to(): string {
+  get second(): string {
     return this.dates.length > 1 ? this.dates[1].format('YYYY-MM-DD') : null;
   }
 

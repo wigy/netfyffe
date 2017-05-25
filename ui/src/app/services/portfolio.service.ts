@@ -15,6 +15,9 @@ export class PortfolioService {
 
   constructor(private http: Http) { }
 
+  /**
+   * Fetch full portfolio data.
+   */
   getPortfolio(): Promise<Portfolio> {
     return this.getAccountGroups()
       .then(groups => {
@@ -31,7 +34,9 @@ export class PortfolioService {
     return this.http.get(this.url + '/account_group')
       .toPromise()
       .then(response => response.json())
-      .then(data => data.map((item: Object) => new AccountGroup(item)))
+      .then(data => {
+        return Promise.all(data.map((g:any) => this.getAccountGroup(g.id)));
+      });
   }
 
   /**

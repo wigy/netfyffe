@@ -13,6 +13,32 @@ export class Query {
     constructor(public dates: Dates, public currency=<string>null) {}
 
     /**
+     * Make a copy of this query.
+     */
+    public clone(): Query {
+        return new Query(this.dates, this.currency);
+    }
+
+    /**
+     * Check if this query accepts the given currency.
+     */
+    public acceptsCurrency(currency: string): boolean {
+        if (this.currency === null) {
+            return true;
+        }
+        return this.currency === currency;
+    }
+
+    /**
+     * Construct new query from this query by limiting currency to the given currency.
+     */
+    public withCurrency(currency: string): Query {
+        let ret = this.clone();
+        ret.currency = currency;
+        return ret;
+    }
+
+    /**
      * Construct a query.
      */
     public static build(day: string) : Query;
