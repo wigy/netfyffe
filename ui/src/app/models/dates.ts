@@ -85,9 +85,28 @@ export class Dates {
    * `3M` - Two dates: three months ago and today.
    * `YTD` - Two dates: first of January and today.
    * `1Y` - Two dates: an year ago and today.
+   * `2015Q3` - Tow dates: the first and the last day of the quarter.
    */
   public static make(what: string): Dates {
-    let ret: Dates = new Dates(what, 'today', 'today');
+
+    let ret: Dates;
+
+    let match = /^(\d\d\d\d)Q([1-4])$/.exec(what);
+    if (match) {
+      switch(match[2]) {
+        case '1':
+          return new Dates(what, match[1] + '-01-01', match[1] + '-03-31');
+        case '2':
+          return new Dates(what, match[1] + '-01-04', match[1] + '-06-30');
+        case '3':
+          return new Dates(what, match[1] + '-01-07', match[1] + '-09-30');
+        case '4':
+          return new Dates(what, match[1] + '-01-10', match[1] + '-12-31');
+      }
+    }
+
+    ret = new Dates(what, 'today', 'today');
+
     switch(what) {
       case '1D':
         ret.dates[0].subtract(1, 'days');
