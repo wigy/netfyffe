@@ -1,16 +1,12 @@
 <h2>History</h2>
 <h3>Recent</h3>
-<div *ngFor="let dates of recentDates">
-    {{dates.name}}
-    <!-- TODO: This approach makes a crash. Create a class combining result and daterange.
-    {{portfolio.query(dates)|json}}
-    -->
+<div *ngFor="let valuation of recentDates">
+    {{valuation.name}}
+    {{valuation.results | json}}
 </div>
 
 <h3>Quarters</h3>
-<div *ngFor="let dates of quarterDates">
-    {{dates.name}}
-    <!-- TODO: This approach makes a crash. Create a class combining result and daterange.
-    {{portfolio.query(dates)|json}}
-    -->
+<div *ngFor="let valuation of quarterDates">
+    {{valuation.name}}
+    {{valuation.results | json}}
 </div>

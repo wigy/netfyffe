@@ -2,7 +2,7 @@ import { Dates } from './dates';
 import { Values } from './values';
 
 /**
- * A filtering description for calculating values and value changes for portfolios and accounts.
+ * A description about filtering and date ranges for calculating value changes for portfolios and accounts.
  *
  * If a single date is given, then the value is the closing value (or the latest known, if today)
  * of the target. If the range is given, then opening and closing (or the latest) with difference
