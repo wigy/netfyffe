@@ -1,3 +1,6 @@
+import { Query } from './query';
+import { Values } from './values';
+
 export class Balances {
 
     balances: Object;
@@ -20,5 +23,12 @@ export class Balances {
     values(from: string, to: string) {
         let keys = Object.keys(this.balances);
         return keys.map(day => new Object({name: new Date(day), value: this.balances[day] / 100}));
+    }
+
+    /**
+     * Calculate valuations for the given query.
+     */
+    public query(query: Query): Values {
+        return new Values();
     }
 }

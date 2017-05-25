@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { PortfolioService } from '../services/portfolio.service';
 import { Portfolio } from '../models/portfolio';
 import { Dates } from '../models/dates';
+import { Query } from '../models/query';
 
 @Component({
   templateUrl: './history.html',
@@ -28,6 +29,12 @@ export class HistoryComponent implements OnInit  {
           this.portfolio = portfolio;
           // TODO: Calculate quarter dates applicapable to the portfolio.
           this.quarterDates = Dates.make(['2016Q1', '2016Q2', '2016Q3', '2016Q4', '2017Q1', '2016Q2']);
+
+          // TODO: Just testing here.
+          let q = Query.build('2016-06-01');
+          d(portfolio)
+          d(portfolio.query(q));
+
         });
     });
   }

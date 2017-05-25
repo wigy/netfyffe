@@ -1,3 +1,6 @@
+import { Query } from './query';
+import { Values } from './values';
+
 export class Instrument {
 
     ticker: string;
@@ -14,5 +17,12 @@ export class Instrument {
         this.sell_price = data.sell_price || null;
         this.bought = data.bought || null;
         this.sold = data.sold || null;
+    }
+
+    /**
+     * Calculate valuation for this instrument.
+     */
+    public query(query: Query): Values {
+        return new Values();
     }
 }

@@ -1,6 +1,8 @@
 import { Transaction } from './transaction';
 import { Balances } from './balances';
 import { Instruments } from './instruments';
+import { Query } from './query';
+import { Values } from './values';
 
 export class Account {
 
@@ -32,9 +34,19 @@ export class Account {
      * Calculate daily valuations for this account.
      */
     values(from?: string, to?: string): any[] {
+        // TODO: Obsolete. Drop after query() is usable instead.
         from = from || this.firstDate();
         to = to || new Date().toISOString().substr(0, 10);
         let ret = this.balances.values(from, to);
         return ret;
+    }
+
+    /**
+     * Calculate valuations for this account.
+     */
+    public query(query: Query): Values {
+        let b = this.balances.query(query);
+        let i = this.instruments.query(query);
+        return b.merge(i);
     }
 }

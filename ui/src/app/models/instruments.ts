@@ -1,3 +1,5 @@
+import { Query } from './query';
+import { Values } from './values';
 import { Instrument } from './instrument';
 
 export class Instruments {
@@ -12,5 +14,12 @@ export class Instruments {
         // Note that days are ordered.
         let days = this.instruments.map(instr => instr.bought);
         return days.length ? days[0] : (new Date().toISOString().substr(0, 10));
+    }
+
+    /**
+     * Calculate valuation for these instruments.
+     */
+    public query(query: Query): Values {
+        return Values.join(this.instruments.map(i => i.query(query)));
     }
 }

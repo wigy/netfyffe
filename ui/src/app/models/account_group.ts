@@ -1,5 +1,7 @@
 import { Bank } from './bank';
 import { Account } from './account';
+import { Query } from './query';
+import { Values } from './values';
 
 export class AccountGroup {
 
@@ -21,6 +23,14 @@ export class AccountGroup {
      * Calculate daily valuations for all accounts in this group.
      */
     values(from?: string, to?: string) {
+        // TODO: Obsolete. Drop after query() is usable instead.
         return this.accounts.map(acc => new Object({name: acc.currency, series: acc.values()}));
+    }
+
+    /**
+     * Calculate valuations for all acccounts in this group.
+     */
+    public query(query: Query): Values {
+        return Values.join(this.accounts.map(g => g.query(query)));
     }
 }
