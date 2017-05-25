@@ -112,6 +112,13 @@ export class Dates {
   }
 
   /**
+   * Get the last date as a string `YYYY-DD-MM`.
+   */
+  get last(): string {
+    return this.dates.length ? this.dates[this.dates.length - 1].format('YYYY-MM-DD') : null;
+  }
+
+  /**
    * Construct a date collection for the given purpose:
    *
    * `1D` - Two dates: yesterday and today.

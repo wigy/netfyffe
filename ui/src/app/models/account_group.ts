@@ -31,6 +31,7 @@ export class AccountGroup {
      * Calculate valuations for all acccounts in this group.
      */
     public query(query: Query): Values {
+        d('Q', query)
         return Values.join(this.accounts.map(g => g.query(query)));
     }
 }

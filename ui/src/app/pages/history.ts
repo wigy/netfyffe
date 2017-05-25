@@ -35,7 +35,7 @@ export class HistoryComponent implements OnInit  {
           let q2 = Query.build('2016-08-04');
           let q3 = Query.build('2016-08-03');
           let q4 = Query.build('2017-05-24');
-          d(portfolio.query(q2));
+          d(portfolio.query(q4));
 
         });
     });

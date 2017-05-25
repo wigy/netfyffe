@@ -35,7 +35,7 @@ export class Balances {
         if (!keys.length) {
             return 0;
         }
-        let str = day.first;
+        let str = day.last;
         if (keys[0] > str) {
             return 0;
         }
@@ -63,7 +63,7 @@ export class Balances {
         if (query.dates.isSingleDay()) {
             let data = {};
             data[query.currency] = this.closing(query.dates);
-            return new Values(data);
+            return new Values({closing: data, opening: {}, change: {}});
         }
         throw Error('Query not yet implemented.');
     }

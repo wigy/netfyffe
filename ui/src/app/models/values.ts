@@ -3,16 +3,16 @@
  */
 export class Values {
 
-    constructor(public data={}) {}
+    constructor(public data={opening: {}, closing: {}, change: {}}) {}
 
     /**
      * Combine two results into this one.
      */
     public merge(other: Values) {
 
-        Object.keys(other.data).forEach(k => {
-            this.data[k] = this.data[k] || 0;
-            this.data[k] += other.data[k];
+        Object.keys(other.data.closing).forEach(k => {
+            this.data.closing[k] = this.data.closing[k] || 0;
+            this.data.closing[k] += other.data.closing[k];
         });
 
         return this;
