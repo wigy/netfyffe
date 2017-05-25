@@ -3,17 +3,17 @@ import { PortfolioService } from '../services/portfolio.service';
 import { AccountGroup } from '../models/account_group';
 
 @Component({
-  templateUrl: './accounts.html',
+    templateUrl: './accounts.html',
 })
 export class AccountsComponent implements OnInit  {
 
-  accountGroups: AccountGroup[];
+    accountGroups: AccountGroup[];
 
-  constructor(private portfolio: PortfolioService) {
-  }
+    constructor(private portfolio: PortfolioService) {
+    }
 
-  ngOnInit(): void {
-    this.portfolio.getAccountGroups()
-      .then((data: AccountGroup[]) => this.accountGroups = data);
-  }
+    ngOnInit(): void {
+        this.portfolio.getAccountGroups()
+          .then((data: AccountGroup[]) => this.accountGroups = data);
+    }
 }

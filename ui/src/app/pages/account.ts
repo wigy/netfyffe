@@ -5,25 +5,25 @@ import { AccountGroup } from '../models/account_group';
 import { Account } from '../models/account';
 
 @Component({
-  templateUrl: './account.html',
+    templateUrl: './account.html',
 })
 export class AccountComponent implements OnInit  {
 
-  accountGroup: AccountGroup;
-  data: any[];
+    accountGroup: AccountGroup;
+    data: any[];
 
-  constructor(private portfolioService: PortfolioService, private route: ActivatedRoute) {
-    this.accountGroup = new AccountGroup({});
-    this.data = [];
-  }
+    constructor(private portfolioService: PortfolioService, private route: ActivatedRoute) {
+        this.accountGroup = new AccountGroup({});
+        this.data = [];
+    }
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.portfolioService.getAccountGroup(+params['id'])
-        .then(group => {
-          this.accountGroup = group;
-          this.data = group.values();
+    ngOnInit(): void {
+        this.route.params.subscribe((params: Params) => {
+            this.portfolioService.getAccountGroup(+params['id'])
+            .then(group => {
+                this.accountGroup = group;
+                this.data = group.values();
+            });
         });
-    });
-  }
+    }
 }
