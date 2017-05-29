@@ -23,4 +23,19 @@ export class Portfolio {
         }
         return Values.join(this.groups.map(g => g.query(<Query>query)));
     }
+
+    /**
+     * Calculate first day that this portfolio has activities.
+     */
+    firstDate(): string {
+        return Dates.min(this.groups.map(group => group.firstDate()));
+    }
+
+    /**
+     * Collect list of quarters applicapable for this portfolio in format `2017Q1`
+     */
+    public quarters(): string[] {
+        let q = new Dates(this.firstDate(), 'today');
+        return q.quarters();
+    }
 }

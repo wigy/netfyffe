@@ -126,8 +126,16 @@ export class Dates {
     }
 
     /**
+    * Get the year of the first date as a number.
+    */
+    get year(): number {
+        return this.dates.length ? parseInt(this.dates[0].format('YYYY')) : null;
+    }
+
+    /**
     * Construct a date collection for the given purpose:
     *
+    * `today` - One date: today.
     * `1D` - Two dates: yesterday and today.
     * `1W` - Two dates: a week ago and today.
     * `1M` - Two dates: a month ago and today.
@@ -145,6 +153,10 @@ export class Dates {
 
         if (what instanceof Array) {
             return what.map(w => Dates.make(w));
+        }
+
+        if (what === 'today') {
+            return new Dates(what, 'today');
         }
 
         let ret: Dates;
@@ -196,6 +208,47 @@ export class Dates {
             default:
             throw Error(`Don't know how to construct Dates for '${what}'.`);
         }
+        return ret;
+    }
+
+    /**
+     * Find the first date in the list of date strings of format `YYYY-MM-DD`.
+     */
+    public static min(dates: string[]): string {
+        let ret = <string>null;
+        dates.forEach(date => {
+            if ((ret === null || ret > date) && date !== null) {
+                ret = date;
+            }
+        });
+        return ret;
+    }
+
+    /**
+     * Calculate list of quarters between two dates inclusive formatted like `2017Q1`.
+     */
+    public  quarters(): string[] {
+        if (this.dates.length !== 2) {
+            throw Error(`Must have two dates to calculate quarters.`);
+        }
+        let ret: string[] = [];
+        let y = this.dates[0].year();
+        let q = this.dates[0].quarter();
+        let y2 = this.dates[1].year();
+        let q2 = this.dates[1].quarter();
+
+        do {
+            ret.push(y + 'Q' + q);
+            q++;
+            if (q > 4) {
+                q = 1;
+                y++;
+            }
+            if (y > y2 || (y === y2 && q > q2)) {
+                break;
+            }
+        } while(true);
+
         return ret;
     }
 };

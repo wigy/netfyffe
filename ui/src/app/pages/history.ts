@@ -27,8 +27,7 @@ export class HistoryComponent implements OnInit  {
             this.portfolioService.getPortfolio()
             .then(portfolio => {
                 this.portfolio = portfolio;
-                // TODO: Calculate quarter dates applicapable to the portfolio.
-                this.quarterDates = Valuation.make(this.portfolio, ['2016Q1', '2016Q2', '2016Q3', '2016Q4', '2017Q1', '2017Q2']);
+                this.quarterDates = Valuation.make(this.portfolio, portfolio.quarters());
                 this.recentDates = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
             });
         });

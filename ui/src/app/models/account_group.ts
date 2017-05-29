@@ -2,6 +2,7 @@ import { Bank } from './bank';
 import { Account } from './account';
 import { Query } from './query';
 import { Values } from './values';
+import { Dates } from './dates';
 
 export class AccountGroup {
 
@@ -25,6 +26,13 @@ export class AccountGroup {
     values(from?: string, to?: string) {
         // TODO: Obsolete. Drop after query() is usable instead.
         return this.accounts.map(acc => new Object({name: acc.currency, series: acc.values()}));
+    }
+
+    /**
+     * Calculate first day that this account group has activities.
+     */
+    firstDate(): string {
+        return Dates.min(this.accounts.map(account => account.firstDate()));
     }
 
     /**

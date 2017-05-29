@@ -49,8 +49,8 @@ export class PortfolioService {
         .then(data => new AccountGroup(data))
         .then(group => {
             return Promise.all(group.accounts.map((account: Account) => Promise.all([
-            this.getBalances(account.id),
-            this.getInstruments(account.id)
+                this.getBalances(account.id),
+                this.getInstruments(account.id)
             ])))
             .then(data => {
                 data.forEach((accdata, i) => {
