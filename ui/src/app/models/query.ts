@@ -10,13 +10,13 @@ import { Values } from './values';
  */
 export class Query {
 
-    constructor(public dates: Dates, public currency=<string>null) {}
+    constructor(public dates: Dates, public currency=<string>null, private allValues=false) {}
 
     /**
      * Make a copy of this query.
      */
     public clone(): Query {
-        return new Query(this.dates, this.currency);
+        return new Query(this.dates, this.currency, this.allValues);
     }
 
     /**
@@ -36,6 +36,14 @@ export class Query {
         let ret = this.clone();
         ret.currency = currency;
         return ret;
+    }
+
+    /**
+     * Change the query so that it collects all values and not just opening and closing.
+     */
+    public all(): Query {
+        this.allValues = true;
+        return this;
     }
 
     /**

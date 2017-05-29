@@ -63,14 +63,14 @@ export class Balances {
         if (query.dates.isSingleDay()) {
             let closing = {};
             closing[query.currency] = this.closing(query.dates);
-            return new Values({closing: closing, opening: {}});
+            return new Values({closing: closing, range: {}, opening: {}});
         }
         if (query.dates.isDateRange()) {
             let closing = {};
             closing[query.currency] = this.closing(query.dates);
             let opening = {};
             opening[query.currency] = this.opening(query.dates);
-            return new Values({closing: closing, opening: opening});
+            return new Values({closing: closing, range: {}, opening: opening});
         }
         throw Error('Query not yet implemented.');
     }

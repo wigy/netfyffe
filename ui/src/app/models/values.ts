@@ -3,7 +3,7 @@
  */
 export class Values {
 
-    constructor(public data={opening: {}, closing: {}}) {}
+    constructor(public data={opening: {}, range: {}, closing: {}}) {}
 
     /**
      * Combine two results into this one.

@@ -27,7 +27,8 @@ export class HistoryComponent implements OnInit  {
             this.portfolioService.getPortfolio()
             .then(portfolio => {
                 this.portfolio = portfolio;
-                this.quarterDates = Valuation.make(this.portfolio, portfolio.quarters());
+                // TODO: All values are turned on just for testing.
+                this.quarterDates = Valuation.make(this.portfolio, portfolio.quarters(), true);
                 this.recentDates = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
             });
         });
