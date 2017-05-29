@@ -7,11 +7,14 @@ import { Transaction } from '../models/transaction';
 import { Balances } from '../models/balances';
 import { Instruments } from '../models/instruments';
 import { Portfolio } from '../models/portfolio';
+import { Dates } from '../models/dates';
 
 @Injectable()
 export class PortfolioService {
     // TODO: Make configurable.
-    private url = 'http://localhost:9002';
+    private url: string = 'http://localhost:9002';
+    private fyffe: Promise<any> = null;
+    private fyffeFetched: Dates = null;
 
     constructor(private http: Http) { }
 
@@ -66,21 +69,33 @@ export class PortfolioService {
     * Get Balances instance for the given account with the `id`.
     */
     getBalances(id: Number): Promise<Balances> {
-        // TODO: Move main fetching to separate getFyffe() function caching data until day has changed.
-        return this.http.get(this.url + '/fyffe/')
-        .toPromise()
-        .then(response => response.json())
-        .then(data => new Balances(data.balances['' + id]));
+        return this.getFyffe().then(data => new Balances(data.balances['' + id]));
     }
 
     /**
     * Get Instruments instance for the given account with the `id`.
     */
     getInstruments(id: Number): Promise<Instruments> {
-        // TODO: Move main fetching to separate getFyffe() function caching data until day has changed.
-        return this.http.get(this.url + '/fyffe/')
-        .toPromise()
-        .then(response => response.json())
-        .then(data => new Instruments(data.instruments.filter((instr: Object) => +instr['account_id'] === id)));
+        return this.getFyffe()
+            .then(data => new Instruments(data.instruments.filter((instr: Object) => +instr['account_id'] === id)));
+    }
+
+    /**
+     * Get the instrument and balances data and cache it until date has changed.
+     */
+    getFyffe(): Promise<any> {
+
+        if (this.fyffe) {
+            if (this.fyffeFetched.isToday()) {
+                return this.fyffe;
+            }
+        }
+
+        this.fyffeFetched = new Dates('today');
+        this.fyffe = this.http.get(this.url + '/fyffe/')
+            .toPromise()
+            .then(response => response.json());
+
+        return this.fyffe;
     }
 }
