@@ -40,7 +40,7 @@ export class Balances {
             return 0;
         }
         // TODO: Check if we have right date value already.
-        // TODO: Inefficient lookup.
+        // TODO: Inefficient lookup. Use https://www.npmjs.com/package/binary-search-bounds
         let i = 1;
         while (keys[i] <= str && i < keys.length) {
             i++;

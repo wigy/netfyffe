@@ -41,4 +41,22 @@ export class AccountGroup {
     public query(query: Query): Values {
         return Values.join(this.accounts.map(g => g.query(query)));
     }
+
+    /**
+     * Collect data serics for a graph.
+     */
+    public getGraphData(): any[] {
+        let ret: any[] = [];
+        let range = new Dates('graph range', this.firstDate(), 'today');
+        let q = new Query(range, null, true);
+        let data = this.query(q).data.quotes;
+        Object.keys(data).forEach(currency => {
+            let obj = {name: currency, series: <any[]>[]};
+            Object.keys(data[currency]).forEach(day => {
+                obj.series.push({name: new Date(day), value: data[currency][day]});
+            });
+            ret.push(obj);
+        });
+        return ret;
+    }
 }
