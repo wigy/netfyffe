@@ -20,7 +20,13 @@ export class Values {
             this.data.closing[k] += other.data.closing[k];
         });
 
-        // TODO: Merge quotes.
+        Object.keys(other.data.quotes).forEach(k => {
+            this.data.quotes[k] = this.data.quotes[k] || {};
+            Object.keys(other.data.quotes[k]).forEach(d => {
+                this.data.quotes[k][d] = this.data.quotes[k][d] || 0;
+                this.data.quotes[k][d] += other.data.quotes[k][d];
+            });
+        });
 
         return this;
     }
