@@ -53,7 +53,7 @@ export class AccountGroup {
         Object.keys(data).forEach(currency => {
             let obj = {name: currency, series: <any[]>[]};
             Object.keys(data[currency]).forEach(day => {
-                obj.series.push({name: new Date(day), value: data[currency][day]});
+                obj.series.push({name: new Date(day), value: data[currency][day] / 100});
             });
             ret.push(obj);
         });
