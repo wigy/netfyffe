@@ -252,6 +252,11 @@ export class Dates {
         return ret;
     }
 
+    /**
+     * Construct an iterator [a1, a2, ..., an-1] for two dates in collection [a1, an].
+     *
+     * Usage: for(let day = dates.start(); !day.end(); day.inc()) {...}
+     */
     public start(): Dates {
         if (this.dates.length !== 2) {
             throw Error(`Must have two dates make an iterator.`);
@@ -262,10 +267,16 @@ export class Dates {
         return ret;
     }
 
+    /**
+     * Check if first date is still before than second date.
+     */
     public end(): boolean {
         return !this.dates[0].isBefore(this.dates[1]);
     }
 
+    /**
+     * Increment first date.
+     */
     public inc(): void {
         this.dates[0].add(1, 'days');
     }
