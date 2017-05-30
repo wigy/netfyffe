@@ -15,41 +15,41 @@ import { HistoryComponent }   from './pages/history';
 import { PortfolioService } from './services/portfolio.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard',  component: DashboardComponent },
-  { path: 'accounts/:id',  component: AccountComponent },
-  { path: 'accounts',  component: AccountsComponent },
-  { path: 'history',  component: HistoryComponent },
+{ path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+{ path: 'dashboard',  component: DashboardComponent },
+{ path: 'accounts/:id',  component: AccountComponent },
+{ path: 'accounts',  component: AccountsComponent },
+{ path: 'history',  component: HistoryComponent },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+    imports: [ RouterModule.forRoot(routes) ],
+    exports: [ RouterModule ]
 })
 class AppRoutingModule {}
 
 @NgModule({
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    HttpModule,
-    NgxChartsModule,
-    BrowserAnimationsModule,
-  ],
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    AccountsComponent,
-    AccountComponent,
-    MenuComponent,
-    HistoryComponent,
-    HistoryGraphComponent,
-  ],
-  providers: [
-    PortfolioService,
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        HttpModule,
+        NgxChartsModule,
+        BrowserAnimationsModule,
+    ],
+    declarations: [
+        AppComponent,
+        DashboardComponent,
+        AccountsComponent,
+        AccountComponent,
+        MenuComponent,
+        HistoryComponent,
+        HistoryGraphComponent,
+    ],
+    providers: [
+        PortfolioService,
+    ],
+    bootstrap: [
+        AppComponent
+    ]
 })
 export class AppModule { }
