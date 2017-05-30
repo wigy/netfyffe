@@ -30,19 +30,22 @@ export class Balances {
     /**
      * Calculate closing value for the day.
      */
-    closing(day: Dates): number {
+    closing(day: Dates, useFirstDay=false): number {
         let keys = Object.keys(this.balances);
         if (!keys.length) {
             return 0;
         }
-        let str = day.last;
+        let str = useFirstDay ? day.first : day.last;
         if (keys[0] > str) {
             return 0;
         }
+        // TODO: Check if we have right date value already.
+        // TODO: Inefficient lookup.
         let i = 1;
         while (keys[i] <= str && i < keys.length) {
             i++;
         }
+        // TODO: Store the value as well?
         return this.balances[keys[i-1]];
     }
 
@@ -63,14 +66,24 @@ export class Balances {
         if (query.dates.isSingleDay()) {
             let closing = {};
             closing[query.currency] = this.closing(query.dates);
-            return new Values({closing: closing, range: {}, opening: {}});
+            return new Values({closing: closing, quotes: {}, opening: {}});
         }
         if (query.dates.isDateRange()) {
-            let closing = {};
-            closing[query.currency] = this.closing(query.dates);
             let opening = {};
             opening[query.currency] = this.opening(query.dates);
-            return new Values({closing: closing, range: {}, opening: opening});
+            let closing = {};
+            closing[query.currency] = this.closing(query.dates);
+            let quotes = {};
+            quotes[query.currency] = {};
+            if (query.allValues) {
+                let day = query.start();
+                while (!day.end()) {
+                    quotes[query.currency][day.first] = this.closing(day, true);
+                    day.inc();
+                }
+                quotes[query.currency][day.first] = closing[query.currency];
+            }
+            return new Values({closing: closing, quotes: quotes, opening: opening});
         }
         throw Error('Query not yet implemented.');
     }

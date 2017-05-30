@@ -31,7 +31,7 @@ export class Portfolio {
         if (query instanceof Dates) {
             query = new Query(query);
         }
-        query.all();
+        query.allValues = true;
         return Values.join(this.groups.map(g => g.query(<Query>query)));
     }
 

@@ -101,7 +101,7 @@ export class Dates {
     * Construct new `Dates` which is one day before the current.
     */
     public dayBefore(): Dates {
-        return this.dates.length ? new Dates(this.dates[0].subtract(1, 'days').format('YYYY-MM-DD')) : null;
+        return this.dates.length ? new Dates(moment(this.dates[0]).subtract(1, 'days').format('YYYY-MM-DD')) : null;
     }
 
     /**
@@ -250,5 +250,23 @@ export class Dates {
         } while(true);
 
         return ret;
+    }
+
+    public start(): Dates {
+        if (this.dates.length !== 2) {
+            throw Error(`Must have two dates make an iterator.`);
+        }
+        let ret = new Dates(this.name!==null ? this.name + ' iterator' : null);
+        ret.dates.push(moment(this.dates[0]));
+        ret.dates.push(moment(this.dates[1]));
+        return ret;
+    }
+
+    public end(): boolean {
+        return !this.dates[0].isBefore(this.dates[1]);
+    }
+
+    public inc(): void {
+        this.dates[0].add(1, 'days');
     }
 };

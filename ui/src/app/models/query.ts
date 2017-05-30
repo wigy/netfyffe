@@ -10,7 +10,7 @@ import { Values } from './values';
  */
 export class Query {
 
-    constructor(public dates: Dates, public currency=<string>null, private allValues=false) {}
+    constructor(public dates: Dates, public currency=<string>null, public allValues=false) {}
 
     /**
      * Make a copy of this query.
@@ -38,12 +38,8 @@ export class Query {
         return ret;
     }
 
-    /**
-     * Change the query so that it collects all values and not just opening and closing.
-     */
-    public all(): Query {
-        this.allValues = true;
-        return this;
+    public start(): Dates {
+        return this.dates.start();
     }
 
     /**

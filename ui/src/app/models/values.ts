@@ -3,7 +3,7 @@
  */
 export class Values {
 
-    constructor(public data={opening: {}, range: {}, closing: {}}) {}
+    constructor(public data={opening: {}, quotes: {}, closing: {}}) {}
 
     /**
      * Combine two results into this one.
@@ -19,6 +19,8 @@ export class Values {
             this.data.closing[k] = this.data.closing[k] || 0;
             this.data.closing[k] += other.data.closing[k];
         });
+
+        // TODO: Merge quotes.
 
         return this;
     }
