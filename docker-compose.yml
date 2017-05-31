@@ -1,0 +1,15 @@
+version: '2'
+services:
+
+  quotes:
+    image: quotes
+    build:
+      context: quotes
+      dockerfile: Dockerfile
+    container_name: quotes
+    ports:
+      - "9000:9000"
+    environment:
+      - NETFYFFE_HARVEST=http://localhost:9001
+    volumes:
+      - ./quotes:/var/app
