@@ -31,17 +31,6 @@ export class Account {
     }
 
     /**
-     * Calculate daily valuations for this account.
-     */
-    values(from?: string, to?: string): any[] {
-        // TODO: Obsolete. Drop after query() is usable instead.
-        from = from || this.firstDate();
-        to = to || new Date().toISOString().substr(0, 10);
-        let ret = this.balances.values(from, to);
-        return ret;
-    }
-
-    /**
      * Calculate valuations for this account.
      */
     public query(query: Query): Values {

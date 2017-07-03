@@ -19,15 +19,6 @@ export class Balances {
     }
 
     /**
-     * Calculate daily valuations for the given date range.
-     */
-    values(from: string, to: string) {
-        // TODO: Obsolete. Remove once not needed.
-        let keys = Object.keys(this.balances);
-        return keys.map(day => new Object({name: new Date(day), value: this.balances[day] / 100}));
-    }
-
-    /**
      * Calculate closing value for the day.
      */
     closing(day: Dates, useFirstDay=false): number {
