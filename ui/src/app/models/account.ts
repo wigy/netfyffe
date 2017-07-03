@@ -1,5 +1,6 @@
 import { Transaction } from './transaction';
 import { Balances } from './balances';
+import { Capital } from './capital';
 import { Instruments } from './instruments';
 import { Query } from './query';
 import { Values } from './values';
@@ -11,6 +12,7 @@ export class Account {
     transactions: Transaction[];
     balances: Balances;
     instruments: Instruments;
+    capital: Capital;
 
     constructor(data: any) {
         this.id = data.id || null;
@@ -19,6 +21,7 @@ export class Account {
         this.transactions = transactions.map((tx: Object) => new Transaction(tx));
         this.balances = new Balances(data.balances);
         this.instruments = new Instruments(data.instruments);
+        this.capital = new Capital(data.capital);
     }
 
     /**
