@@ -6,21 +6,21 @@ import { BrowserAnimationsModule }    from '@angular/platform-browser/animations
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppComponent }  from './app.component';
-import { MenuComponent }  from './components/menu.component';
-import { HistoryGraphComponent }  from './components/history_graph.component';
-import { DashboardComponent } from './pages/dashboard';
-import { AccountsComponent }   from './pages/accounts';
-import { AccountComponent }   from './pages/account';
-import { HistoryComponent }   from './pages/history';
+import { MenuComponent }  from './components/menu';
+import { HistoryGraphComponent }  from './components/history_graph';
+import { DashboardPage } from './pages/dashboard';
+import { AccountsPage }   from './pages/accounts';
+import { AccountPage }   from './pages/account';
+import { HistoryPage }   from './pages/history';
 import { PortfolioService } from './services/portfolio.service';
 import { ChangeDirective }   from './components/change';
 
 const routes: Routes = [
 { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-{ path: 'dashboard',  component: DashboardComponent },
-{ path: 'accounts/:id',  component: AccountComponent },
-{ path: 'accounts',  component: AccountsComponent },
-{ path: 'history',  component: HistoryComponent },
+{ path: 'dashboard',  component: DashboardPage },
+{ path: 'accounts/:id',  component: AccountPage },
+{ path: 'accounts',  component: AccountsPage },
+{ path: 'history',  component: HistoryPage },
 ];
 
 @NgModule({
@@ -39,11 +39,11 @@ class AppRoutingModule {}
     ],
     declarations: [
         AppComponent,
-        DashboardComponent,
-        AccountsComponent,
-        AccountComponent,
+        DashboardPage,
+        AccountsPage,
+        AccountPage,
         MenuComponent,
-        HistoryComponent,
+        HistoryPage,
         HistoryGraphComponent,
         ChangeDirective,
     ],

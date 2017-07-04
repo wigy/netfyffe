@@ -8,7 +8,7 @@ import { Query } from '../models/query';
 @Component({
     templateUrl: './history.html',
 })
-export class HistoryComponent implements OnInit  {
+export class HistoryPage implements OnInit  {
 
     portfolio: Portfolio;
     data: any[];
