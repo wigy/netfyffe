@@ -5,7 +5,7 @@ import { AccountGroup } from '../models/account_group';
 @Component({
     templateUrl: './accounts.html',
 })
-export class AccountsComponent implements OnInit  {
+export class AccountsPage implements OnInit  {
 
     accountGroups: AccountGroup[];
 
