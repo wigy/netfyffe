@@ -1,5 +1,5 @@
 /**
- * A result collection for value queries.
+ * A result collection for queries.
  */
 export class Values {
 
@@ -12,7 +12,7 @@ export class Values {
     }
 
     /**
-     * Combine two results into this one.
+     * Combine other collection of results into this one.
      */
     public merge(other: Values) {
 

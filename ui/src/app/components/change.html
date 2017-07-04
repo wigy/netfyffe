@@ -1,1 +1,5 @@
-CHANGE TODO
+<div *ngFor="let currency of currencies">
+    {{currency}}
+    {{opening(currency)/100 | number:'1.2-2'}}
+    {{closing(currency)/100 | number:'1.2-2'}}
+</div>
