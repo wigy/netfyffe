@@ -19,15 +19,6 @@ export class Balances {
     }
 
     /**
-     * Calculate daily valuations for the given date range.
-     */
-    values(from: string, to: string) {
-        // TODO: Obsolete. Remove once not needed.
-        let keys = Object.keys(this.balances);
-        return keys.map(day => new Object({name: new Date(day), value: this.balances[day] / 100}));
-    }
-
-    /**
      * Calculate closing value for the day.
      */
     closing(day: Dates, useFirstDay=false): number {
@@ -57,16 +48,16 @@ export class Balances {
     }
 
     /**
-     * Calculate valuations for the given query.
+     * Helper to calculate valuations for the given query.
      */
-    public query(query: Query): Values {
+    protected _query(query: Query): {opening: {}; quotes: {}; closing: {}} {
         if (!query.currency) {
-            throw Error('Cannot query `Balances` without defining currency in the query.');
+            throw Error('Cannot query `Balances` or `Capital` without defining currency in the query.');
         }
         if (query.dates.isSingleDay()) {
             let closing = {};
             closing[query.currency] = this.closing(query.dates);
-            return new Values({closing: closing, quotes: {}, opening: {}});
+            return {closing: closing, quotes: {}, opening: {}};
         }
         if (query.dates.isDateRange()) {
             let opening = {};
@@ -83,8 +74,15 @@ export class Balances {
                 }
                 quotes[query.currency][day.first] = closing[query.currency];
             }
-            return new Values({closing: closing, quotes: quotes, opening: opening});
+            return {closing: closing, quotes: quotes, opening: opening};
         }
         throw Error('Query not yet implemented.');
+    }
+
+    /**
+     * Calculate valuations for the given query.
+     */
+    public query(query: Query): Values {
+        return new Values(this._query(query));
     }
 }

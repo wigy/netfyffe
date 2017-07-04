@@ -5,6 +5,7 @@ import { AccountGroup } from '../models/account_group';
 import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
 import { Balances } from '../models/balances';
+import { Capital } from '../models/capital';
 import { Instruments } from '../models/instruments';
 import { Portfolio } from '../models/portfolio';
 import { Dates } from '../models/dates';
@@ -53,12 +54,14 @@ export class PortfolioService {
         .then(group => {
             return Promise.all(group.accounts.map((account: Account) => Promise.all([
                 this.getBalances(account.id),
-                this.getInstruments(account.id)
+                this.getInstruments(account.id),
+                this.getCapital(account.id)
             ])))
             .then(data => {
                 data.forEach((accdata, i) => {
                     group.accounts[i].balances = accdata[0];
                     group.accounts[i].instruments = accdata[1];
+                    group.accounts[i].capital = accdata[2];
                 });
                 return group;
             });
@@ -78,6 +81,13 @@ export class PortfolioService {
     getInstruments(id: Number): Promise<Instruments> {
         return this.getFyffe()
             .then(data => new Instruments(data.instruments.filter((instr: Object) => +instr['account_id'] === id)));
+    }
+
+    /**
+    * Get Capital instance for the given account with the `id`.
+    */
+    getCapital(id: Number): Promise<Capital> {
+        return this.getFyffe().then(data => new Capital(data.capital['' + id]));
     }
 
     /**

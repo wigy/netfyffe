@@ -1,5 +1,6 @@
 import { Transaction } from './transaction';
 import { Balances } from './balances';
+import { Capital } from './capital';
 import { Instruments } from './instruments';
 import { Query } from './query';
 import { Values } from './values';
@@ -11,6 +12,7 @@ export class Account {
     transactions: Transaction[];
     balances: Balances;
     instruments: Instruments;
+    capital: Capital;
 
     constructor(data: any) {
         this.id = data.id || null;
@@ -19,6 +21,7 @@ export class Account {
         this.transactions = transactions.map((tx: Object) => new Transaction(tx));
         this.balances = new Balances(data.balances);
         this.instruments = new Instruments(data.instruments);
+        this.capital = new Capital(data.capital);
     }
 
     /**
@@ -31,25 +34,16 @@ export class Account {
     }
 
     /**
-     * Calculate daily valuations for this account.
-     */
-    values(from?: string, to?: string): any[] {
-        // TODO: Obsolete. Drop after query() is usable instead.
-        from = from || this.firstDate();
-        to = to || new Date().toISOString().substr(0, 10);
-        let ret = this.balances.values(from, to);
-        return ret;
-    }
-
-    /**
      * Calculate valuations for this account.
      */
     public query(query: Query): Values {
         if (!query.acceptsCurrency(this.currency)) {
-            return new Values()
+            return new Values();
         }
         let b = this.balances.query(query.withCurrency(this.currency));
         let i = this.instruments.query(query.withCurrency(this.currency));
-        return b.merge(i);
+        let c = this.capital.query(query.withCurrency(this.currency));
+
+        return b.merge(i).merge(c);
     }
 }

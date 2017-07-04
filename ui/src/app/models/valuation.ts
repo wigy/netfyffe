@@ -18,6 +18,30 @@ export class Valuation {
     }
 
     /**
+     * Get the list of currencies seen in this valuation.
+     */
+    get currencies(): string[] {
+        return Object.keys(this.results.data.closing);
+    }
+    /**
+     * Get the opening value for the currency.
+     */
+    opening(currency: string, deductCapital: boolean=false): number {
+        return this.results.data.opening[currency] - (
+            deductCapital ? this.results.capital.data.opening[currency] : 0
+        );
+    }
+
+    /**
+     * Get the closing value for the currency.
+     */
+    closing(currency: string, deductCapital: boolean=false): number {
+        return this.results.data.closing[currency] - (
+            deductCapital ? this.results.capital.data.closing[currency] : 0
+        );
+    }
+
+    /**
      * Construct a list of portfolio valutations for the given date ranges.
      */
     public static make(portfolio: Portfolio, what: string[], allValues=false): Valuation[] {

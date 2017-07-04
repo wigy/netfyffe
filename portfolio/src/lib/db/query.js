@@ -5,6 +5,7 @@ const objection = require('objection');
 const Account = require('../../models/Account');
 const Balance = require('../../models/Balance');
 const Instrument = require('../../models/Instrument');
+const Transaction = require('../../models/Transaction');
 
 /**
  * Insert more than one entry to the database (Objection does not work with sqlite).
@@ -47,7 +48,8 @@ function fyffe() {
     return Promise.all([
         Account.cacheAll(),
         Balance.query().orderBy('date'),
-        Instrument.query().orderBy('bought')
+        Instrument.query().orderBy('bought'),
+        Transaction.query().whereIn('type', ['deposit', 'withdraw', 'cash-out', 'cash-in']).orderBy('date'),
     ]).then(all => {
         let results = {};
         results.accounts = Object.keys(all[0]).map(id => all[0][id]);
@@ -57,6 +59,14 @@ function fyffe() {
             results.balances[bal.account_id][bal.date] = bal.balance;
         });
         results.instruments = all[2];
+        results.capital = {};
+        let totals = {};
+        all[3].forEach(cap => {
+            results.capital[cap.account_id] = results.capital[cap.account_id] || {};
+            totals[cap.account_id] = totals[cap.account_id] || 0;
+            totals[cap.account_id] += cap.amount;
+            results.capital[cap.account_id][cap.date] = totals[cap.account_id];
+        });
         return results;
     });
 }

@@ -21,14 +21,6 @@ export class AccountGroup {
     }
 
     /**
-     * Calculate daily valuations for all accounts in this group.
-     */
-    values(from?: string, to?: string) {
-        // TODO: Obsolete. Drop after query() is usable instead.
-        return this.accounts.map(acc => new Object({name: acc.currency, series: acc.values()}));
-    }
-
-    /**
      * Calculate first day that this account group has activities.
      */
     firstDate(): string {
