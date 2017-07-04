@@ -14,11 +14,11 @@ export class ChangeDirective  {
     }
 
     opening(currency: string): Number {
-        return this.valuation ? this.valuation.opening(currency) : 0;
+        return this.valuation ? this.valuation.opening(currency, true) : 0;
     }
 
     closing(currency: string): Number {
-        return this.valuation ? this.valuation.closing(currency) : 0;
+        return this.valuation ? this.valuation.closing(currency, true) : 0;
     }
 }
 // TODO: Maybe have own directory for these.

@@ -26,15 +26,19 @@ export class Valuation {
     /**
      * Get the opening value for the currency.
      */
-    opening(currency: string): Number {
-        return this.results.data.opening[currency];
+    opening(currency: string, deductCapital: boolean=false): Number {
+        return this.results.data.opening[currency] - (
+            deductCapital ? this.results.capital.data.opening[currency] : 0
+        );
     }
 
     /**
      * Get the closing value for the currency.
      */
-    closing(currency: string): Number {
-        return this.results.data.closing[currency];
+    closing(currency: string, deductCapital: boolean=false): Number {
+        return this.results.data.closing[currency] - (
+            deductCapital ? this.results.capital.data.closing[currency] : 0
+        );
     }
 
     /**
