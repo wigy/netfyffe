@@ -13,12 +13,18 @@ export class ChangeDirective  {
         return this.valuation ? this.valuation.currencies : [];
     }
 
-    opening(currency: string): Number {
+    opening(currency: string): number {
         return this.valuation ? this.valuation.opening(currency, true) : 0;
     }
 
-    closing(currency: string): Number {
+    closing(currency: string): number {
         return this.valuation ? this.valuation.closing(currency, true) : 0;
+    }
+
+    change(currency: string): number {
+        const o = this.opening(currency), c = this.closing(currency);
+        const osum = this.valuation ? this.valuation.opening(currency) : 0;
+        return osum ? (c-o)/osum : NaN;
     }
 }
 // TODO: Maybe have own directory for these.
