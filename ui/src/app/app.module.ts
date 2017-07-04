@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent }  from './app.component';
-import { MenuComponent }  from './components/menu.component';
-import { HistoryGraphComponent }  from './components/history_graph.component';
+import { MenuComponent }  from './components/menu';
+import { HistoryGraphComponent }  from './components/history_graph';
 import { DashboardPage } from './pages/dashboard';
 import { AccountsPage }   from './pages/accounts';
 import { AccountPage }   from './pages/account';
