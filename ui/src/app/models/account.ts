@@ -38,10 +38,12 @@ export class Account {
      */
     public query(query: Query): Values {
         if (!query.acceptsCurrency(this.currency)) {
-            return new Values()
+            return new Values();
         }
         let b = this.balances.query(query.withCurrency(this.currency));
         let i = this.instruments.query(query.withCurrency(this.currency));
-        return b.merge(i);
+        let c = this.capital.query(query.withCurrency(this.currency));
+
+        return b.merge(i).merge(c);
     }
 }

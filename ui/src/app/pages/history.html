@@ -2,13 +2,10 @@
 <h3>Recent</h3>
 <div *ngFor="let valuation of recentDates">
     {{valuation.name}}
-    {{valuation.results | json}}
-    {{valuation.query | json}}
+    <change></change>
 </div>
 
 <h3>Quarters</h3>
 <div *ngFor="let valuation of quarterDates">
     {{valuation.name}}
-    {{valuation.results | json}}
-    {{valuation.query | json}}
 </div>

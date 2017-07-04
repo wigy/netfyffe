@@ -11,6 +11,7 @@ import { AccountsComponent }   from './pages/accounts';
 import { AccountComponent }   from './pages/account';
 import { HistoryComponent }   from './pages/history';
 import { PortfolioService } from './services/portfolio.service';
+import { ChangeDirective }   from './components/change';
 
 const routes: Routes = [
 { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -40,6 +41,7 @@ class AppRoutingModule {}
         MenuComponent,
         HistoryComponent,
         HistoryGraphComponent,
+        ChangeDirective,
     ],
     providers: [
         PortfolioService,

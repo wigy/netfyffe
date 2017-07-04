@@ -3,7 +3,13 @@
  */
 export class Values {
 
-    constructor(public data={opening: {}, quotes: {}, closing: {}}) {}
+    data: {opening: {}, quotes: {}, closing: {}};
+    capital: Values|null;
+
+    constructor(data=<{opening: {}, quotes: {}, closing: {}}>null, capital=<Values>null) {
+        this.data = data ? data : {opening: {}, quotes: {}, closing: {}};
+        this.capital = capital;
+    }
 
     /**
      * Combine two results into this one.
@@ -28,11 +34,18 @@ export class Values {
             });
         });
 
+        if (!this.capital && other.capital) {
+            this.capital = new Values();
+        }
+        if (other.capital) {
+            this.capital.merge(other.capital);
+        }
+
         return this;
     }
 
     /**
-     * Combine an arra of results into one.
+     * Combine an array of results into one.
      */
     public static join(all: Values[]) : Values {
         return all.reduce((acc, cur) => cur.merge(acc), new Values());
