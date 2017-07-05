@@ -4,14 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent }  from './app.component';
-import { MenuComponent }  from './components/menu';
+import { MenuComponent }  from './components/structural/menu';
 import { HistoryGraphComponent }  from './components/history_graph';
 import { DashboardPage } from './pages/dashboard';
 import { AccountsPage }   from './pages/accounts';
 import { AccountPage }   from './pages/account';
 import { HistoryPage }   from './pages/history';
 import { PortfolioService } from './services/portfolio.service';
-import { ChangeDirective }   from './components/change';
+import { ChangeDirective }   from './components/data/change';
 
 const routes: Routes = [
 { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

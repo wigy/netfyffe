@@ -20,7 +20,7 @@ export class PortfolioService {
     constructor(private http: Http) { }
 
     /**
-    * Fetch full portfolio data.
+    * Fetch complete portfolio data.
     */
     getPortfolio(): Promise<Portfolio> {
         return this.getAccountGroups()
@@ -94,13 +94,11 @@ export class PortfolioService {
      * Get the instrument and balances data and cache it until date has changed.
      */
     getFyffe(): Promise<any> {
-
         if (this.fyffe) {
             if (this.fyffeFetched.isToday()) {
                 return this.fyffe;
             }
         }
-
         this.fyffeFetched = new Dates('today');
         this.fyffe = this.http.get(this.url + '/fyffe/')
             .toPromise()

@@ -2,7 +2,7 @@ import { Balances } from './balances';
 import { Query } from './query';
 import { Values } from './values';
 
-export class Capital extends Balances{
+export class Capital extends Balances {
 
     capital: Object;
 
