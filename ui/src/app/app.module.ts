@@ -5,13 +5,14 @@ import { HttpModule }    from '@angular/http';
 
 import { AppComponent }  from './app.component';
 import { MenuComponent }  from './components/structural/menu';
-import { HistoryGraphComponent }  from './components/history_graph';
+import { HistoryGraphComponent }  from './components/graphics/history_graph';
 import { DashboardPage } from './pages/dashboard';
 import { AccountsPage }   from './pages/accounts';
 import { AccountPage }   from './pages/account';
 import { HistoryPage }   from './pages/history';
 import { PortfolioService } from './services/portfolio';
 import { ChangeDirective }   from './components/data/change';
+import { PercentageDirective } from './components/data/percentage';
 
 const routes: Routes = [
 { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -42,6 +43,7 @@ class AppRoutingModule {}
         HistoryPage,
         HistoryGraphComponent,
         ChangeDirective,
+        PercentageDirective,
     ],
     providers: [
         PortfolioService,
