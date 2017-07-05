@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PortfolioService } from '../services/portfolio.service';
+import { PortfolioService } from '../services/portfolio';
 import { AccountGroup } from '../models/account_group';
 import { Account } from '../models/account';
 

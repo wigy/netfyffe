@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PortfolioService } from '../services/portfolio.service';
+import { PortfolioService } from '../services/portfolio';
 import { AccountGroup } from '../models/account_group';
 
 @Component({

@@ -10,7 +10,7 @@ import { DashboardPage } from './pages/dashboard';
 import { AccountsPage }   from './pages/accounts';
 import { AccountPage }   from './pages/account';
 import { HistoryPage }   from './pages/history';
-import { PortfolioService } from './services/portfolio.service';
+import { PortfolioService } from './services/portfolio';
 import { ChangeDirective }   from './components/data/change';
 
 const routes: Routes = [
