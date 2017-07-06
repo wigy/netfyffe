@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { AccountGroup } from '../models/account_group';
+import { AccountGroup } from '../../models/account_group';
 
 @Component({
   selector: 'history-graph',

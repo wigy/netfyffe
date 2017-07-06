@@ -23,6 +23,7 @@ export class Instrument {
      * Calculate valuation for this instrument.
      */
     public query(query: Query): Values {
+        // TODO: Implement instrument query.
         return new Values();
     }
 }

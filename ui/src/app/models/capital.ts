@@ -6,11 +6,6 @@ export class Capital extends Balances {
 
     capital: Object;
 
-    constructor(data: any) {
-        super(data);
-        this.capital = data || {};
-    }
-
     /**
      * Calculate valuations for the given query.
      */

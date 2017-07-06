@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+// TODO: Get rid of toPromise.
 import 'rxjs/add/operator/toPromise';
 import { AccountGroup } from '../models/account_group';
 import { Account } from '../models/account';
@@ -23,6 +24,8 @@ export class PortfolioService {
     * Fetch complete portfolio data.
     */
     getPortfolio(): Promise<Portfolio> {
+        // TODO: Add parental references to all related models.
+        // TODO: Reorganize code so that this is based on directly single getFyffe() data fetch.
         return this.getAccountGroups()
         .then(groups => {
             let ret = new Portfolio();
@@ -35,6 +38,7 @@ export class PortfolioService {
     * Collect all account groups.
     */
     getAccountGroups(): Promise<AccountGroup[]> {
+        // TODO: Use getPortfolio() here instead, once it uses getFyffe() construction.
         return this.http.get(this.url + '/account_group')
         .toPromise()
         .then(response => response.json())

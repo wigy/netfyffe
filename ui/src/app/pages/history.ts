@@ -12,14 +12,14 @@ export class HistoryPage implements OnInit  {
 
     portfolio: Portfolio;
     data: any[];
-    recentDates: Valuation[];
-    quarterDates: Valuation[];
+    performance: Valuation[];
+    quarters: Valuation[];
 
     constructor(private portfolioService: PortfolioService, private route: ActivatedRoute) {
         this.portfolio = new Portfolio();
         this.data = [];
-        this.recentDates = [];
-        this.quarterDates = [];
+        this.performance = [];
+        this.quarters = [];
     }
 
     ngOnInit(): void {
@@ -27,8 +27,9 @@ export class HistoryPage implements OnInit  {
             this.portfolioService.getPortfolio()
             .then(portfolio => {
                 this.portfolio = portfolio;
-                this.quarterDates = Valuation.make(this.portfolio, portfolio.quarters());
-                this.recentDates = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
+//                this.quarters = Valuation.make(this.portfolio, portfolio.quarters());
+//                this.performance = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
+                this.performance = Valuation.make(this.portfolio, ['1D']);
             });
         });
     }
