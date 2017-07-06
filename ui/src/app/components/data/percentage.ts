@@ -16,7 +16,7 @@ export class PercentageDirective  {
     @Input() value: number;
     @Input() digits: number;
 
-    get color() {
+    get color(): string {
         if (typeof(this.value) !== 'number' || isNaN(this.value)) {
             return 'gray';
         }
@@ -29,7 +29,7 @@ export class PercentageDirective  {
         return 'black';
     }
 
-    get text() {
+    get text(): string {
         if (typeof(this.value) !== 'number' || isNaN(this.value)) {
             return '&mdash;';
         }
