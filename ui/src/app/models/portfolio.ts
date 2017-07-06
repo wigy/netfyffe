@@ -55,6 +55,6 @@ export class Portfolio {
      * Handle update messages from quote service.
      */
     public update(msg: Quotes): void {
-        d('update', msg);
+        // TODO: Update new values to the instruments and account currencies.
     }
 }

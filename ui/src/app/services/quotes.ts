@@ -7,7 +7,6 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/delay';
-import 'rxjs/add/operator/debounceTime';
 
 @Injectable()
 export class QuoteService {
@@ -26,7 +25,6 @@ export class QuoteService {
         observable.subscribe((msg : Quotes) => portfolio.update(msg));
         // TODO: Calculate "quick relief", i.e. linear estimates based on buy/sell prices.
         observable.next(new Quotes())
-        observable.debounceTime(500);
         // TODO: Fetch real values for instruments.
         // TODO: Fetch real values for currency rates.
         return observable;
