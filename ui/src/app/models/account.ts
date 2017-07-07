@@ -1,3 +1,4 @@
+import { Portfolio } from './portfolio';
 import { AccountGroup } from '../models/account_group';
 import { Transaction } from './transaction';
 import { Balances } from './balances';
@@ -48,5 +49,12 @@ export class Account {
         let c = this.capital.query(query.withCurrency(this.currency));
 
         return b.merge(i).merge(c);
+    }
+
+    /**
+     * The portfolio this object belongs, if known.
+     */
+    public get portfolio(): Portfolio {
+        return this.account_group ? this.account_group.portfolio : null;
     }
 }

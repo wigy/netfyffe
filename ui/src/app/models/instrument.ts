@@ -1,3 +1,4 @@
+import { Portfolio } from './portfolio';
 import { Account } from './account';
 import { Query } from './query';
 import { Values } from './values';
@@ -26,7 +27,15 @@ export class Instrument {
      * Calculate valuation for this instrument.
      */
     public query(query: Query): Values {
+        //d(query.dates.first, query.dates.last, this.portfolio)
         // TODO: Implement instrument query.
         return new Values();
+    }
+
+    /**
+     * The portfolio this object belongs, if known.
+     */
+    public get portfolio(): Portfolio {
+        return this.account ? this.account.portfolio : null;
     }
 }
