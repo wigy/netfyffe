@@ -1,4 +1,5 @@
 import { AccountGroup } from './account_group';
+import { Account } from './account';
 import { Query } from './query';
 import { Values } from './values';
 import { Dates } from './dates';
@@ -44,11 +45,37 @@ export class Portfolio {
     }
 
     /**
-     * Collect list of quarters applicapable for this portfolio in format `2017Q1`
+     * Collect a list of quarters applicapable for this portfolio in format `2017Q1`
      */
     public quarters(): string[] {
         let q = new Dates(this.firstDate(), 'today');
         return q.quarters();
+    }
+
+    /**
+     * Run the function for all accounts in this portfolio.
+     */
+    public forAccounts(callback: (a: Account) => any): any[] {
+        let ret = <any[]>[];
+        this.groups.forEach(group => {
+            group.accounts.forEach(acc => {
+                ret.push(callback(acc));
+            })
+        });
+        return ret;
+    }
+
+    /**
+     * Collect a list of tickers related to the portfolio.
+     */
+    public tickers(): string[] {
+        let seen = {};
+        this.forAccounts((acc: Account) => {
+            acc.instruments.instruments.forEach(i => {
+                seen[i.ticker] = true;
+            });
+        });
+        return Object.keys(seen);
     }
 
     /**

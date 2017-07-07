@@ -23,7 +23,7 @@ export class PortfolioService {
     /**
      * Connect a function to the portfolio data updates.
      */
-    subscribe(callback: Function): void {
+    subscribe(callback: (p: Portfolio) => void): void {
 
         if (this.portfolio) {
             if (this.portfolioFetched.isToday()) {
@@ -81,7 +81,7 @@ export class PortfolioService {
     /**
      * Subscribe to get transactions for the account group.
      */
-    transactions(id: Number, callback: Function): void {
+    transactions(id: Number, callback: (g: AccountGroup) => void): void {
         this.subscribe((portfolio: Portfolio) => {
             let group = portfolio.groups.filter((g: AccountGroup) => g.id === id)[0];
             this.http.get(this.url + '/account_group/' + id)

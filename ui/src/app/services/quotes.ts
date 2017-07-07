@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Portfolio } from '../models/portfolio';
 import { Quotes } from '../models/quotes';
+import { Dates } from '../models/dates';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
@@ -20,7 +21,8 @@ export class QuoteService {
     /**
     * Subscribe to the observable updating quotes related to the Portfolio.
     */
-    subscribe(portfolio: Portfolio, callback: Function): void {
+    subscribe(portfolio: Portfolio, dates: Dates[], callback: Function): void {
+        // TODO: Perhaps allow strings that automatically converts to Dates.
         // TODO: Calculate "quick relief", i.e. linear estimates based on buy/sell prices.
         callback(new Quotes());
         // TODO: Fetch real values for instruments.

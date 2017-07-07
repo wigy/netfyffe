@@ -19,7 +19,7 @@ export class AccountPage implements OnInit  {
 
     ngOnInit(): void {
         this.route.params.subscribe((params: Params) => {
-            this.portfolioService.transactions(+params.id, (group: AccountGroup) => {
+            this.portfolioService.transactions(+params['id'], (group: AccountGroup) => {
                 this.accountGroup = group;
                 this.data = group.getGraphData();
             });
