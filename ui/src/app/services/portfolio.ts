@@ -24,74 +24,77 @@ export class PortfolioService {
     * Fetch complete portfolio data.
     */
     getPortfolio(): Promise<Portfolio> {
-        // TODO: Add parental references to all related models.
-        // TODO: Reorganize code so that this is based on directly single getFyffe() data fetch.
-        return this.getAccountGroups()
-        .then(groups => {
-            let ret = new Portfolio();
-            ret.groups = groups;
-            return ret;
-        });
+        // TODO: Move fyffe caching here instead.
+        return this.getFyffe()
+            .then(fyffe => {
+                let ret = new Portfolio();
+                // Create account groups.
+                let groupsById = {};
+                fyffe.account_groups.forEach((group: any) => {
+                    group.portfolio = ret;
+                    groupsById[group.id] = new AccountGroup(group);
+                    ret.groups.push(groupsById[group.id]);
+                });
+                // Create accounts.
+                let accountsById = {};
+                fyffe.accounts.forEach((account: any) => {
+                    account.account_group = groupsById[account.account_group_id];
+                    accountsById[account.id] = new Account(account);
+                    groupsById[account.account_group_id].accounts.push(accountsById[account.id]);
+                });
+                // Create balances.
+                Object.keys(fyffe.balances).forEach(id => {
+                    fyffe.balances[id].account = accountsById[id];
+                    accountsById[id].balances = new Balances(accountsById[id], fyffe.balances[id]);
+                });
+                // Create instruments.
+                let instrumentsByAccount = {};
+                fyffe.instruments.forEach((instrument: any) => {
+                    let id = instrument.account_id;
+                    instrument.account = accountsById[id];
+                    instrumentsByAccount[id] = instrumentsByAccount[id] || [];
+                    instrumentsByAccount[id].push(instrument);
+                });
+                Object.keys(instrumentsByAccount).forEach(id => {
+                    accountsById[id].instruments = new Instruments(instrumentsByAccount[id]);
+                });
+                // Create capital data.
+                Object.keys(fyffe.capital).forEach(id => {
+                    fyffe.capital[id].account = accountsById[id];
+                    accountsById[id].capital = new Capital(accountsById[id], fyffe.capital[id]);
+                });
+                return ret;
+            });
     }
 
     /**
     * Collect all account groups.
     */
     getAccountGroups(): Promise<AccountGroup[]> {
-        // TODO: Use getPortfolio() here instead, once it uses getFyffe() construction.
-        return this.http.get(this.url + '/account_group')
-        .toPromise()
-        .then(response => response.json())
-        .then(data => {
-            return Promise.all(data.map((g:any) => this.getAccountGroup(g.id)));
-        });
+        return this.getPortfolio()
+            .then((portfolio: Portfolio) => portfolio.groups);
     }
 
     /**
-    * Get the account group with all accounts and their contents.
+    * Get the account group with all accounts and their transactions.
     */
     getAccountGroup(id: Number): Promise<AccountGroup> {
-        return this.http.get(this.url + '/account_group/' + id)
-        .toPromise()
-        .then(response => response.json())
-        .then(data => new AccountGroup(data))
-        .then(group => {
-            return Promise.all(group.accounts.map((account: Account) => Promise.all([
-                this.getBalances(account.id),
-                this.getInstruments(account.id),
-                this.getCapital(account.id)
-            ])))
-            .then(data => {
-                data.forEach((accdata, i) => {
-                    group.accounts[i].balances = accdata[0];
-                    group.accounts[i].instruments = accdata[1];
-                    group.accounts[i].capital = accdata[2];
-                });
-                return group;
+        return this.getPortfolio()
+            .then((portfolio: Portfolio) => portfolio.groups.filter((g: AccountGroup) => g.id === id)[0])
+            .then((group: AccountGroup) => {
+                // Attach transactions to the account data.
+                return this.http.get(this.url + '/account_group/' + id).toPromise()
+                    .then((tx) => {
+                        let txById = {};
+                        tx.json().accounts.forEach((acc: any) => {
+                            txById[acc.id] = acc.transactions.map((tx: any) => new Transaction(tx));
+                        });
+                        group.accounts.forEach((acc: Account) => {
+                            acc.transactions = txById[acc.id];
+                        });
+                        return group;
+                    })
             });
-        });
-    }
-
-    /**
-    * Get Balances instance for the given account with the `id`.
-    */
-    getBalances(id: Number): Promise<Balances> {
-        return this.getFyffe().then(data => new Balances(data.balances['' + id]));
-    }
-
-    /**
-    * Get Instruments instance for the given account with the `id`.
-    */
-    getInstruments(id: Number): Promise<Instruments> {
-        return this.getFyffe()
-            .then(data => new Instruments(data.instruments.filter((instr: Object) => +instr['account_id'] === id)));
-    }
-
-    /**
-    * Get Capital instance for the given account with the `id`.
-    */
-    getCapital(id: Number): Promise<Capital> {
-        return this.getFyffe().then(data => new Capital(data.capital['' + id]));
     }
 
     /**

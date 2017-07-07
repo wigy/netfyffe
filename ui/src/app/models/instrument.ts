@@ -1,8 +1,10 @@
+import { Account } from './account';
 import { Query } from './query';
 import { Values } from './values';
 
 export class Instrument {
 
+    account: Account;
     ticker: string;
     count: Number;
     buy_price: Number;
@@ -11,6 +13,7 @@ export class Instrument {
     sold?: string;
 
     constructor(data: any) {
+        this.account = data.account || null;
         this.ticker = data.ticker || null;
         this.count = data.count || null;
         this.buy_price = data.buy_price || null;

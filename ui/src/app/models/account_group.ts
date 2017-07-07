@@ -1,3 +1,4 @@
+import { Portfolio } from './portfolio';
 import { Bank } from './bank';
 import { Account } from './account';
 import { Query } from './query';
@@ -6,6 +7,7 @@ import { Dates } from './dates';
 
 export class AccountGroup {
 
+    portfolio: Portfolio;
     id: number;
     name: string;
     code: string;
@@ -13,6 +15,7 @@ export class AccountGroup {
     accounts: Account[];
 
     constructor(data: any) {
+        this.portfolio = data.portfolio || null;
         this.id = data.id || null;
         this.name = data.name || null;
         this.code = data.code || null;

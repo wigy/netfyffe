@@ -1,3 +1,4 @@
+import { AccountGroup } from '../models/account_group';
 import { Transaction } from './transaction';
 import { Balances } from './balances';
 import { Capital } from './capital';
@@ -7,6 +8,7 @@ import { Values } from './values';
 
 export class Account {
 
+    account_group: AccountGroup;
     id: number;
     currency: string;
     transactions: Transaction[];
@@ -15,13 +17,14 @@ export class Account {
     capital: Capital;
 
     constructor(data: any) {
+        this.account_group = data.account_group || null;
         this.id = data.id || null;
         this.currency = data.currency || null;
         let transactions = data.transactions || [];
         this.transactions = transactions.map((tx: Object) => new Transaction(tx));
-        this.balances = new Balances(data.balances);
+        this.balances = new Balances(this, data.balances);
         this.instruments = new Instruments(data.instruments);
-        this.capital = new Capital(data.capital);
+        this.capital = new Capital(this, data.capital);
     }
 
     /**

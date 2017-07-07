@@ -3,6 +3,7 @@
  */
 const objection = require('objection');
 const Account = require('../../models/Account');
+const AccountGroup = require('../../models/AccountGroup');
 const Balance = require('../../models/Balance');
 const Instrument = require('../../models/Instrument');
 const Transaction = require('../../models/Transaction');
@@ -47,21 +48,23 @@ function fyffe() {
 
     return Promise.all([
         Account.cacheAll(),
+        AccountGroup.query().orderBy('id'),
         Balance.query().orderBy('date'),
         Instrument.query().orderBy('bought'),
         Transaction.query().whereIn('type', ['deposit', 'withdraw', 'cash-out', 'cash-in']).orderBy('date'),
     ]).then(all => {
         let results = {};
         results.accounts = Object.keys(all[0]).map(id => all[0][id]);
+        results.account_groups = all[1];
         results.balances = {};
-        all[1].forEach(bal => {
+        all[2].forEach(bal => {
             results.balances[bal.account_id] = results.balances[bal.account_id] || {};
             results.balances[bal.account_id][bal.date] = bal.balance;
         });
-        results.instruments = all[2];
+        results.instruments = all[3];
         results.capital = {};
         let totals = {};
-        all[3].forEach(cap => {
+        all[4].forEach(cap => {
             results.capital[cap.account_id] = results.capital[cap.account_id] || {};
             totals[cap.account_id] = totals[cap.account_id] || 0;
             totals[cap.account_id] += cap.amount;

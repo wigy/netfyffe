@@ -1,14 +1,11 @@
+import { Account } from './account';
 import { Dates } from './dates';
 import { Query } from './query';
 import { Values } from './values';
 
 export class Balances {
 
-    balances: Object;
-
-    constructor(data: any) {
-        this.balances = data || {};
-    }
+    constructor(public account: Account, public balances: any = {}) { }
 
     /**
      * Calculate first day that has a balance recording.

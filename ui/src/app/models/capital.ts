@@ -4,8 +4,6 @@ import { Values } from './values';
 
 export class Capital extends Balances {
 
-    capital: Object;
-
     /**
      * Calculate valuations for the given query.
      */
