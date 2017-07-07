@@ -16,7 +16,7 @@ export class HistoryPage implements OnInit  {
     performance: Valuation[];
     quarters: Valuation[];
 
-    constructor(private portfolioService: PortfolioService, private route: ActivatedRoute) {
+    constructor(private portfolioService: PortfolioService, private quoteService: QuoteService, private route: ActivatedRoute) {
         this.portfolio = new Portfolio();
         this.data = [];
         this.performance = [];
@@ -32,8 +32,9 @@ export class HistoryPage implements OnInit  {
 //                this.performance = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
                 this.performance = Valuation.make(this.portfolio, ['1D']);
 
-                QuoteService.connect(this.portfolio).subscribe(() => {
+                this.quoteService.subscribe(this.portfolio, () => {
                     // TODO: Refresh valuations.
+                    d("OK")
                 });
             });
         });

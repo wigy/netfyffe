@@ -11,6 +11,7 @@ import { AccountsPage }   from './pages/accounts';
 import { AccountPage }   from './pages/account';
 import { HistoryPage }   from './pages/history';
 import { PortfolioService } from './services/portfolio';
+import { QuoteService } from './services/quotes';
 import { ChangeDirective }   from './components/data/change';
 import { PercentageDirective } from './components/data/percentage';
 
@@ -47,6 +48,7 @@ class AppRoutingModule {}
     ],
     providers: [
         PortfolioService,
+        QuoteService,
     ],
     bootstrap: [
         AppComponent

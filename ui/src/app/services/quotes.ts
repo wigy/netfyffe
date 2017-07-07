@@ -20,13 +20,10 @@ export class QuoteService {
     /**
     * Subscribe to the observable updating quotes related to the Portfolio.
     */
-    static connect(portfolio: Portfolio): Observable<Quotes> {
-        let observable = new Subject();
-        observable.subscribe((msg : Quotes) => portfolio.update(msg));
+    subscribe(portfolio: Portfolio, callback: Function): void {
         // TODO: Calculate "quick relief", i.e. linear estimates based on buy/sell prices.
-        observable.next(new Quotes())
+        callback(new Quotes());
         // TODO: Fetch real values for instruments.
         // TODO: Fetch real values for currency rates.
-        return observable;
     }
 }
