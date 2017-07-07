@@ -15,17 +15,24 @@ import { Dates } from '../models/dates';
 export class PortfolioService {
     // TODO: Make configurable.
     private url: string = 'http://localhost:9002';
-    private fyffe: Promise<any> = null;
-    private fyffeFetched: Dates = null;
+    private portfolio: Promise<Portfolio> = null;
+    private portfolioFetched: Dates = null;
 
     constructor(private http: Http) { }
 
     /**
-    * Fetch complete portfolio data.
+    * Fetch complete portfolio data and construct cached `Portfolio` instance.
     */
     getPortfolio(): Promise<Portfolio> {
-        // TODO: Move fyffe caching here instead.
-        return this.getFyffe()
+
+        if (this.portfolio) {
+            if (this.portfolioFetched.isToday()) {
+                return this.portfolio;
+            }
+        }
+
+        this.portfolioFetched = new Dates('today');
+        this.portfolio = this.getFyffe()
             .then(fyffe => {
                 let ret = new Portfolio();
                 // Create account groups.
@@ -65,6 +72,8 @@ export class PortfolioService {
                 });
                 return ret;
             });
+
+        return this.portfolio;
     }
 
     /**
@@ -98,19 +107,11 @@ export class PortfolioService {
     }
 
     /**
-     * Get the instrument and balances data and cache it until date has changed.
+     * Get the portfolio data from the API.
      */
     getFyffe(): Promise<any> {
-        if (this.fyffe) {
-            if (this.fyffeFetched.isToday()) {
-                return this.fyffe;
-            }
-        }
-        this.fyffeFetched = new Dates('today');
-        this.fyffe = this.http.get(this.url + '/fyffe/')
+        return this.http.get(this.url + '/fyffe/')
             .toPromise()
             .then(response => response.json());
-
-        return this.fyffe;
     }
 }
