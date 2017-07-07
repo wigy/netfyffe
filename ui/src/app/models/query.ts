@@ -9,13 +9,14 @@ import { Values } from './values';
  */
 export class Query {
 
-    constructor(public dates: Dates, public currency=<string>null, public allValues=false) {}
+    constructor(public dates: Dates, public currency=<string>null) {}
 
     /**
      * Make a copy of this query.
      */
     public clone(): Query {
-        return new Query(this.dates, this.currency, this.allValues);
+        // TODO: Should copy dates here and not assign reference.
+        return new Query(this.dates, this.currency);
     }
 
     /**

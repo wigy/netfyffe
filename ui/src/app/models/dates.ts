@@ -6,12 +6,14 @@ import * as moment from 'moment/moment';
 export class Dates {
 
     public name: string;
+    private fullRange: boolean;
     private dates: any[];
 
     /**
     * Figure out if the first argument is a date and add it to dates collection, if it is.
     */
     constructor(name: string, ...dates: string[]) {
+        this.fullRange = false;
         this.name = null;
         this.dates = [];
         let datePerhaps = this.toMoment(name);
@@ -27,6 +29,23 @@ export class Dates {
             }
             this.dates.push(moment);
         });
+    }
+
+    /**
+     * Convert this to full range.
+     */
+    public useFullRange(): void {
+        if (this.dates.length !== 2) {
+            throw Error(`Must have two dates use full range.`);
+        }
+        this.fullRange = true;
+    }
+
+    /**
+     * Check if this dates uses complete date range.
+     */
+    get hasFullRange(): boolean {
+        return this.fullRange;
     }
 
     /**
@@ -49,7 +68,13 @@ export class Dates {
     */
     public toArray(): string[] {
         let ret: string[] = [];
-        this.dates.forEach(moment => ret.push(moment.format('YYYY-MM-DD')));
+        if (this.fullRange) {
+            for (let i = this.start(); !i.endeq(); i.inc()) {
+                ret.push(i.first);
+            }
+        } else {
+            this.dates.forEach(moment => ret.push(moment.format('YYYY-MM-DD')));
+        }
         return ret;
     }
 
@@ -58,8 +83,21 @@ export class Dates {
     */
     public toObject(): Object {
         let ret = {};
-        this.dates.forEach(moment => ret[moment.format('YYYY-MM-DD')]=true);
+        if (this.fullRange) {
+            for (let i = this.start(); !i.endeq(); i.inc()) {
+                ret[i.first]=true;
+            }
+        } else {
+            this.dates.forEach(moment => ret[moment.format('YYYY-MM-DD')]=true);
+        }
         return ret;
+    }
+
+    /**
+    * Convert current dates to string `YYYY-MM-DD` separated with spaces.
+    */
+    public toString(): string {
+        return this.toArray().join(' ');
     }
 
     /**
@@ -146,6 +184,10 @@ export class Dates {
     * `3Y` - Two dates: three years ago and today.
     * `5Y` - Two dates: five years ago and today.
     * `2015Q3` - Tow dates: the first and the last day of the quarter.
+    *
+    * If two dates name ends with `*` then it denotes complete range of days, i.e.
+    * when converting to strings with `toArray()` all dates in between is included
+    * and not just the limiting dates.
     */
     public static make(what: string): Dates;
     public static make(what: string[]): Dates[];
@@ -160,6 +202,12 @@ export class Dates {
         }
 
         let ret: Dates;
+
+        if (what.substr(what.length - 1, 1) === '*') {
+            ret = Dates.make(what.substr(0, what.length - 1));
+            ret.fullRange = true;
+            return ret;
+        }
 
         let match = /^(\d\d\d\d)Q([1-4])$/.exec(what);
         if (match) {
@@ -272,6 +320,13 @@ export class Dates {
      */
     public end(): boolean {
         return !this.dates[0].isBefore(this.dates[1]);
+    }
+
+    /**
+     * Check if first date is still before or equal than second date.
+     */
+    public endeq(): boolean {
+        return !this.dates[0].isSameOrBefore(this.dates[1]);
     }
 
     /**

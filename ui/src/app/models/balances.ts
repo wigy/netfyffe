@@ -63,7 +63,7 @@ export class Balances {
             closing[query.currency] = this.closing(query.dates);
             let quotes = {};
             quotes[query.currency] = {};
-            if (query.allValues) {
+            if (query.dates.hasFullRange) {
                 let day = query.start();
                 while (!day.end()) {
                     quotes[query.currency][day.first] = this.closing(day, true);

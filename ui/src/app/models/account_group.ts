@@ -43,7 +43,8 @@ export class AccountGroup {
     public getGraphData(): any[] {
         let ret: any[] = [];
         let range = new Dates('graph range', this.firstDate(), 'today');
-        let q = new Query(range, null, true);
+        range.useFullRange();
+        let q = new Query(range, null);
         let data = this.query(q).data.quotes;
         Object.keys(data).forEach(currency => {
             let obj = {name: currency, series: <any[]>[]};
