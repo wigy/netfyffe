@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-// TODO: Get rid of toPromise.
-import 'rxjs/add/operator/toPromise';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import { AccountGroup } from '../models/account_group';
 import { Account } from '../models/account';
 import { Transaction } from '../models/transaction';
@@ -15,25 +15,25 @@ import { Dates } from '../models/dates';
 export class PortfolioService {
     // TODO: Make configurable.
     private url: string = 'http://localhost:9002';
-    private portfolio: Promise<Portfolio> = null;
+    private portfolio: Portfolio = null;
     private portfolioFetched: Dates = null;
 
     constructor(private http: Http) { }
 
     /**
-    * Fetch complete portfolio data and construct cached `Portfolio` instance.
-    */
-    getPortfolio(): Promise<Portfolio> {
+     * Connect a function to the portfolio data updates.
+     */
+    subscribe(callback: Function): void {
 
         if (this.portfolio) {
             if (this.portfolioFetched.isToday()) {
-                return this.portfolio;
+                callback(this.portfolio);
+                return;
             }
         }
 
-        this.portfolioFetched = new Dates('today');
-        this.portfolio = this.getFyffe()
-            .then(fyffe => {
+        this.getFyffe()
+            .subscribe((fyffe: any) => {
                 let ret = new Portfolio();
                 // Create account groups.
                 let groupsById = {};
@@ -70,48 +70,39 @@ export class PortfolioService {
                     fyffe.capital[id].account = accountsById[id];
                     accountsById[id].capital = new Capital(accountsById[id], fyffe.capital[id]);
                 });
-                return ret;
-            });
 
-        return this.portfolio;
+                this.portfolio = ret;
+                this.portfolioFetched = new Dates('today');
+
+                callback(ret);
+            });
     }
 
     /**
-    * Collect all account groups.
-    */
-    getAccountGroups(): Promise<AccountGroup[]> {
-        return this.getPortfolio()
-            .then((portfolio: Portfolio) => portfolio.groups);
-    }
-
-    /**
-    * Get the account group with all accounts and their transactions.
-    */
-    getAccountGroup(id: Number): Promise<AccountGroup> {
-        return this.getPortfolio()
-            .then((portfolio: Portfolio) => portfolio.groups.filter((g: AccountGroup) => g.id === id)[0])
-            .then((group: AccountGroup) => {
-                // Attach transactions to the account data.
-                return this.http.get(this.url + '/account_group/' + id).toPromise()
-                    .then((tx) => {
-                        let txById = {};
-                        tx.json().accounts.forEach((acc: any) => {
-                            txById[acc.id] = acc.transactions.map((tx: any) => new Transaction(tx));
-                        });
-                        group.accounts.forEach((acc: Account) => {
-                            acc.transactions = txById[acc.id];
-                        });
-                        return group;
-                    })
-            });
+     * Subscribe to get transactions for the account group.
+     */
+    transactions(id: Number, callback: Function): void {
+        this.subscribe((portfolio: Portfolio) => {
+            let group = portfolio.groups.filter((g: AccountGroup) => g.id === id)[0];
+            this.http.get(this.url + '/account_group/' + id)
+                .subscribe(tx => {
+                    let txById = {};
+                    tx.json().accounts.forEach((acc: any) => {
+                        txById[acc.id] = acc.transactions.map((tx: any) => new Transaction(tx));
+                    });
+                    group.accounts.forEach((acc: Account) => {
+                        acc.transactions = txById[acc.id];
+                    });
+                    callback(group);
+                });
+        });
     }
 
     /**
      * Get the portfolio data from the API.
      */
-    getFyffe(): Promise<any> {
+    getFyffe(): Observable<any> {
         return this.http.get(this.url + '/fyffe/')
-            .toPromise()
-            .then(response => response.json());
+            .map((response: Response) => response.json());
     }
 }

@@ -25,16 +25,16 @@ export class HistoryPage implements OnInit  {
 
     ngOnInit(): void {
         this.route.params.subscribe((params: Params) => {
-            this.portfolioService.getPortfolio()
-            .then(portfolio => {
+
+            this.portfolioService.subscribe((portfolio: Portfolio) => {
                 this.portfolio = portfolio;
-                // TODO: Subscribe to this observable and update history.
-                QuoteService.connect(this.portfolio).subscribe(() => {
-                    // TODO: Refresh valuations.
-                });
 //                this.quarters = Valuation.make(this.portfolio, portfolio.quarters());
 //                this.performance = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
                 this.performance = Valuation.make(this.portfolio, ['1D']);
+
+                QuoteService.connect(this.portfolio).subscribe(() => {
+                    // TODO: Refresh valuations.
+                });
             });
         });
     }
