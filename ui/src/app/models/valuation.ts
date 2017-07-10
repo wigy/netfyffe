@@ -44,9 +44,9 @@ export class Valuation {
     /**
      * Construct a list of portfolio valutations for the given date ranges.
      */
-    public static make(portfolio: Portfolio, what: string[], allValues=false): Valuation[] {
+    public static make(portfolio: Portfolio, what: string[]): Valuation[] {
         return Dates.make(what).map(dates => {
-            let q = new Query(dates, null, allValues);
+            let q = new Query(dates);
             return new Valuation(q, portfolio.query(q));
         });
     }

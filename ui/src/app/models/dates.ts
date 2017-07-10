@@ -171,6 +171,23 @@ export class Dates {
     }
 
     /**
+     * Get difference in days of the range.
+     */
+    get days(): number {
+        if (this.dates.length !== 2) {
+            throw Error(`Must have two dates to calculate days in the range.`);
+        }
+        return this.dates[1].diff(this.dates[0], 'days');
+    }
+
+    /**
+     * Calculate days to the target day from the first day.
+     */
+    public daysTo(target: string) {
+        return - this.dates[0].diff(target, 'days');
+    }
+
+    /**
     * Construct a date collection for the given purpose:
     *
     * `today` - One date: today.

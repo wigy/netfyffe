@@ -27,17 +27,6 @@ export class Portfolio {
     }
 
     /**
-     * Calculate daily valuations for the portfolio in the date range.
-     */
-    public queryAll(query: Query|Dates): Values {
-        if (query instanceof Dates) {
-            query = new Query(query);
-        }
-        query.allValues = true;
-        return Values.join(this.groups.map(g => g.query(<Query>query)));
-    }
-
-    /**
      * Calculate first day that this portfolio has activities.
      */
     firstDate(): string {

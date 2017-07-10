@@ -13,13 +13,13 @@ export class HistoryPage implements OnInit  {
 
     portfolio: Portfolio;
     data: any[];
-    performance: Valuation[];
+    historical: Valuation[];
     quarters: Valuation[];
 
     constructor(private portfolioService: PortfolioService, private quoteService: QuoteService, private route: ActivatedRoute) {
         this.portfolio = new Portfolio();
         this.data = [];
-        this.performance = [];
+        this.historical = [];
         this.quarters = [];
     }
 
@@ -29,10 +29,9 @@ export class HistoryPage implements OnInit  {
             this.portfolioService.subscribe((portfolio: Portfolio) => {
                 this.portfolio = portfolio;
 //                this.quarters = Valuation.make(this.portfolio, portfolio.quarters());
-//                this.performance = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
-                this.performance = Valuation.make(this.portfolio, ['1D']);
+//                this.historical = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
+                this.historical = Valuation.make(this.portfolio, ['2017Q1', '2017Q2']);
                 // TODO: Construct dates.
-                // TODO: Move query feature full range flag to Dates class to denote full range.
                 this.quoteService.subscribe(this.portfolio, [], () => {
                     // TODO: Refresh valuations.
                 });
