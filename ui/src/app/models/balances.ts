@@ -1,13 +1,13 @@
+import { Account } from './account';
+import { DailyValues } from './daily_values';
 import { Dates } from './dates';
 import { Query } from './query';
 import { Values } from './values';
 
-export class Balances {
+export class Balances extends DailyValues {
 
-    balances: Object;
-
-    constructor(data: any) {
-        this.balances = data || {};
+    constructor(public account: Account, public balances: any = {}) {
+        super();
     }
 
     /**
@@ -21,7 +21,7 @@ export class Balances {
     /**
      * Calculate closing value for the day.
      */
-    closing(day: Dates, useFirstDay=false): number {
+    public closing(day: Dates, useFirstDay=false): number {
         let keys = Object.keys(this.balances);
         if (!keys.length) {
             return 0;
@@ -43,40 +43,8 @@ export class Balances {
     /**
      * Calculate opening value for the day.
      */
-    opening(day: Dates): number {
+    public opening(day: Dates): number {
         return this.closing(day.dayBefore());
-    }
-
-    /**
-     * Helper to calculate valuations for the given query.
-     */
-    protected _query(query: Query): {opening: {}; quotes: {}; closing: {}} {
-        if (!query.currency) {
-            throw Error('Cannot query `Balances` or `Capital` without defining currency in the query.');
-        }
-        if (query.dates.isSingleDay()) {
-            let closing = {};
-            closing[query.currency] = this.closing(query.dates);
-            return {closing: closing, quotes: {}, opening: {}};
-        }
-        if (query.dates.isDateRange()) {
-            let opening = {};
-            opening[query.currency] = this.opening(query.dates);
-            let closing = {};
-            closing[query.currency] = this.closing(query.dates);
-            let quotes = {};
-            quotes[query.currency] = {};
-            if (query.allValues) {
-                let day = query.start();
-                while (!day.end()) {
-                    quotes[query.currency][day.first] = this.closing(day, true);
-                    day.inc();
-                }
-                quotes[query.currency][day.first] = closing[query.currency];
-            }
-            return {closing: closing, quotes: quotes, opening: opening};
-        }
-        throw Error('Query not yet implemented.');
     }
 
     /**

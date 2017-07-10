@@ -2,6 +2,5 @@
     {{currency}}
     {{opening(currency)/100 | number:'1.2-2'}}
     {{closing(currency)/100 | number:'1.2-2'}}
-    <!-- TODO: Colored percentage pipe/filter/directive. -->
-    {{change(currency) | number:'1.1-1'}}%
+    <percentage digits=1 [value]="change(currency)"></percentage>
 </div>

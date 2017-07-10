@@ -98,4 +98,40 @@ router.get('/:id', (req, res) => {
     });
 });
 
+/**
+ * @api {get} /account/:id Collect full account description data.
+ * @apiName AccountDetail
+ * @apiGroup Portfolio
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [
+ * TODO: Fill in
+ *     ]
+ */
+router.get('/:id', (req, res) => {
+    let id = req.params.id;
+    Promise.all([
+        AccountGroup.query()
+            .where('id', id),
+        Account.query()
+            .where('account_group_id', id)
+            .orderBy('currency')
+            .then(accounts => {
+                return Promise.all(accounts.map(account =>
+                    Transaction
+                        .query()
+                        .where('account_id', account.id)
+                        .orderBy('date')
+                        .then(txs => {account.transactions = txs; return account;})
+                ));
+            })
+    ])
+    .then(data => {let group = data[0][0]; group.accounts = data[1]; res.send(group);})
+    .catch(err => {
+        d.error(err);
+        res.status(500).send({error: 'FetchFailed'});
+    });
+});
+
 module.exports = router;

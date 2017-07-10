@@ -2,14 +2,7 @@ import { Balances } from './balances';
 import { Query } from './query';
 import { Values } from './values';
 
-export class Capital extends Balances{
-
-    capital: Object;
-
-    constructor(data: any) {
-        super(data);
-        this.capital = data || {};
-    }
+export class Capital extends Balances {
 
     /**
      * Calculate valuations for the given query.

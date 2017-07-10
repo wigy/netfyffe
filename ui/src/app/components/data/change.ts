@@ -27,4 +27,3 @@ export class ChangeDirective  {
         return osum ? (c-o)/osum : NaN;
     }
 }
-// TODO: Maybe have own directory for these.

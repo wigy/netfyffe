@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { PortfolioService } from '../services/portfolio.service';
+import { PortfolioService } from '../services/portfolio';
 import { AccountGroup } from '../models/account_group';
 import { Account } from '../models/account';
 
@@ -19,8 +19,7 @@ export class AccountPage implements OnInit  {
 
     ngOnInit(): void {
         this.route.params.subscribe((params: Params) => {
-            this.portfolioService.getAccountGroup(+params['id'])
-            .then(group => {
+            this.portfolioService.transactions(+params['id'], (group: AccountGroup) => {
                 this.accountGroup = group;
                 this.data = group.getGraphData();
             });

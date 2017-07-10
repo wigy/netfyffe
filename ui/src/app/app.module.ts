@@ -6,14 +6,16 @@ import { BrowserAnimationsModule }    from '@angular/platform-browser/animations
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { AppComponent }  from './app.component';
-import { MenuComponent }  from './components/menu';
-import { HistoryGraphComponent }  from './components/history_graph';
+import { MenuComponent }  from './components/structural/menu';
+import { HistoryGraphComponent }  from './components/graphics/history_graph';
 import { DashboardPage } from './pages/dashboard';
 import { AccountsPage }   from './pages/accounts';
 import { AccountPage }   from './pages/account';
 import { HistoryPage }   from './pages/history';
-import { PortfolioService } from './services/portfolio.service';
-import { ChangeDirective }   from './components/change';
+import { PortfolioService } from './services/portfolio';
+import { QuoteService } from './services/quotes';
+import { ChangeDirective }   from './components/data/change';
+import { PercentageDirective } from './components/data/percentage';
 
 const routes: Routes = [
 { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -46,9 +48,11 @@ class AppRoutingModule {}
         HistoryPage,
         HistoryGraphComponent,
         ChangeDirective,
+        PercentageDirective,
     ],
     providers: [
         PortfolioService,
+        QuoteService,
     ],
     bootstrap: [
         AppComponent

@@ -22,4 +22,15 @@ export class Instruments {
     public query(query: Query): Values {
         return Values.join(this.instruments.map(i => i.query(query)));
     }
+
+    /**
+     * Collect a list of tickers in this collection.
+     */
+    public tickers(): string[] {
+        let seen = {};
+        this.instruments.forEach(i => {
+            seen[i.ticker] = true;
+        });
+        return Object.keys(seen);
+    }
 }
