@@ -42,7 +42,7 @@ export class Instrument extends DailyValues{
             return this.buy_price;
         }
         if (str >= this.sold) {
-            return this.sell_price;
+            return 0;
         }
         let dates = this.dates;
         return Math.round(this.buy_price + (dates.daysTo(str) / dates.days) * (this.sell_price - this.buy_price));
