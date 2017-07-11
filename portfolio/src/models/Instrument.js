@@ -115,7 +115,7 @@ class Instrument extends Model {
                     count -= instrument.count;
                 });
                 return Promise.all(ops);
-            })
+            });
     }
 
     /**

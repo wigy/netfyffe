@@ -3,7 +3,6 @@
  */
 const objection = require('objection');
 const Account = require('../../models/Account');
-const AccountGroup = require('../../models/AccountGroup');
 const Balance = require('../../models/Balance');
 const Instrument = require('../../models/Instrument');
 const Transaction = require('../../models/Transaction');
@@ -45,6 +44,8 @@ function findOrCreate(model, members) {
  * See API documentation for /fyffe/ for more info.
  */
 function fyffe() {
+
+    const AccountGroup = require('../../models/AccountGroup');
 
     return Promise.all([
         Account.cacheAll(),

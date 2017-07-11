@@ -43,7 +43,7 @@ class Account extends Model {
                 .andWhere('account_id', this.id),
         ]).then( res => {
             return res[0].concat(res[1]);
-        })
+        });
     }
 
     /**
@@ -58,7 +58,7 @@ class Account extends Model {
                 let ret = {};
                 instruments.forEach(inst => ret[inst.ticker] = (ret[inst.ticker] || 0) + inst.count);
                 return ret;
-            })
+            });
     }
 
     /**
@@ -111,19 +111,19 @@ class Account extends Model {
                 return Balance
                     .query()
                     .where('account_id', id)
-                    .delete()
+                    .delete();
             })
             .then(() => {
                 return Instrument
                     .query()
                     .where('account_id', id)
-                    .delete()
+                    .delete();
             })
             .then(() => {
                 return Account
                     .query()
                     .where('id', id)
-                    .delete()
+                    .delete();
             });
     }
 
@@ -155,7 +155,7 @@ class Account extends Model {
                     return Balance
                         .query()
                         .patch({balance: total})
-                        .where('id', data[0].id)
+                        .where('id', data[0].id);
                 }
                 // If not found, create new entry.
                 return Balance
@@ -175,10 +175,10 @@ class Account extends Model {
                     return Balance
                         .query()
                         .patch({balance: entry.balance + amount})
-                        .where('id', entry.id)
+                        .where('id', entry.id);
                 }));
             })
-            .then(() => true)
+            .then(() => true);
     }
 
     /**

@@ -172,7 +172,7 @@ function load(filepath) {
             if (converted) {
                 data.push(converted);
             }
-        })
+        });
 
         // Check and create accounts if needed.
         checkAccounts(Object.keys(accountIds)).then(() => {
