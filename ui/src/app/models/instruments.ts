@@ -24,6 +24,26 @@ export class Instruments {
     }
 
     /**
+     * Construct a summary how query is calculated.
+     */
+    public explain(query: Query): Object {
+        let ret = {};
+        if (!this.instruments.length) {
+            return ret;
+        }
+        const currency = this.instruments[0].account.currency;
+        ret[currency] = [];
+        this.instruments.forEach(i => {
+            const values = i.query(query.withCurrency(currency));
+            const o = values.data.opening[currency]/100;
+            const c = values.data.closing[currency]/100;
+            const name = i.ticker + '[' + i.bought + ' .. ' + (i.sold ? i.sold : '') + ']';
+            ret[currency].push(name + ' opening ' + o + ' and closing ' + c + ' (change ' + (c-o) + ')');
+        })
+        return ret;
+    }
+
+    /**
      * Collect a list of tickers in this collection.
      */
     public tickers(): string[] {

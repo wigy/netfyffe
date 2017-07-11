@@ -31,7 +31,7 @@ export class Account {
     /**
      * Calculate first day that this account has activities.
      */
-    firstDate(): string {
+    public firstDate(): string {
         let a = this.balances.firstDate();
         let b = this.instruments.firstDate();
         return (a < b) ? a : b;
@@ -52,9 +52,32 @@ export class Account {
     }
 
     /**
+     * Construct a summary how query is calculated.
+     */
+    public explain(query: Query): Object {
+        let ret = {};
+        ret[this.currency] = [];
+        let result = this.balances.query(query.withCurrency(this.currency));
+        const o = result.data.opening[this.currency]/100;
+        const c = result.data.closing[this.currency]/100;
+        ret[this.currency].push('Opening balance in `' + this.name + '` ' + o);
+        let instruments = this.instruments.explain(query);
+        ret[this.currency] = ret[this.currency].concat(instruments[this.currency] || []);
+        ret[this.currency].push('Closing balance in `' + this.name + '` ' + c + ' (change ' + (c - o) + ')');
+        return ret;
+    }
+
+    /**
      * The portfolio this object belongs, if known.
      */
     public get portfolio(): Portfolio {
         return this.account_group ? this.account_group.portfolio : null;
+    }
+
+    /**
+     * Get the name of the account group combined with the currency.
+     */
+    public get name(): string {
+        return this.account_group.name + ' ' + this.currency;
     }
 }

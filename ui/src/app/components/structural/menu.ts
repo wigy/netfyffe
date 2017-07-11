@@ -7,4 +7,3 @@ import { Component } from '@angular/core';
 })
 export class MenuComponent  {
 }
-// TODO: Rename files without .component prefix.

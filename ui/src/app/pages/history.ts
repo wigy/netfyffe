@@ -31,6 +31,8 @@ export class HistoryPage implements OnInit  {
 //                this.quarters = Valuation.make(this.portfolio, portfolio.quarters());
 //                this.historical = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
                 this.historical = Valuation.make(this.portfolio, ['2017Q1', '2017Q2']);
+                // TODO: Implement explain() function to tell how data is formed.
+                d(this.historical[0].explain().EUR)
                 // TODO: Construct dates.
                 this.quoteService.subscribe(this.portfolio, [], () => {
                     // TODO: Refresh valuations.

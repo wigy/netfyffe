@@ -3,7 +3,7 @@ import { AccountGroup } from '../../models/account_group';
 
 @Component({
   selector: 'history-graph',
-  template: 'GRAPH HERE ({{data | json}})',
+  template: 'GRAPH HERE',
 })
 export class HistoryGraphComponent implements OnChanges {
 
