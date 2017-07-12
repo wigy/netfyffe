@@ -1,6 +1,8 @@
 <div *ngFor="let currency of currencies">
-    {{currency}}
-    {{opening(currency)/100 | number:'1.2-2'}}
-    {{closing(currency)/100 | number:'1.2-2'}}
-    <percentage digits=1 [value]="change(currency)"></percentage>
+    <div *ngIf="opening(currency) != 0 || closing(currency) != 0">
+        {{currency}}
+        {{opening(currency)/100 | number:'1.2-2'}}
+        {{closing(currency)/100 | number:'1.2-2'}}
+        <percentage digits=1 [value]="change(currency)"></percentage>
+    </div>
 </div>
