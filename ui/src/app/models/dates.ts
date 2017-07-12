@@ -232,11 +232,11 @@ export class Dates {
                 case '1':
                 return new Dates(what, match[1] + '-01-01', match[1] + '-03-31');
                 case '2':
-                return new Dates(what, match[1] + '-01-04', match[1] + '-06-30');
+                return new Dates(what, match[1] + '-04-01', match[1] + '-06-30');
                 case '3':
-                return new Dates(what, match[1] + '-01-07', match[1] + '-09-30');
+                return new Dates(what, match[1] + '-07-01', match[1] + '-09-30');
                 case '4':
-                return new Dates(what, match[1] + '-01-10', match[1] + '-12-31');
+                return new Dates(what, match[1] + '-10-01', match[1] + '-12-31');
             }
         }
 

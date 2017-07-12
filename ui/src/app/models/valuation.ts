@@ -52,11 +52,21 @@ export class Valuation {
         let portfolioExplanations = this.portfolio.explain(this.query);
         this.currencies.forEach(currency => {
             ret[currency] = [];
-            ret[currency].push('Opening capital ' + currency + ' on ' + firstDate + ' is ' + this.results.capital.data.opening[currency]/100);
+            let oc = this.results.capital.data.opening[currency]/100;
+            let cc = this.results.capital.data.closing[currency]/100;
+            ret[currency].push('Opening capital ' + currency + ' on ' + firstDate + ' is ' + oc);
             ret[currency] = ret[currency].concat(portfolioExplanations[currency]);
-            ret[currency].push('Closing capital ' + currency + ' on ' + lastDate + ' is ' + this.results.capital.data.closing[currency]/100);
+            ret[currency].push('Closing capital ' + currency + ' on ' + lastDate + ' is ' + cc);
             ret[currency].push('Capital change ' + currency + ' ' + (this.results.capital.data.closing[currency]
               - this.results.capital.data.opening[currency])/100);
+            let opening = portfolioExplanations[currency + '-opening'];
+            let closing = portfolioExplanations[currency + '-closing'];
+            let o = opening.reduce((a: number, b: number) => a+b, 0);
+            let c = closing.reduce((a: number, b: number) => a+b, 0);
+            ret[currency].push('Opening value ' + opening.join(' + ') + ' = ' + o + ' (minus capital ' + (o-oc) + ')');
+            ret[currency].push('Closing value ' + closing.join(' + ') + ' = ' + c + ' (minus capital ' + (c-cc) + ')');
+            let profit = ((c-cc) - (o-oc));
+            ret[currency].push('Total profit for period ' +firstDate + ' ' + lastDate + ' is ' + profit + ' ' + (profit / o) + '%');
         });
         return ret;
     }

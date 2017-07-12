@@ -64,6 +64,8 @@ export class Account {
         let instruments = this.instruments.explain(query);
         ret[this.currency] = ret[this.currency].concat(instruments[this.currency] || []);
         ret[this.currency].push('Closing balance in `' + this.name + '` ' + c + ' (change ' + (c - o) + ')');
+        ret[this.currency + '-opening'] = [o].concat(instruments[this.currency + '-opening']);
+        ret[this.currency + '-closing'] = [c].concat(instruments[this.currency + '-closing']);
         return ret;
     }
 
