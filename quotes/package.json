@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/wigy/netfyffe#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "express": "^4.14.1",
     "knex": "^0.12.7",
