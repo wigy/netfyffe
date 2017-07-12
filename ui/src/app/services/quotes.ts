@@ -21,11 +21,22 @@ export class QuoteService {
     /**
     * Subscribe to the observable updating quotes related to the Portfolio.
     */
-    subscribe(portfolio: Portfolio, dates: Dates[], callback: Function): void {
-        // TODO: Perhaps allow strings that automatically converts to Dates.
-        // TODO: Calculate "quick relief", i.e. linear estimates based on buy/sell prices.
-        callback(new Quotes());
-        // TODO: Fetch real values for instruments.
+    subscribe(portfolio: Portfolio, dates: Dates[]|string[], callback: Function): void {
+        if (dates.length && typeof(dates[0]) === 'string') {
+            dates = Dates.make(<string[]>dates);
+        }
+        // Construct a full list of dates needed.
+        let needs = {};
+        (<Dates[]>dates).map((date: Dates) => {
+            date.toArray().forEach(str => needs[str]=true);
+        });
+
+        const url = this.url + '/quote/';
+        this.http.post(url, {tickers: portfolio.tickers(), dates: Object.keys(needs)})
+            .subscribe(data=> {
+                d(data);
+            });
+
         // TODO: Fetch real values for currency rates.
     }
 }

@@ -60,9 +60,9 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
     const {ticker, start, end} = req.params;
     const engine = harvester(res);
 
-    if (engine) {
+    function tickerFetcher(start, end, ticker) {
         d.info('Fetching from', start, 'to', end, 'for', ticker);
-        engine.getDailyData(ticker, start, end)
+        return engine.getDailyData(ticker, start, end)
         .then(data => {
             // Prepare fast lookup table per date.
             let lookup = {};
@@ -78,9 +78,21 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
                 } else if (latest !== null) {
                     d.info('Filling a gap for', ticker, 'on', day);
                     ret.push({date: day, open: latest, close: latest, high: latest, low: latest, ticker: ticker, volume: 0});
-                }
+                } else {
+                    d.info('Need new lookup, since no results for', day, 'in the result set', Object.keys(lookup));
+                    let dates = [start, end].concat(Object.keys(lookup)).sort();
+                    return tickerFetcher(dates[0], dates[dates.length - 1], ticker)
+                        .then(data => data.filter(e => (e.date >= start && e.date <= end)));
+               }
             }
-            res.send(ret);
+            return ret;
+        });
+    }
+
+    if (engine) {
+        tickerFetcher(start, end, ticker)
+        .then(data => {
+            res.send(data);
         })
         .catch(err => {
             d.error(err);

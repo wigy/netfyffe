@@ -5,6 +5,8 @@ import { QuoteService } from '../services/quotes';
 import { Portfolio } from '../models/portfolio';
 import { Valuation } from '../models/valuation';
 import { Query } from '../models/query';
+import { Dates } from '../models/dates';
+import { Quotes } from '../models/quotes';
 
 @Component({
     templateUrl: './history.html',
@@ -24,16 +26,21 @@ export class HistoryPage implements OnInit  {
     }
 
     ngOnInit(): void {
+        const history = ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y'];
+
         this.route.params.subscribe((params: Params) => {
 
             this.portfolioService.subscribe((portfolio: Portfolio) => {
+
+                const quarters = portfolio.quarters();
+
                 this.portfolio = portfolio;
-//                this.quarters = Valuation.make(this.portfolio, portfolio.quarters());
-//                this.historical = Valuation.make(this.portfolio, ['1D', '1W', '1M', '3M', '6M', 'YTD', '1Y', '3Y', '5Y']);
-                this.historical = Valuation.make(this.portfolio, ['2017Q1', '2017Q2']);
-                // TODO: Construct dates.
-                this.quoteService.subscribe(this.portfolio, [], () => {
+                this.quarters = Valuation.make(this.portfolio, quarters);
+                this.historical = Valuation.make(this.portfolio, history);
+
+                this.quoteService.subscribe(this.portfolio, quarters.concat(history), (update: Quotes) => {
                     // TODO: Refresh valuations.
+                    console.log("Refresh", update);
                 });
             });
         });

@@ -3,6 +3,8 @@ import { Component, Input } from '@angular/core';
 /**
  * Display a percentage value with color red (negative), green (positive), black (zero) or gray (NaN, null).
  *
+ * If value is rounded to zero, then one additional digit is added.
+ *
  * For example:
  *
  * <percentage [value]="-12.2224" digits=2></percentage>
@@ -35,15 +37,21 @@ export class PercentageDirective  {
         }
         let digits = this.digits !== undefined ? parseInt('' + this.digits) : 0;
         let pow = Math.pow(10, digits);
-        let value = '' + Math.round(this.value * pow) / pow;
-        let parts = value.split('.');
+        let value = Math.round(this.value * pow) / pow;
+        if (value === 0) {
+            pow *= 10;
+            digits++;
+            value = Math.round(this.value * pow) / pow;
+        }
+        let parts = value.toString().split('.');
+        let ret = '';
         if (digits) {
             if (parts.length < 2) {
                 parts.push('');
             }
             parts[1] = (parts[1] + '0000000000000').substr(0, digits);
-            value = parts.join('.');
+            ret = parts.join('.');
         }
-        return value + '%';
+        return ret + '%';
     }
 }

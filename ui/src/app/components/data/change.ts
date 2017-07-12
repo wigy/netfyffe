@@ -22,7 +22,8 @@ export class ChangeDirective  {
     }
 
     change(currency: string): number {
-        const o = this.opening(currency), c = this.closing(currency);
+        const o = this.opening(currency);
+        const c = this.closing(currency);
         const osum = this.valuation ? this.valuation.opening(currency) : 0;
         return osum ? (c-o)/osum : NaN;
     }

@@ -85,7 +85,7 @@ class Transaction extends Model {
                 data = data.map(trx => (() => trx.apply()));
                 return promise.seq(data);
             })
-            .finally(() => lockfile.unlockSync('.transaction.lock'))
+            .finally(() => lockfile.unlockSync('.transaction.lock'));
     }
 }
 

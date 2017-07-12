@@ -29,7 +29,7 @@ export class Portfolio {
     /**
      * Calculate first day that this portfolio has activities.
      */
-    firstDate(): string {
+    public firstDate(): string {
         return Dates.min(this.groups.map(group => group.firstDate()));
     }
 
@@ -45,7 +45,7 @@ export class Portfolio {
      * Run the function for all accounts in this portfolio.
      */
     public forAccounts(callback: (a: Account) => any): any[] {
-        let ret = <any[]>[];
+        let ret: any[] = [];
         this.groups.forEach(group => {
             group.accounts.forEach(acc => {
                 ret.push(callback(acc));
@@ -65,6 +65,21 @@ export class Portfolio {
             });
         });
         return Object.keys(seen);
+    }
+
+    /**
+     * Construct a summary how query is calculated.
+     */
+    public explain(query: Query): Object {
+        let ret = {};
+        this.forAccounts(acc => {
+            let expl = acc.explain(query);
+            Object.keys(expl).forEach(currency => {
+                ret[currency] = ret[currency] || [];
+                ret[currency] = ret[currency].concat(expl[currency]);
+            });
+        });
+        return ret;
     }
 
     /**
