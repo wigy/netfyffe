@@ -81,7 +81,8 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
                 } else {
                     d.info('Need new lookup, since no results for', day, 'in the result set', Object.keys(lookup));
                     let dates = [start, end].concat(Object.keys(lookup)).sort();
-                    return tickerFetcher(dates[0], dates[dates.length - 1], ticker);
+                    return tickerFetcher(dates[0], dates[dates.length - 1], ticker)
+                        .then(data => data.filter(e => (e.date >= start && e.date <= end)));
                }
             }
             return ret;
