@@ -13,30 +13,33 @@ import 'rxjs/add/operator/delay';
 export class QuoteService {
     // TODO: Make configurable.
     private url: string = 'http://localhost:9000';
-    // Target portfolio to collect quotes for.
-    private portfolio: Portfolio = null;
 
     constructor(private http: Http) { }
 
     /**
     * Subscribe to the observable updating quotes related to the Portfolio.
     */
-    subscribe(portfolio: Portfolio, dates: Dates[]|string[], callback: Function): void {
+    public subscribe(portfolio: Portfolio, dates: Dates[]|string[], callback: (q: Quotes) => void): void {
         if (dates.length && typeof(dates[0]) === 'string') {
             dates = Dates.make(<string[]>dates);
         }
+
         // Construct a full list of dates needed.
         let needs = {};
         (<Dates[]>dates).map((date: Dates) => {
             date.toArray().forEach(str => needs[str]=true);
         });
 
+        // Fetch all quotes for tickers in portfolio.
         const url = this.url + '/quote/';
         this.http.post(url, {tickers: portfolio.tickers(), dates: Object.keys(needs)})
-            .subscribe(data=> {
-                d(data);
+            .subscribe(data => {
+                let update = new Quotes(data.json());
+                portfolio.update(update);
+                callback(update);
             });
 
         // TODO: Fetch real values for currency rates.
+        // TODO: Start updating regularly the latest quotes if today is among the dates.
     }
 }

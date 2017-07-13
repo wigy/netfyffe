@@ -11,9 +11,11 @@ import { Quotes } from './quotes';
 export class Portfolio {
 
     groups: AccountGroup[];
+    quotes: Quotes;
 
     constructor(data?: AccountGroup[]) {
         this.groups = data ? data : [];
+        this.quotes = new Quotes();
     }
 
     /**
@@ -83,9 +85,16 @@ export class Portfolio {
     }
 
     /**
-     * Handle update messages from quote service.
+     * Handle updated quotes from the quote service.
      */
-    public update(msg: Quotes): void {
-        // TODO: Update new values to the instruments and account currencies.
+    public update(update: Quotes): void {
+        this.quotes.merge(update);
+    }
+
+    /**
+     * Check if we know closing value for the given date for a ticker.
+     */
+    public closing(ticker: string, day: Dates|string) {
+        return this.quotes.closing(ticker, day);
     }
 }
