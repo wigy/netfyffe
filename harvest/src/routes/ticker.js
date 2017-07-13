@@ -80,7 +80,7 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
                     latest = lookup[day].close;
                 } else if (latest !== null) {
                     gaps.push(day);
-                    ret.push({date: day, open: latest, close: latest, high: latest, low: latest, ticker: ticker, volume: 0});
+                    ret.push({date: day, open: null, close: null, high: null, low: null, ticker: ticker, volume: 0});
                 } else {
                     d.info('Need new lookup, since no results for', day, 'in the result set', Object.keys(lookup));
                     let dates = [start, end].concat(Object.keys(lookup)).sort();
@@ -88,7 +88,9 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
                         .then(data => data.filter(e => (e.date >= start && e.date <= end)));
                }
             }
-            d.info('Filled gaps for', ticker, 'on', gaps);
+            if (gaps.length) {
+                d.info('Filled gaps for', ticker, 'on', gaps);
+            }
             return ret;
         });
     }

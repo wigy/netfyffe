@@ -34,6 +34,8 @@ export class Quotes {
      * Check if we know quote for the given date for a ticker.
      */
     public closing(ticker: string, day: Dates|string): number|null {
+        // TODO: Use yesterdy always for today's substitute, if available.
+        // TODO: Handle null entries, i.e. gaps by looking for previous.
         let str: string = typeof(day) === 'string' ? day : day.first;
         if (this.data[ticker] && this.data[ticker][str]) {
             return this.data[ticker][str].close;
