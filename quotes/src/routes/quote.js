@@ -3,7 +3,7 @@ const moment = require('moment');
 const router = express.Router();
 const harvestCache = require('../lib/harvest/cache');
 const db = require('../db');
-const closure = require('../lib/dates/closure');
+const common = require('../../../common');
 
 // TODO: API docs.
 router.get('/', (req, res) => {
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 // TODO: API docs.
 router.post('/', (req, res) => {
     const {tickers, dates} = req.body;
-    let [start, end] = closure(dates);
+    let [start, end] = common.dates.closure(dates);
     d.info('Quote request for ', tickers, 'for', dates.length, 'dates between', start, '-', end);
     // Expand the range if it is small.
     if (moment(end).diff(moment(start), 'days') < 30) {
