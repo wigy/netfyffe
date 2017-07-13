@@ -24,6 +24,7 @@ export class QuoteService {
             dates = Dates.make(<string[]>dates);
         }
 
+        // TODO: If dates are continuous ranges (account viewer), we might use GET /quote/ticker/start/end instead for each ticker.
         // Construct a full list of dates needed.
         let needs = {};
         (<Dates[]>dates).map((date: Dates) => {

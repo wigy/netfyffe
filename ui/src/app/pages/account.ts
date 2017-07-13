@@ -22,6 +22,7 @@ export class AccountPage implements OnInit  {
             this.portfolioService.transactions(+params['id'], (group: AccountGroup) => {
                 this.accountGroup = group;
                 this.data = group.getGraphData();
+                // TODO: Subscribe to quote updates via portfolio. Note: needs continuous date ranges.
             });
         });
     }
