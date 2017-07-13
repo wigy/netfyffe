@@ -15,7 +15,9 @@ const router = express.Router();
  *
  */
 function harvester(res) {
-    return new (require(config.harvester_module))(rp);
+    return new (require(config.harvester_module))(rp, msg => {
+        d.info(config.harvester_module + ':', msg);
+    });
 }
 
 /**
@@ -70,13 +72,14 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
             // Fill in gaps in the date range by creating new entries.
             let latest = null;
             let ret = [];
+            let gaps = [];
             for(let s = moment(start), e = moment(end); s.diff(e) <= 0; s.add(1,'day')) {
                 let day = s.format('YYYY-MM-DD');
                 if (lookup[day]) {
                     ret.push(lookup[day]);
                     latest = lookup[day].close;
                 } else if (latest !== null) {
-                    d.info('Filling a gap for', ticker, 'on', day);
+                    gaps.push(day);
                     ret.push({date: day, open: latest, close: latest, high: latest, low: latest, ticker: ticker, volume: 0});
                 } else {
                     d.info('Need new lookup, since no results for', day, 'in the result set', Object.keys(lookup));
@@ -85,6 +88,7 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
                         .then(data => data.filter(e => (e.date >= start && e.date <= end)));
                }
             }
+            d.info('Filled gaps for', ticker, 'on', gaps);
             return ret;
         });
     }
