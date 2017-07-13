@@ -16,7 +16,7 @@ const router = express.Router();
  */
 function harvester(res) {
     return new (require(config.harvester_module))(rp, msg => {
-        d.info(config.harvester_module + ':', msg);
+        d(config.harvester_module + ':', msg);
     });
 }
 

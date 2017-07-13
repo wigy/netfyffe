@@ -18,17 +18,23 @@ module.exports = {
 
         cache[ticker] = cache[ticker] || {};
 
-        // TODO: Do not let `end` to be today or in future.
+        // Do not let `end` to be today or in future.
+        if (end >= moment().format('YYYY-MM-DD')) {
+            end = moment().subtract(1, 'day').format('YYYY-MM-DD');
+        }
 
         // Check cache if we have data already.
         let days = 0;
         let holes = false;
         let hits = [];
+
+        // TODO: Get rid of silly ways of counting days.
         for(let s = moment(start), e = moment(end); s.diff(e) <= 0; s.add(1,'day')) {
             let day = s.format('YYYY-MM-DD');
             if (!cache[ticker][day]) {
                 holes = true;
             }
+            // If there are holes, no point to collect results but we are still counting the days.
             if (!holes) {
                 hits.push(cache[ticker][day]);
             }
