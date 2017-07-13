@@ -17,6 +17,8 @@ module.exports = {
 
         cache[ticker] = cache[ticker] || {};
 
+        // TODO: Do not let `end` to be today or in future.
+
         // Check cache if we have data already.
         let days = 0;
         let holes = false;
@@ -56,7 +58,7 @@ module.exports = {
             })
             .then(data => {
                 // Construct second array for entries not found from cache.
-                let fresh = data.filter(entry => !cache[ticker][entry.date])
+                let fresh = data.filter(entry => !cache[ticker][entry.date]);
                 d.info('Got', data.length, 'entries for', ticker, 'with', fresh.length, 'new entries');
                 // Fill in cache.
                 fresh.map(entry => cache[ticker][entry.date] = entry);
@@ -67,6 +69,7 @@ module.exports = {
                 let [data, fresh] = result;
                 if (fresh.length) {
                     d.info('Adding', fresh.length, 'new entries to database for', ticker);
+                    // TODO: Split to 999 (define constant)
                     return db('quotes').insert(fresh)
                         .then(() => {
                             return data;

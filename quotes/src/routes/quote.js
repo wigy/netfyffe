@@ -15,26 +15,34 @@ router.get('/', (req, res) => {
 // TODO: API docs.
 router.post('/', (req, res) => {
     const {tickers, dates} = req.body;
-    const [min, max] = closure(dates);
-    d.info('Quote request for ', tickers, 'for', dates.length, 'dates between', min, '-', max);
-    // Calculate combinations to query.
+    let [start, end] = closure(dates);
+    d.info('Quote request for ', tickers, 'for', dates.length, 'dates between', start, '-', end);
+    // Expand the range if it is small.
+    if (moment(end).diff(moment(start), 'days') < 30) {
+        start = moment(end).subtract(30, 'days').format('YYYY-MM-DD');
+    }
+    // Construct queries.
     let queries = [];
     tickers.forEach(ticker => {
-        dates.forEach(date => {
-            queries.push({ticker, date});
-        });
+        queries.push({ticker, start, end});
     });
     // Query them.
-    Promise.all(queries.map(query => harvestCache.quotes(query.ticker, query.date, query.date)))
+    Promise.all(queries.map(query => harvestCache.quotes(query.ticker, query.start, query.end)))
         .then(data => {
             let ret = {};
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
                     ret[data[i][j].ticker] = ret[data[i][j].ticker] || {};
-                    ret[data[i][j].ticker][data[i][j].date] = data[i][j];
+                    if (dates.indexOf(data[i][j].date) >= 0) {
+                        ret[data[i][j].ticker][data[i][j].date] = data[i][j];
+                    }
                 }
             }
             res.send(ret);
+        })
+        .catch(err => {
+            d.error('Failed:', err);
+            res.status(404).send('Fetching failed.');
         });
 });
 
