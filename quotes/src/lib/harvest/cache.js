@@ -1,5 +1,6 @@
 const rp = require('request-promise');
 const moment = require('moment');
+const splitArray = require('split-array');
 const config = require('../../config');
 const db = require('../../db');
 
@@ -69,8 +70,7 @@ module.exports = {
                 let [data, fresh] = result;
                 if (fresh.length) {
                     d.info('Adding', fresh.length, 'new entries to database for', ticker);
-                    // TODO: Split to 999 (define constant)
-                    return db('quotes').insert(fresh)
+                    return Promise.all(splitArray(fresh,config.dbWriteChunkSize).map(chunk => db('quotes').insert(chunk)))
                         .then(() => {
                             return data;
                         });
