@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 });
 app.use('/quote', require('./routes/quote'));
 app.use('/industries', require('./routes/industries'));
+app.use('/doc', express.static('./doc'));
 
 app.listen(config.port, function () {
   d.info('App listening on port ' + config.port);

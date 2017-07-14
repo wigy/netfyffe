@@ -5,14 +5,73 @@ const harvestCache = require('../lib/harvest/cache');
 const db = require('../db');
 const common = require('../../../common');
 
-// TODO: API docs.
+/**
+* @api {get} /quote Get the list of ticker names.
+* @apiVersion 1.0.0
+* @apiName TickerList
+* @apiGroup Quote
+* @apiDescription
+*
+* Lists all known tickers in the database.
+*
+* @apiSuccessExample {json} Response example:
+*     HTTP/1.1 200 OK
+*     [
+*        "HEL:ABC",
+*        "HEL:DEF",
+*        "FRA:ABC",
+*        ...
+*     ]
+*/
 router.get('/', (req, res) => {
     db.select('ticker').from('tickers').then(
         data => res.send(data.map(obj => obj.ticker))
     );
 });
 
-// TODO: API docs.
+/**
+* @api {post} /quote Get quotes for serveral tickers in different days.
+* @apiVersion 1.0.0
+* @apiName TickerSpotValues
+* @apiGroup Quote
+* @apiParam {Array} tickers A list of tickers.
+* @apiParam {Array} dates A list of dates in `YYYY-MM-DD` format.
+* @apiDescription
+*
+* Find out the quotes for the one or more tickers for one or more dates.
+* If values is not available (for Sundays for example), some other earlier
+* values **may** have been given. These values cannot be older than 7 days.
+* In that case, the missing values on the original date are filled with `null`.
+*
+* @apiParamExample {json} Request example:
+*     {
+*         "tickers": "HEL:ABC",
+*         "dates": "2017-07-09"
+*     }
+*
+* @apiSuccessExample {json} Response example:
+*     HTTP/1.1 200 OK
+*     {
+*         "2017-07-09": {
+*             "ticker": "HEL:ABC",
+*             "date": "2017-07-09",
+*             "open": null,
+*             "high": null,
+*             "low": null,
+*             "close": null,
+*             "volume": 0
+*         },
+*         "2017-07-07": {
+*             "ticker": "HEL:ABC",
+*             "date": "2017-07-07",
+*             "open": 1.66,
+*             "high": 1.69,
+*             "low": 1.65,
+*             "close": 1.66,
+*             "volume": 294064
+*         }
+*     }
+*/
 router.post('/', (req, res) => {
     const {tickers, dates} = req.body;
     let [start, end] = common.dates.closure(dates);
@@ -73,6 +132,49 @@ router.post('/', (req, res) => {
         });
 });
 
+/**
+* @api {get} /quote/:ticker Get quotes for the ticker for 30 days.
+* @apiVersion 1.0.0
+* @apiName TickerQuote30
+* @apiGroup Quote
+* @apiParam {string} ticker Name of the ticker.
+* @apiDescription
+*
+* Get the quotes for a single ticker for 30 days.
+*
+* @apiSuccessExample {json} Response example:
+*     HTTP/1.1 200 OK
+*     [
+*         {
+*             "ticker": "HEL:ABC",
+*             "date": "2017-07-07",
+*             "open": 1.66,
+*             "high": 1.69,
+*             "low": 1.65,
+*             "close": 1.66,
+*             "volume": 294064
+*         },
+*         {
+*             "ticker": "HEL:ABC",
+*             "date": "2017-07-08",
+*             "open": null,
+*             "high": null,
+*             "low": null,
+*             "close": null,
+*             "volume": 0
+*         },
+*         {
+*             "ticker": "HEL:ABC",
+*             "date": "2017-07-09",
+*             "open": null,
+*             "high": null,
+*             "low": null,
+*             "close": null,
+*             "volume": 0
+*         },
+*        ...
+*     ]
+*/
 router.get('/:ticker', (req, res) => {
     const {ticker} = req.params;
     let from = moment().subtract(30,'days').format('YYYY-MM-DD');
@@ -80,6 +182,18 @@ router.get('/:ticker', (req, res) => {
     res.redirect('/quote/' + ticker + '/' + from + '/' + to);
 });
 
+/**
+* @api {get} /quote/:ticker/:start/:end Get quotes for the ticker for given days.
+* @apiName TickerQuoteRange
+* @apiGroup Quote
+* @apiParam {string} ticker Name of the ticker.
+* @apiParam {string} start First date in `YYYY-MM-DD` format.
+* @apiParam {string} end Last date in `YYYY-MM-DD` format.
+* @apiDescription
+*
+* Get the quotes for a single ticker for defined starting and ending days.
+* The result format is the same as without dates.
+*/
 router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
     const {ticker, start, end} = req.params;
     harvestCache.quotes(ticker, start, end)
