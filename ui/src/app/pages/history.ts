@@ -39,8 +39,8 @@ export class HistoryPage implements OnInit  {
                 this.historical = Valuation.make(this.portfolio, history);
 
                 this.quoteService.subscribe(this.portfolio, quarters.concat(history), (update: Quotes) => {
-                    // TODO: Refresh valuations.
-                    console.log("Refresh", update);
+                    this.quarters = Valuation.make(this.portfolio, quarters);
+                    this.historical = Valuation.make(this.portfolio, history);
                 });
             });
         });

@@ -11,9 +11,11 @@ import { Quotes } from './quotes';
 export class Portfolio {
 
     groups: AccountGroup[];
+    quotes: Quotes;
 
     constructor(data?: AccountGroup[]) {
         this.groups = data ? data : [];
+        this.quotes = new Quotes();
     }
 
     /**
@@ -27,10 +29,17 @@ export class Portfolio {
     }
 
     /**
-     * Calculate first day that this portfolio has activities.
+     * Calculate the first day that this portfolio has activities.
      */
     public firstDate(): string {
         return Dates.min(this.groups.map(group => group.firstDate()));
+    }
+
+    /**
+     * Calculate the last day that this portfolio has activities.
+     */
+    public lastDate(): string {
+        return Dates.max(this.groups.map(group => group.lastDate()));
     }
 
     /**
@@ -76,16 +85,23 @@ export class Portfolio {
             let expl = acc.explain(query);
             Object.keys(expl).forEach(currency => {
                 ret[currency] = ret[currency] || [];
-                ret[currency] = ret[currency].concat(expl[currency]);
+                ret[currency] = ret[currency].concat(expl[currency] || []);
             });
         });
         return ret;
     }
 
     /**
-     * Handle update messages from quote service.
+     * Handle updated quotes from the quote service.
      */
-    public update(msg: Quotes): void {
-        // TODO: Update new values to the instruments and account currencies.
+    public update(update: Quotes): void {
+        this.quotes.merge(update);
+    }
+
+    /**
+     * Check if we know closing value for the given date for a ticker.
+     */
+    public closing(ticker: string, day: Dates|string) {
+        return this.quotes.closing(ticker, day);
     }
 }

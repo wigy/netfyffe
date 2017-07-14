@@ -13,6 +13,7 @@ const config = {
             },
             useNullAsDefault: true
         },
+        dbWriteChunkSize: 100,
     },
 
     production: {
@@ -35,6 +36,7 @@ const config = {
             },
             useNullAsDefault: true
         },
+        dbWriteChunkSize: 999999,
     },
 };
 

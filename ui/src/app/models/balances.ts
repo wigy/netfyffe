@@ -8,14 +8,32 @@ export class Balances extends DailyValues {
 
     constructor(public account: Account, public balances: any = {}) {
         super();
+        // Clean up fyffe data.
+        if (this.balances.account) {
+            delete this.balances.account;
+        }
     }
 
     /**
-     * Calculate first day that has a balance recording.
+     * Calculate the first day that has a balance recording.
      */
     firstDate(): string {
         let keys = Object.keys(this.balances);
         return keys.length ? keys[0] : new Date().toISOString().substr(0, 10);
+    }
+
+    /**
+     * Calculate the last day that has a non-zero balance.
+     */
+    lastDate(): string {
+        let keys = Object.keys(this.balances);
+        if (keys.length) {
+            // Only if the last balance is empty, the date is relevant. Otherwise we still have money today.
+            if (!this.balances[keys[keys.length - 1]]) {
+                return keys[keys.length - 1];
+            }
+        }
+        return new Date().toISOString().substr(0, 10);
     }
 
     /**

@@ -24,10 +24,17 @@ export class AccountGroup {
     }
 
     /**
-     * Calculate first day that this account group has activities.
+     * Calculate the first day that this account group has activities.
      */
     firstDate(): string {
         return Dates.min(this.accounts.map(account => account.firstDate()));
+    }
+
+    /**
+     * Calculate the last day that this account group has activities.
+     */
+    lastDate(): string {
+        return Dates.max(this.accounts.map(account => account.lastDate()));
     }
 
     /**

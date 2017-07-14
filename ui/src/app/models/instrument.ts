@@ -33,16 +33,22 @@ export class Instrument extends DailyValues{
      * Ask quote from portfolio and if not available, then make quick interpolation.
      */
     public closing(day: Dates, useFirstDay=false): number {
-        // TODO: Check for the available quotes.
         let str = useFirstDay ? day.first : day.last;
+        // If day is before this has been bought or after selling, it has no value on that date.
         if (str < this.bought) {
             return 0;
         }
+        if (this.sold !== null && str >= this.sold) {
+            return 0;
+        }
+        // Check for quotes.
+        let q = this.portfolio.closing(this.ticker, str);
+        if (q !== null) {
+            return Math.round(q * this.count * 100);
+        }
+        // Make some interpolation if no quotes available.
         if (this.sold === null) {
             return this.buy_price;
-        }
-        if (str >= this.sold) {
-            return 0;
         }
         let dates = this.dates;
         return Math.round(this.buy_price + (dates.daysTo(str) / dates.days) * (this.sell_price - this.buy_price));

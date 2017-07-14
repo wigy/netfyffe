@@ -32,6 +32,18 @@ export class Dates {
     }
 
     /**
+     * Make a copy of these dates.
+     */
+    public clone() : Dates {
+        let ret = new Dates(this.name);
+        ret.fullRange = this.fullRange;
+        this.dates.forEach(mom => {
+            ret.dates.push(moment(mom));
+        });
+        return ret;
+    }
+
+    /**
      * Convert this to full range.
      */
     public useFullRange(): void {
@@ -279,10 +291,23 @@ export class Dates {
     /**
      * Find the first date in the list of date strings of format `YYYY-MM-DD`.
      */
-    public static min(dates: string[]): string {
-        let ret = <string>null;
+    public static min(dates: string[]): string|null {
+        let ret: string = null;
         dates.forEach(date => {
             if ((ret === null || ret > date) && date !== null) {
+                ret = date;
+            }
+        });
+        return ret;
+    }
+
+    /**
+     * Find the last date in the list of date strings of format `YYYY-MM-DD`.
+     */
+    public static max(dates: string[]): string|null {
+        let ret: string = null;
+        dates.forEach(date => {
+            if ((ret === null || ret < date) && date !== null) {
                 ret = date;
             }
         });

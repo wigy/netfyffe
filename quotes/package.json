@@ -1,11 +1,13 @@
 {
   "name": "netfyffe-quotes",
   "version": "0.0.1",
-  "description": "",
+  "description": "Caching front-end to the harvest service.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js",
+    "doc": "apidoc -i src",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "load": "rm -f development.sqlite; knex migrate:latest; knex seed:run",
     "save": "knex-dump --file seeds/quotes.json save"
   },
@@ -24,12 +26,13 @@
     "cors": "^2.8.3",
     "express": "^4.14.1",
     "knex": "^0.12.7",
-    "knex-dump": "^1.0.0",
+    "knex-dump": "^1.0.4",
     "moment": "^2.17.1",
     "neat-dump": "^1.0.7",
     "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
+    "split-array": "^1.0.1",
     "sqlite3": "^3.1.8"
   }
 }
