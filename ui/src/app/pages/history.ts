@@ -41,7 +41,6 @@ export class HistoryPage implements OnInit  {
                 this.quoteService.subscribe(this.portfolio, quarters.concat(history), (update: Quotes) => {
                     this.quarters = Valuation.make(this.portfolio, quarters);
                     this.historical = Valuation.make(this.portfolio, history);
-                    d(this.quarters[1].explain())
                 });
             });
         });

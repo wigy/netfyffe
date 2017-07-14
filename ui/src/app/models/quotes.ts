@@ -48,6 +48,7 @@ export class Quotes {
                         return this.data[ticker][old];
                     }
                 }
+                return null;
             }
             return this.data[ticker][str].close;
         }

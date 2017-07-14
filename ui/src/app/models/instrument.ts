@@ -33,7 +33,6 @@ export class Instrument extends DailyValues{
      * Ask quote from portfolio and if not available, then make quick interpolation.
      */
     public closing(day: Dates, useFirstDay=false): number {
-        // TODO: Check for the available quotes.
         let str = useFirstDay ? day.first : day.last;
         // If day is before this has been bought or after selling, it has no value on that date.
         if (str < this.bought) {
