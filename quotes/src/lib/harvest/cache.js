@@ -49,9 +49,15 @@ module.exports = {
                 data.map(entry => cache[ticker][entry.date] = entry);
 
                 // Check if there are enough entries.
-                d.info('Found', data.length, 'entries from database for', ticker);
-                if (days === data.length) {
+                if (data.length === days) {
+                    d.info('Found all', data.length, 'entries from database for', ticker);
                     return data;
+                }
+
+                // Expand the range if it is small.
+                if (moment(end).diff(moment(start), 'days') < 30) {
+                    d.info('Expanding range from', start, 'to', end, 'to 30 days');
+                    start = moment(end).subtract(30, 'days').format('YYYY-MM-DD');
                 }
 
                 // Fetch from the harvest.
@@ -62,7 +68,6 @@ module.exports = {
             .then(data => {
                 // Construct second array for entries not found from cache.
                 let fresh = data.filter(entry => !cache[ticker][entry.date]);
-                d.info('Got', data.length, 'entries for', ticker, 'with', fresh.length, 'new entries');
                 // Fill in cache.
                 fresh.map(entry => cache[ticker][entry.date] = entry);
                 return [data, fresh];

@@ -17,11 +17,8 @@ router.post('/', (req, res) => {
     const {tickers, dates} = req.body;
     let [start, end] = common.dates.closure(dates);
     d.info('Quote request for', tickers, 'for', dates.length, 'dates between', start, '-', end);
-    // Expand the range if it is small.
-    // TODO: This makes no sense if the cache has them already. Maybe do it in harvestCache instead.
-    if (moment(end).diff(moment(start), 'days') < 30) {
-        start = moment(end).subtract(30, 'days').format('YYYY-MM-DD');
-    }
+    // Adjust start so that we have backups dates for sundays.
+    start = moment(start).subtract(5, 'days').format('YYYY-MM-DD');
     // Construct queries.
     let queries = [];
     tickers.forEach(ticker => {
