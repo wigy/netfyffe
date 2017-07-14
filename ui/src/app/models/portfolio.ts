@@ -78,7 +78,7 @@ export class Portfolio {
             let expl = acc.explain(query);
             Object.keys(expl).forEach(currency => {
                 ret[currency] = ret[currency] || [];
-                ret[currency] = ret[currency].concat(expl[currency]);
+                ret[currency] = ret[currency].concat(expl[currency] || []);
             });
         });
         return ret;
