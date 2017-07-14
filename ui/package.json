@@ -8,6 +8,7 @@
     "serve": "lite-server -c=bs-config.js",
     "prestart": "npm run build",
     "start": "concurrently \"npm run build:watch\" \"npm run serve\"",
+    "dev": "concurrently \"npm run build:watch\" \"npm run serve\"",
     "lint": "tslint ./src/**/*.ts -t verbose"
   },
   "keywords": [],
