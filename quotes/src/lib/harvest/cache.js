@@ -24,21 +24,17 @@ module.exports = {
         }
 
         // Check cache if we have data already.
-        let days = 0;
+        let days = moment(end).diff(moment(start), 'days') + 1;
         let holes = false;
         let hits = [];
 
-        // TODO: Get rid of silly ways of counting days.
         for(let s = moment(start), e = moment(end); s.diff(e) <= 0; s.add(1,'day')) {
             let day = s.format('YYYY-MM-DD');
             if (!cache[ticker][day]) {
                 holes = true;
+                break;
             }
-            // If there are holes, no point to collect results but we are still counting the days.
-            if (!holes) {
-                hits.push(cache[ticker][day]);
-            }
-            days++;
+            hits.push(cache[ticker][day]);
         }
 
         // Return cached data.
