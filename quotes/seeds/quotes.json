@@ -1,5 +1,5 @@
 {
-  "date": "2017-07-14T06:44:51.705Z",
+  "date": "2017-07-14T11:58:17.028Z",
   "version": "1.0.4",
   "tables": [
     "tickers",
@@ -24,7 +24,7 @@
   },
   "rows": {
     "tickers": 59,
-    "quotes": 3683
+    "quotes": 3760
   },
   "data": {
     "tickers": [
@@ -385,6 +385,330 @@
     ],
     "quotes": [
       {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-09",
+        "open": 1.66,
+        "high": 1.69,
+        "low": 1.65,
+        "close": 1.69,
+        "volume": 284939
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-10",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-11",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-12",
+        "open": 1.69,
+        "high": 1.69,
+        "low": 1.67,
+        "close": 1.68,
+        "volume": 106825
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-13",
+        "open": 1.68,
+        "high": 1.71,
+        "low": 1.67,
+        "close": 1.71,
+        "volume": 192930
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-14",
+        "open": 1.71,
+        "high": 1.74,
+        "low": 1.7,
+        "close": 1.73,
+        "volume": 236037
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-15",
+        "open": 1.74,
+        "high": 1.75,
+        "low": 1.72,
+        "close": 1.75,
+        "volume": 123372
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-16",
+        "open": 1.75,
+        "high": 1.75,
+        "low": 1.7,
+        "close": 1.7,
+        "volume": 947130
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-17",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-18",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-19",
+        "open": 1.72,
+        "high": 1.73,
+        "low": 1.71,
+        "close": 1.72,
+        "volume": 90403
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-20",
+        "open": 1.73,
+        "high": 1.73,
+        "low": 1.71,
+        "close": 1.71,
+        "volume": 49855
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-21",
+        "open": 1.73,
+        "high": 1.73,
+        "low": 1.67,
+        "close": 1.68,
+        "volume": 191496
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-22",
+        "open": 1.68,
+        "high": 1.69,
+        "low": 1.68,
+        "close": 1.68,
+        "volume": 141139
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-23",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-24",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-25",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-26",
+        "open": 1.68,
+        "high": 1.7,
+        "low": 1.67,
+        "close": 1.69,
+        "volume": 115670
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-27",
+        "open": 1.69,
+        "high": 1.69,
+        "low": 1.68,
+        "close": 1.69,
+        "volume": 224232
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-28",
+        "open": 1.69,
+        "high": 1.69,
+        "low": 1.65,
+        "close": 1.66,
+        "volume": 258261
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-29",
+        "open": 1.67,
+        "high": 1.7,
+        "low": 1.64,
+        "close": 1.64,
+        "volume": 409896
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-06-30",
+        "open": 1.66,
+        "high": 1.72,
+        "low": 1.64,
+        "close": 1.71,
+        "volume": 201712
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-01",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-02",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-03",
+        "open": 1.71,
+        "high": 1.71,
+        "low": 1.66,
+        "close": 1.7,
+        "volume": 137306
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-04",
+        "open": 1.7,
+        "high": 1.7,
+        "low": 1.67,
+        "close": 1.67,
+        "volume": 114560
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-05",
+        "open": 1.67,
+        "high": 1.68,
+        "low": 1.67,
+        "close": 1.67,
+        "volume": 79868
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-06",
+        "open": 1.69,
+        "high": 1.69,
+        "low": 1.66,
+        "close": 1.66,
+        "volume": 93532
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-07",
+        "open": 1.66,
+        "high": 1.69,
+        "low": 1.65,
+        "close": 1.66,
+        "volume": 294064
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-08",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:CAPMAN",
+        "date": "2017-07-09",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:EQV1V",
+        "date": "2017-06-08",
+        "open": 7.84,
+        "high": 7.86,
+        "low": 7.8,
+        "close": 7.86,
+        "volume": 6168
+      },
+      {
+        "ticker": "HEL:EQV1V",
+        "date": "2017-06-09",
+        "open": 7.81,
+        "high": 7.9,
+        "low": 7.81,
+        "close": 7.9,
+        "volume": 3584
+      },
+      {
+        "ticker": "HEL:EQV1V",
+        "date": "2017-06-10",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:EQV1V",
+        "date": "2017-06-11",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:EQV1V",
+        "date": "2017-06-12",
+        "open": 7.9,
+        "high": 7.9,
+        "low": 7.89,
+        "close": 7.9,
+        "volume": 2164
+      },
+      {
         "ticker": "HEL:EQV1V",
         "date": "2017-06-13",
         "open": 7.89,
@@ -662,6 +986,330 @@
         "low": 8.05,
         "close": 8.18,
         "volume": 10511
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-13",
+        "open": 34.4,
+        "high": 34.96,
+        "low": 34.4,
+        "close": 34.91,
+        "volume": 531782
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-14",
+        "open": 34.95,
+        "high": 35.34,
+        "low": 34.8,
+        "close": 34.85,
+        "volume": 780207
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-15",
+        "open": 34.83,
+        "high": 35.04,
+        "low": 34.54,
+        "close": 34.8,
+        "volume": 650901
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-16",
+        "open": 34.84,
+        "high": 35.57,
+        "low": 34.8,
+        "close": 35.5,
+        "volume": 821318
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-17",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-18",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-19",
+        "open": 35.56,
+        "high": 35.89,
+        "low": 35.43,
+        "close": 35.83,
+        "volume": 550433
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-20",
+        "open": 35.83,
+        "high": 35.87,
+        "low": 35.49,
+        "close": 35.71,
+        "volume": 559583
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-21",
+        "open": 35.71,
+        "high": 35.71,
+        "low": 35.33,
+        "close": 35.53,
+        "volume": 476410
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-22",
+        "open": 35.48,
+        "high": 35.49,
+        "low": 34.77,
+        "close": 34.8,
+        "volume": 599570
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-23",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-24",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-25",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-26",
+        "open": 34.91,
+        "high": 35.22,
+        "low": 34.35,
+        "close": 34.53,
+        "volume": 731957
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-27",
+        "open": 34.54,
+        "high": 34.91,
+        "low": 34.33,
+        "close": 34.69,
+        "volume": 528157
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-28",
+        "open": 34.67,
+        "high": 34.84,
+        "low": 34.44,
+        "close": 34.54,
+        "volume": 541795
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-29",
+        "open": 34.61,
+        "high": 34.9,
+        "low": 34.27,
+        "close": 34.45,
+        "volume": 543216
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-06-30",
+        "open": 34.45,
+        "high": 34.81,
+        "low": 34.22,
+        "close": 34.49,
+        "volume": 502051
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-01",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-02",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-03",
+        "open": 34.63,
+        "high": 34.91,
+        "low": 34.38,
+        "close": 34.75,
+        "volume": 539818
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-04",
+        "open": 34.72,
+        "high": 34.84,
+        "low": 34.51,
+        "close": 34.66,
+        "volume": 301982
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-05",
+        "open": 34.65,
+        "high": 35.28,
+        "low": 34.45,
+        "close": 34.51,
+        "volume": 692895
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-06",
+        "open": 34.54,
+        "high": 34.81,
+        "low": 34.07,
+        "close": 34.76,
+        "volume": 918513
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-07",
+        "open": 34.76,
+        "high": 34.96,
+        "low": 34.5,
+        "close": 34.96,
+        "volume": 360702
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-08",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-09",
+        "open": null,
+        "high": null,
+        "low": null,
+        "close": null,
+        "volume": 0
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-10",
+        "open": 35,
+        "high": 35.59,
+        "low": 34.96,
+        "close": 35.58,
+        "volume": 432271
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-11",
+        "open": 35.57,
+        "high": 35.73,
+        "low": 35.23,
+        "close": 35.52,
+        "volume": 440070
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-12",
+        "open": 35.61,
+        "high": 36,
+        "low": 35.61,
+        "close": 35.91,
+        "volume": 455968
+      },
+      {
+        "ticker": "HEL:NESTE",
+        "date": "2017-07-13",
+        "open": 35.95,
+        "high": 36.54,
+        "low": 35.77,
+        "close": 36.54,
+        "volume": 509838
+      },
+      {
+        "ticker": "HEL:NOKIA",
+        "date": "2012-07-09",
+        "open": 1.55,
+        "high": 1.559,
+        "low": 1.479,
+        "close": 1.486,
+        "volume": 29289759
+      },
+      {
+        "ticker": "HEL:NOKIA",
+        "date": "2012-07-10",
+        "open": 1.49,
+        "high": 1.504,
+        "low": 1.436,
+        "close": 1.44,
+        "volume": 29642549
+      },
+      {
+        "ticker": "HEL:NOKIA",
+        "date": "2012-07-11",
+        "open": 1.44,
+        "high": 1.53,
+        "low": 1.434,
+        "close": 1.5,
+        "volume": 38044935
+      },
+      {
+        "ticker": "HEL:NOKIA",
+        "date": "2012-07-12",
+        "open": 1.504,
+        "high": 1.596,
+        "low": 1.504,
+        "close": 1.548,
+        "volume": 34386073
+      },
+      {
+        "ticker": "HEL:NOKIA",
+        "date": "2012-07-13",
+        "open": 1.525,
+        "high": 1.546,
+        "low": 1.495,
+        "close": 1.51,
+        "volume": 27163710
       },
       {
         "ticker": "HEL:NOKIA",
@@ -17096,6 +17744,51 @@
         "low": 5.51,
         "close": 5.525,
         "volume": 11544879
+      },
+      {
+        "ticker": "HEL:UPM",
+        "date": "2012-07-09",
+        "open": 9.1,
+        "high": 9.17,
+        "low": 8.94,
+        "close": 9.035,
+        "volume": 1363461
+      },
+      {
+        "ticker": "HEL:UPM",
+        "date": "2012-07-10",
+        "open": 9.115,
+        "high": 9.39,
+        "low": 9.07,
+        "close": 9.315,
+        "volume": 1786043
+      },
+      {
+        "ticker": "HEL:UPM",
+        "date": "2012-07-11",
+        "open": 9.28,
+        "high": 9.34,
+        "low": 9.16,
+        "close": 9.2,
+        "volume": 1226110
+      },
+      {
+        "ticker": "HEL:UPM",
+        "date": "2012-07-12",
+        "open": 9.18,
+        "high": 9.29,
+        "low": 9.12,
+        "close": 9.155,
+        "volume": 1573767
+      },
+      {
+        "ticker": "HEL:UPM",
+        "date": "2012-07-13",
+        "open": 9.235,
+        "high": 9.31,
+        "low": 9.165,
+        "close": 9.295,
+        "volume": 1455238
       },
       {
         "ticker": "HEL:UPM",
