@@ -1,3 +1,4 @@
+import * as moment from 'moment/moment';
 import { Dates } from '../models/dates';
 
 /**
@@ -34,10 +35,20 @@ export class Quotes {
      * Check if we know quote for the given date for a ticker.
      */
     public closing(ticker: string, day: Dates|string): number|null {
-        // TODO: Use yesterdy always for today's substitute, if available.
-        // TODO: Handle null entries, i.e. gaps by looking for previous.
         let str: string = typeof(day) === 'string' ? day : day.first;
         if (this.data[ticker] && this.data[ticker][str]) {
+            if (this.data[ticker][str].close === null) {
+                // Check the previous 7 days for value.
+                let day = moment(str);
+                for (let i = 0; i < 7; i++) {
+                    day.subtract(1, 'days');
+                    let old = day.format('YYYY-MM-DD');
+                    if (this.data[ticker][old] && this.data[ticker][old].close !== null) {
+                        this.data[ticker][str] = this.data[ticker][old];
+                        return this.data[ticker][old];
+                    }
+                }
+            }
             return this.data[ticker][str].close;
         }
         return null;

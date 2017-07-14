@@ -31,14 +31,43 @@ router.post('/', (req, res) => {
     Promise.all(queries.map(query => harvestCache.quotes(query.ticker, query.start, query.end)))
         .then(data => {
             let ret = {};
+            let abandoned = {};
+            let gaps = [];
+            // Sort out the results for those asked for and those that are extra.
             for (let i = 0; i < data.length; i++) {
                 for (let j = 0; j < data[i].length; j++) {
                     ret[data[i][j].ticker] = ret[data[i][j].ticker] || {};
                     if (dates.indexOf(data[i][j].date) >= 0) {
                         ret[data[i][j].ticker][data[i][j].date] = data[i][j];
+                        // Now if the date does not have nothing but null, fill previous non-null.
+                        if (data[i][j].close === null) {
+                            gaps.push([data[i][j].ticker, data[i][j].date]);
+                        }
+                    } else {
+                        abandoned[data[i][j].ticker] = abandoned[data[i][j].ticker] || {};
+                        abandoned[data[i][j].ticker][data[i][j].date] = data[i][j];
                     }
                 }
             }
+            // Fill in gaps, if value can be found within 7 days earlier.
+            gaps.forEach(([ticker, date]) => {
+                let found = false;
+                let old = moment(date);
+                for (let k = 0; k < 7; k++) {
+                    old.subtract(1, 'days');
+                    let day = old.format('YYYY-MM-DD');
+                    if (abandoned[ticker] && abandoned[ticker][day] && abandoned[ticker][day].close !== null) {
+                        d.info('Providing', day, 'to fill gap for', ticker, '@', date);
+                        ret[ticker] = ret[ticker] || {};
+                        ret[ticker][day] = abandoned[ticker][day];
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    d.warning('Could not found a replacement for missing', ticker, '@', date);
+                }
+            });
             res.send(ret);
         })
         .catch(err => {
