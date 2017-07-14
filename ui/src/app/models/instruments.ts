@@ -16,6 +16,20 @@ export class Instruments {
         return days.length ? days[0] : (new Date().toISOString().substr(0, 10));
     }
 
+    lastDate(): string {
+        let ret: string = null;
+        this.instruments.forEach(instr => {
+            // If instrument is not sold, it has still relevance today.
+            if (!instr.sold) {
+                return new Date().toISOString().substr(0, 10);
+            }
+            if (ret === null || ret < instr.sold) {
+                ret = instr.sold;
+            }
+        });
+        return ret;
+    }
+
     /**
      * Calculate valuation for these instruments.
      */

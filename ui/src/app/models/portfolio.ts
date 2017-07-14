@@ -29,10 +29,17 @@ export class Portfolio {
     }
 
     /**
-     * Calculate first day that this portfolio has activities.
+     * Calculate the first day that this portfolio has activities.
      */
     public firstDate(): string {
         return Dates.min(this.groups.map(group => group.firstDate()));
+    }
+
+    /**
+     * Calculate the last day that this portfolio has activities.
+     */
+    public lastDate(): string {
+        return Dates.max(this.groups.map(group => group.lastDate()));
     }
 
     /**

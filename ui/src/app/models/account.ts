@@ -38,6 +38,15 @@ export class Account {
     }
 
     /**
+     * Calculate the last day that this account has activities.
+     */
+    lastDate(): string {
+        let a = this.balances.lastDate();
+        let b = this.instruments.lastDate();
+        return (a > b) ? a : b;
+    }
+
+    /**
      * Calculate valuations for this account.
      */
     public query(query: Query): Values {
