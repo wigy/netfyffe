@@ -45,7 +45,7 @@ export class Quotes {
                     let old = day.format('YYYY-MM-DD');
                     if (this.data[ticker][old] && this.data[ticker][old].close !== null) {
                         this.data[ticker][str] = this.data[ticker][old];
-                        return this.data[ticker][old];
+                        return this.data[ticker][old].close;
                     }
                 }
                 return null;
