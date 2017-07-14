@@ -69,28 +69,17 @@ router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}
             // Prepare fast lookup table per date.
             let lookup = {};
             data.map(q => lookup[q.date]=q);
-            // Fill in gaps in the date range by creating new entries.
-            let latest = null;
+            // Fill in gaps in the date range by creating new entries with nulls.
             let ret = [];
-            let gaps = [];
             for(let s = moment(start), e = moment(end); s.diff(e) <= 0; s.add(1,'day')) {
                 let day = s.format('YYYY-MM-DD');
                 if (lookup[day]) {
                     ret.push(lookup[day]);
-                    latest = lookup[day].close;
-                } else if (latest !== null) {
-                    gaps.push(day);
-                    ret.push({date: day, open: null, close: null, high: null, low: null, ticker: ticker, volume: 0});
                 } else {
-                    d.info('Need new lookup, since no results for', day, 'in the result set', Object.keys(lookup));
-                    let dates = [start, end].concat(Object.keys(lookup)).sort();
-                    return tickerFetcher(dates[0], dates[dates.length - 1], ticker)
-                        .then(data => data.filter(e => (e.date >= start && e.date <= end)));
-               }
+                    ret.push({date: day, open: null, close: null, high: null, low: null, ticker: ticker, volume: 0});
+                }
             }
-            if (gaps.length) {
-                d.info('Filled gaps for', ticker, 'on', gaps);
-            }
+
             return ret;
         });
     }

@@ -102,6 +102,7 @@ export class PortfolioService {
      * Get the portfolio data from the API.
      */
     getFyffe(): Observable<any> {
+        // TODO: This should also fetch dividents.
         return this.http.get(this.url + '/fyffe/')
             .map((response: Response) => response.json());
     }
