@@ -15,8 +15,7 @@ export class Query {
      * Make a copy of this query.
      */
     public clone(): Query {
-        // TODO: Should copy dates here and not assign reference.
-        return new Query(this.dates, this.currency);
+        return new Query(this.dates.clone(), this.currency);
     }
 
     /**

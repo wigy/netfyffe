@@ -32,6 +32,18 @@ export class Dates {
     }
 
     /**
+     * Make a copy of these dates.
+     */
+    public clone() : Dates {
+        let ret = new Dates(this.name);
+        ret.fullRange = this.fullRange;
+        this.dates.forEach(mom => {
+            ret.dates.push(moment(mom));
+        });
+        return ret;
+    }
+
+    /**
      * Convert this to full range.
      */
     public useFullRange(): void {
