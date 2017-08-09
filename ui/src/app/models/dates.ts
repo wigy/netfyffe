@@ -46,11 +46,12 @@ export class Dates {
     /**
      * Convert this to full range.
      */
-    public useFullRange(): void {
+    public useFullRange(): Dates {
         if (this.dates.length !== 2) {
             throw Error(`Must have two dates use full range.`);
         }
         this.fullRange = true;
+        return this;
     }
 
     /**
