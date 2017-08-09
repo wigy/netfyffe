@@ -7,7 +7,7 @@ const AccountGroup= require('../models/AccountGroup');
 const Transaction= require('../models/Transaction');
 
 /**
- * @api {get} /account Collect account description data for all accounts in all groups.
+ * @api {get} /account_group Collect account description data for all accounts in all groups.
  * @apiName Accounts
  * @apiGroup Portfolio
  *
@@ -63,52 +63,39 @@ router.get('/', (req, res) => {
 });
 
 /**
- * @api {get} /account/:id Collect full account description data.
+ * @api {get} /account_group/:id Collect full account data for the account group.
  * @apiName AccountDetail
  * @apiGroup Portfolio
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *     [
- * TODO: Fill in
- *     ]
- */
-router.get('/:id', (req, res) => {
-    let id = req.params.id;
-    Promise.all([
-        AccountGroup.query()
-            .where('id', id),
-        Account.query()
-            .where('account_group_id', id)
-            .orderBy('currency')
-            .then(accounts => {
-                return Promise.all(accounts.map(account =>
-                    Transaction
-                        .query()
-                        .where('account_id', account.id)
-                        .orderBy('date')
-                        .then(txs => {account.transactions = txs; return account;})
-                ));
-            })
-    ])
-    .then(data => {let group = data[0][0]; group.accounts = data[1]; res.send(group);})
-    .catch(err => {
-        d.error(err);
-        res.status(500).send({error: 'FetchFailed'});
-    });
-});
-
-/**
- * @api {get} /account/:id Collect full account description data.
- * @apiName AccountDetail
- * @apiGroup Portfolio
- *
- * @apiSuccessExample Success-Response:
- *     HTTP/1.1 200 OK
- *     [
- * TODO: Fill in
- *     ]
- */
+ *     {
+ *         "id": 1,
+ *         "bank_id": 1,
+ *         "name": "Euro Account",
+ *         "code": "12345",
+ *         "accounts": [
+ *             {
+ *                 "id": 1,
+ *                 "account_group_id": 1,
+ *                 "currency": "EUR",
+ *                 "transactions": [
+ *                     {
+ *                         "id": 1,
+ *                         "account_id": 1,
+ *                         "date": "2016-08-01",
+ *                         "type": "deposit",
+ *                         "code": null,
+ *                         "count": 0,
+ *                         "amount": 200000,
+ *                         "options": "{}",
+ *                         "applied": 1
+ *                     }
+ *                 ]
+ *             }
+ *         ]
+ *     }
+*/
 router.get('/:id', (req, res) => {
     let id = req.params.id;
     Promise.all([
