@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpModule }    from '@angular/http';
 
 import { AppComponent }  from './app.component';
+import { Config }  from './config';
 import { MenuComponent }  from './components/structural/menu';
 import { HistoryGraphComponent }  from './components/graphics/history_graph';
 import { DashboardPage } from './pages/dashboard';
@@ -47,6 +48,7 @@ class AppRoutingModule {}
         PercentageDirective,
     ],
     providers: [
+        Config,
         PortfolioService,
         QuoteService,
     ],

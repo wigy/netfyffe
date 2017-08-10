@@ -10,15 +10,15 @@ import { Capital } from '../models/capital';
 import { Instruments } from '../models/instruments';
 import { Portfolio } from '../models/portfolio';
 import { Dates } from '../models/dates';
+import { Config } from '../config';
 
 @Injectable()
 export class PortfolioService {
-    // TODO: Make configurable.
-    private url: string = 'http://localhost:9002';
+
     private portfolio: Portfolio = null;
     private portfolioFetched: Dates = null;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private config: Config) { }
 
     /**
      * Connect a function to the portfolio data updates.
@@ -84,7 +84,7 @@ export class PortfolioService {
     transactions(id: Number, callback: (g: AccountGroup) => void): void {
         this.subscribe((portfolio: Portfolio) => {
             let group = portfolio.groups.filter((g: AccountGroup) => g.id === id)[0];
-            this.http.get(this.url + '/account_group/' + id)
+            this.http.get(this.config.PORTFOLIO_URL + '/account_group/' + id)
                 .subscribe(tx => {
                     let txById = {};
                     tx.json().accounts.forEach((acc: any) => {
@@ -103,7 +103,7 @@ export class PortfolioService {
      */
     getFyffe(): Observable<any> {
         // TODO: This should also fetch dividents.
-        return this.http.get(this.url + '/fyffe/')
+        return this.http.get(this.config.PORTFOLIO_URL + '/fyffe/')
             .map((response: Response) => response.json());
     }
 }
