@@ -44,7 +44,9 @@ export class QuoteService {
                 const url = this.url + '/quote/' + ticker + '/' + dates.first + '/' + dates.last;
                 this.http.get(url)
                     .subscribe(data => {
-                        portfolio.update(new Quotes(data.json()));
+                        let quotes = new Quotes();
+                        quotes.fromArray(data.json());
+                        portfolio.update(quotes);
                         callback();
                     });
             });

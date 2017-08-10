@@ -31,6 +31,7 @@ export class AccountPage implements OnInit  {
                 let range = new Dates(group.name + ' range', start, end).useFullRange();
 
                 this.quoteService.subscribe(this.accountGroup.portfolio, [range], () => {
+                    // TODO: Hmm, this doesn't seem to be doing any updates.
                     this.data = group.getGraphData();
                 });
             });
