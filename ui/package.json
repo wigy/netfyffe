@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "User interface to access portfolio.",
   "scripts": {
-    "build": "tsc -p src/",
-    "build:watch": "tsc -p src/ -w",
+    "build": "bin/build_config.js && tsc -p src/",
+    "build:watch": "bin/build_config.js && tsc -p src/ -w",
     "serve": "lite-server -c=bs-config.js",
     "prestart": "npm run build",
     "start": "concurrently \"npm run build:watch\" \"npm run serve\"",

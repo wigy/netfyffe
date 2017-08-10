@@ -4,8 +4,9 @@ import { Injectable } from '@angular/core';
 ///////////////////////////////////////////////
 @Injectable()
 export class Config {
-    PORTFOLIO_URL: string;
+    public PORTFOLIO_URL: string;
+
     constructor() {
-        this.PORTFOLIO_URL = 'http://localhost:9002';
+        this.PORTFOLIO_URL = "http://localhost:9002";
     }
 }
