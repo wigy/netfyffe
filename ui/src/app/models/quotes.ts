@@ -54,4 +54,33 @@ export class Quotes {
         }
         return null;
     }
+
+    /**
+     * Collect quote data from the array format
+     * [
+     *   {
+     *     "ticker": "ABC",
+     *     "date": "2011-01-12",
+     *     "close": 1.23
+     *   },
+     *   {
+     *     "ticker": "ABC",
+     *     "date": "2011-01-13",
+     *     "close": 1.61
+     *   },
+     *   {
+     *     "ticker": "ABC",
+     *     "date": "2011-01-14",
+     *     "close": 1.02
+     *   },
+     *   ...
+     * ]
+     */
+    public fromArray(data: any[]) {
+        this.data = {};
+        data.forEach(quote => {
+            this.data[quote.ticker] = this.data[quote.ticker] || {};
+            this.data[quote.ticker][quote.date] = quote;
+        });
+    }
 }
