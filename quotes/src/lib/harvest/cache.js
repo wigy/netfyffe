@@ -60,6 +60,7 @@ module.exports = {
                     start = moment(end).subtract(30, 'days').format('YYYY-MM-DD');
                 }
 
+                // TODO: Reduce the range if we have dates in the beginning or in the end already.
                 // Fetch from the harvest.
                 let uri = config.harvest + '/ticker/' + ticker + '/' + start + '/' + end;
                 d.info('Fetching', uri);
