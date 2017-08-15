@@ -38,3 +38,13 @@ services:
       - ./portfolio/src:/var/app/src
       - ./common:/var/app/src/common
     command: npm run dev
+
+  ui:
+    container_name: ui
+    build:
+      context: ui
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./ui/src:/var/app/src
+    command: npm run dev
