@@ -27,3 +27,14 @@ services:
       - ./harvest/src:/var/app/src
       - ./common:/var/app/src/common
     command: npm run dev
+
+  portfolio:
+    container_name: portfolio
+    build:
+      context: portfolio
+    ports:
+      - "9002:9002"
+    volumes:
+      - ./portfolio/src:/var/app/src
+      - ./common:/var/app/src/common
+    command: npm run dev
