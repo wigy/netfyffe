@@ -3,7 +3,7 @@ const moment = require('moment');
 const router = express.Router();
 const harvestCache = require('../lib/harvest/cache');
 const db = require('../db');
-const common = require('../../../common');
+const common = require('../common');
 
 /**
 * @api {get} /quote Get the list of ticker names.

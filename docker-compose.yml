@@ -11,17 +11,5 @@ services:
     environment:
       - NETFYFFE_HARVEST=http://localhost:9001
     volumes:
-      - ./quotes:/var/app
-
-  portfolio:
-    container_name: portfolio
-    build:
-      context: portfolio
-    ports:
-      - "9000:9000"
-    depends_on:
-      - "quotes"
-    environment:
-      - NETFYFFE_QUOTES=http://localhost:9000
-    volumes:
-      - ./portfolio:/var/app
+      - ./quotes/src:/var/app/src
+      - ./common:/var/app/src/common
