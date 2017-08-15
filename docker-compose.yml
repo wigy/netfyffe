@@ -9,7 +9,21 @@ services:
     ports:
       - "9000:9000"
     environment:
-      - NETFYFFE_HARVEST=http://localhost:9001
+      - NETFYFFE_HARVEST=http://harvest:9001
     volumes:
       - ./quotes/src:/var/app/src
       - ./common:/var/app/src/common
+    command: npm run dev
+
+  harvest:
+    container_name: harvest
+    build:
+      context: harvest
+    ports:
+      - "9001:9001"
+    environment:
+      - NETFYFFE_HARVEST=../netfyffe-harvest-module.js
+    volumes:
+      - ./harvest/src:/var/app/src
+      - ./common:/var/app/src/common
+    command: npm run dev

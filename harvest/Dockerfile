@@ -6,7 +6,6 @@ ADD package.json .
 RUN npm install
 ADD . .
 RUN npm run doc
-RUN npm run load
 
-EXPOSE 9000
+EXPOSE 9001
 CMD ["npm", "start"]
