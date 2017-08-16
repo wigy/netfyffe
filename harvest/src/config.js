@@ -3,14 +3,14 @@ const config = {
         // Server port
         port: process.env.PORT || 9001,
         // Path to the harverster implementation.
-        harvester_module: process.env.NETFYFFE_HARVEST,
+        harvester_module: process.env.HARVEST_MODULE,
     },
 
     production: {
         // Server port
         port: process.env.PORT || 9001,
         // Path to the harverster implementation.
-        harvester_module: process.env.NETFYFFE_HARVEST,
+        harvester_module: process.env.HARVEST_MODULE,
     },
 };
 

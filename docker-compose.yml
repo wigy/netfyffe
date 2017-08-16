@@ -22,7 +22,7 @@ services:
     ports:
       - "9001:9001"
     environment:
-      - NETFYFFE_HARVEST=/var/app/netfyffe-harvest-module.js
+      - HARVEST_MODULE=/var/app/netfyffe-harvest-module.js
     volumes:
       - ./harvest/src:/var/app/src
       - ./common:/var/app/src/common
