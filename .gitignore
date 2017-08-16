@@ -2,3 +2,5 @@ node_modules
 npm-debug.log
 */*.sqlite
 */doc
+harvest/netfyffe-harvest-module.js
+harvest/harvest-data-*.json
