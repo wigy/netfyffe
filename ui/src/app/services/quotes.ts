@@ -8,13 +8,12 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/delay';
+import { Config } from '../config';
 
 @Injectable()
 export class QuoteService {
-    // TODO: Make configurable.
-    private url: string = 'http://localhost:9000';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private config: Config) { }
 
     /**
     * Subscribe to the observable updating quotes related to the Portfolio.
@@ -41,7 +40,7 @@ export class QuoteService {
         // Fetch ranges seprately.
         ranges.forEach((dates: Dates) => {
             portfolio.tickers().forEach((ticker: string) => {
-                const url = this.url + '/quote/' + ticker + '/' + dates.first + '/' + dates.last;
+                const url = this.config.QUOTES_URL + '/quote/' + ticker + '/' + dates.first + '/' + dates.last;
                 this.http.get(url)
                     .subscribe(data => {
                         let quotes = new Quotes();
@@ -54,7 +53,7 @@ export class QuoteService {
 
         // Fetch all single quotes for all tickers in portfolio with POST.
         if (Object.keys(singles).length) {
-            const url = this.url + '/quote/';
+            const url = this.config.QUOTES_URL + '/quote/';
             this.http.post(url, {tickers: portfolio.tickers(), dates: Object.keys(singles)})
                 .subscribe(data => {
                     portfolio.update(new Quotes(data.json()));
