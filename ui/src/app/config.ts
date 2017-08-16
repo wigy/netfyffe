@@ -6,7 +6,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class Config {
 
+    // REST address for portfolio data.
     public PORTFOLIO_URL: string;
+    // REST address for quote data.
     public QUOTES_URL: string;
 
     constructor() {
