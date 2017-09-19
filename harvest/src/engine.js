@@ -1,3 +1,4 @@
+const config = require('./config');
 const rp = require('request-promise');
 
 /**
@@ -7,6 +8,10 @@ class Engine {
 
     constructor() {
         this.modules = [];
+        // TODO: Move custom modules inside src-directory and use relative notation in ENV.
+        if (config.harvestModules) {
+            config.harvestModules.split(':').forEach(path => this.use(path));
+        }
         this.use('./modules/kraken');
     }
 
@@ -39,10 +44,13 @@ class Engine {
     }
 
     /**
-     * Get the latest value for an instrument.
+     * Hooks to modules.
      */
     getLatest(ticker) {
         return this.call('getLatest', ticker);
+    }
+    getDailyData(ticker, start, end) {
+        return this.call('getDailyData', ticker, start, end);
     }
 }
 
