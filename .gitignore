@@ -4,3 +4,4 @@ npm-debug.log
 */doc
 harvest/netfyffe-harvest-module.js
 harvest/harvest-data-*.json
+harvest/.env

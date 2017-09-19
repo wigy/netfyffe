@@ -3,10 +3,10 @@ const config = require('./config');
 const app = express();
 
 global.d = require('neat-dump');
-if (!config.harvester_module) {
-  throw new Error("The harvester module is not defined in HARVEST_MODULE environment variable.");
+if (!config.harvestModules) {
+  throw new Error("The harvester modules are not defined in HARVEST_MODULES environment variable.");
 }
-d.info("Using harvest-module", config.harvester_module);
+d.info("Using harvest-modules", config.harvestModules);
 app.use(d.middleware());
 app.use('/doc', express.static('./doc'));
 app.use('/ticker', require('./routes/ticker'));

@@ -21,8 +21,6 @@ services:
       context: harvest
     ports:
       - "9001:9001"
-    environment:
-      - HARVEST_MODULE=/var/app/netfyffe-harvest-module.js
     volumes:
       - ./harvest/src:/var/app/src
       - ./common:/var/app/src/common

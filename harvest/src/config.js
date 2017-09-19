@@ -1,16 +1,25 @@
+require('dotenv').config();
 const config = {
     develop: {
         // Server port
         port: process.env.PORT || 9001,
-        // Path to the harverster implementation.
-        harvester_module: process.env.HARVEST_MODULE,
+        // Colon separated paths to the harverster modules.
+        harvestModules: process.env.HARVEST_MODULES,
+        // Kraken API key.
+        kraken_api_key: process.env.KRAKEN_API_KEY,
+        // Kraken API private key.
+        kraken_api_private_key: process.env.KRAKEN_API_PRIVATE_KEY,
     },
 
     production: {
         // Server port
         port: process.env.PORT || 9001,
-        // Path to the harverster implementation.
-        harvester_module: process.env.HARVEST_MODULE,
+        // Colon separated paths to the harverster modules.
+        harvestModules: process.env.HARVEST_MODULES,
+        // Kraken API key.
+        kraken_api_key: process.env.KRAKEN_API_KEY,
+        // Kraken API private key.
+        kraken_api_private_key: process.env.KRAKEN_API_PRIVATE_KEY,
     },
 };
 
