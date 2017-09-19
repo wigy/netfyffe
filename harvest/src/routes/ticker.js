@@ -49,7 +49,7 @@ function harvester(res) {
  *       "volume": 1500
  *     }]
  *
- * @apiError UserNotFound The ticker was not found.
+ * @apiError TickerNotFound The ticker was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
