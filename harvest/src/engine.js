@@ -61,6 +61,7 @@ class Engine {
             files = files.map(x => x.replace(/.*\/(modules\/.*)\.js$/,'$1'));
             files.forEach(x => this.use('./' + x));
         });
+        await Promise.all(this.modules.map(module => module.prepare()));
     }
 
     /**

@@ -1,8 +1,12 @@
 HARVEST
 
-- Latest quotes
+- Latest quotes.
 
 UI
 
-- List of instuments for an account
-- List of instuments for all account
+- List of instuments for an account.
+- List of instuments for all account.
+
+QUOTES
+
+- Ability to save docker container data to git.

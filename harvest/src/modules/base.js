@@ -16,6 +16,9 @@ class HarvestModule {
         return true;
     }
 
+    async prepare() {
+    }
+
     /**
      * Check if the configuration variable is set.
      * @param {string} conf Name of the configuration variable.
@@ -26,7 +29,7 @@ class HarvestModule {
             d.warning('Configuration needs environment', env, 'to be set.');
             return false;
         }
-        return true;
+        return this.config[conf];
     }
 
     /**
