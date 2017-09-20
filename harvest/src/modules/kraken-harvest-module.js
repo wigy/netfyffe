@@ -12,22 +12,35 @@ class KrakenHarvetModule extends HarvestModule {
         return key && priv;
     }
 
+    kraken() {
+        if (!this.client) {
+            const key = this.checkEnv('krakenApiKey', 'KRAKEN_API_KEY');
+            const priv = this.checkEnv('krakenApiPrivateKey', 'KRAKEN_API_PRIVATE_KEY');
+            this.client = new KrakenClient(key, priv);
+        }
+        return this.client;
+    }
+
+    async query(...args) {
+        this.log('API call', args);
+        let kraken = this.kraken();
+        return kraken.api.apply(kraken, args);
+    }
+
     /**
      * Load the list of currencies.
      */
     async prepare() {
         this.currencyPairs = {};
-        const key = this.checkEnv('krakenApiKey', 'KRAKEN_API_KEY');
-        const priv = this.checkEnv('krakenApiPrivateKey', 'KRAKEN_API_PRIVATE_KEY');
-        let kraken = new KrakenClient(key, priv);
-        let assets = await kraken.api('Assets');
-        if (assets.error.length) {
-            return Promise.reject('Failed:' +assets.error.join(', '));
+        let res = await this.query('Assets');
+        if (res.error.length) {
+            return Promise.reject('Failed:' +res.error.join(', '));
         }
-        Object.keys(assets.result).forEach(key => {
-            if (assets.result[key].aclass === 'currency') {
-                let ticker = 'CUR:' + assets.result[key].altname;
-                this.currencyPairs[ticker] = key + 'EUR';
+        Object.keys(res.result).forEach(key => {
+            if (res.result[key].aclass === 'currency') {
+                let ticker = 'CUR:' + res.result[key].altname;
+                // TODO: Actually not all pairs work. Check functional pairs from AssetPairs API.
+                this.currencyPairs[ticker] = key + 'ZEUR';
              }
         });
     }
@@ -37,10 +50,13 @@ class KrakenHarvetModule extends HarvestModule {
         return !!this.currencyPairs[ticker];
     }
 
-    getLatest(ticker) {
-        this.log('Getting', ticker);
-        // TODO: Implement API call.
-        return Promise.resolve(0.81);
+    async getLatest(ticker) {
+        let kraken = this.kraken();
+        let res = await this.query('Ticker', {pair : this.currencyPairs[ticker]});
+        if (res.error.length) {
+            return Promise.reject('Failed:' +res.error.join(', '));
+        }
+        return parseFloat(res.result[this.currencyPairs[ticker]].c[0]);
     }
 }
 
