@@ -33,7 +33,8 @@ class Engine {
      */
     suitable(fn, args) {
         let ret = [];
-        return this.modules.filter(module => module[fn + 'For'].apply(module, args));
+        fn = fn.replace(/get(.*)/,'is$1Available');
+        return this.modules.filter(module => module[fn].apply(module, args));
     }
 
     /**
@@ -52,8 +53,6 @@ class Engine {
      * Load all modules.
      */
     async init() {
-        // TODO: Add sanity check on creation.
-        // TODO: Add initial data fetching hook on creation.
         if (this.modules.length) {
             return;
         }

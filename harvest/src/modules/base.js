@@ -35,14 +35,14 @@ class HarvestModule {
     /**
      * Check if module is able to get the latest value for an instrument.
      */
-    getLatestFor(ticker) {
+    isLatestAvailable(ticker) {
         return false;
     }
 
     /**
      * Check if module is able to get daily data for the given range.
      */
-    getDailyDataFor(ticker, start, end) {
+    isDailyDataAvailable(ticker, start, end) {
         return false;
     }
 
