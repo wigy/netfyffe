@@ -9,6 +9,8 @@ class Engine {
     constructor() {
         this.modules = [];
         // TODO: Move custom modules inside src-directory and use relative notation in ENV.
+	// TODO: Add sanity check on creation.
+	// TODO: Add initial data fetching hook on creation.
         if (config.harvestModules) {
             config.harvestModules.split(':').forEach(path => this.use(path));
         }
