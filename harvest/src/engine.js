@@ -1,5 +1,6 @@
 const config = require('./config');
 const rp = require('request-promise');
+const globby = require('globby');
 
 /**
  * An engine to collect and initialize harvest modules and provide interface calling them.
@@ -8,19 +9,16 @@ class Engine {
 
     constructor() {
         this.modules = [];
-        // TODO: Move custom modules inside src-directory and use relative notation in ENV.
-	// TODO: Add sanity check on creation.
-	// TODO: Add initial data fetching hook on creation.
         if (config.harvestModules) {
             config.harvestModules.split(':').forEach(path => this.use(path));
         }
-        this.use('./modules/kraken');
     }
 
     /**
      * Load and use the module.
      */
     use(path) {
+        d.info('Using module', path);
         const ModuleClass = require(path);
         this.modules.push(new ModuleClass(rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);}));
     }
@@ -46,12 +44,30 @@ class Engine {
     }
 
     /**
+     * Load all modules.
+     */
+    async init() {
+        // TODO: Add sanity check on creation.
+        // TODO: Add initial data fetching hook on creation.
+        if (this.modules.length) {
+            return;
+        }
+        await globby(__dirname + '/modules/**/*-harvest-module.js').then(files => {
+            files = files.map(x => x.replace(/.*\/(modules\/.*)\.js$/,'$1'));
+            files.forEach(x => this.use('./' + x));
+        });
+    }
+
+    /**
      * Hooks to modules.
      */
-    getLatest(ticker) {
+    async getLatest(ticker) {
+        await this.init();
         return this.call('getLatest', ticker);
     }
-    getDailyData(ticker, start, end) {
+
+    async getDailyData(ticker, start, end) {
+        await this.init();
         return this.call('getDailyData', ticker, start, end);
     }
 }

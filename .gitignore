@@ -1,7 +1,8 @@
 node_modules
+package-lock.json
 npm-debug.log
 */*.sqlite
 */doc
-harvest/netfyffe-harvest-module.js
-harvest/harvest-data-*.json
 harvest/.env
+harvest/src/modules/private/*.js
+harvest/src/modules/private/*.json
