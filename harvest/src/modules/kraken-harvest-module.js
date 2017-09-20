@@ -2,7 +2,10 @@ const HarvestModule = require('./base');
 
 class KrakenHarvetModule extends HarvestModule {
 
-    // TODO: Implement checking and validation for proper ENVs and drop with warning this module if not fulfilled.
+    checkRequirements() {
+        return this.checkEnv('krakenApiKey', 'KRAKEN_API_KEY') && this.checkEnv('krakenApiPrivateKey', 'KRAKEN_API_PRIVATE_KEY');
+    }
+
     getLatestFor(ticker) {
         return (ticker === 'CUR:XBT');
     }

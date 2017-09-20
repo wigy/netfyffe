@@ -3,9 +3,30 @@
  */
 class HarvestModule {
 
-    constructor(requestPromise, logger) {
+    constructor(config, requestPromise, logger) {
+        this.config = config;
         this.rp = requestPromise;
         this.log = logger;
+    }
+
+    /**
+     * Hook to check environment before using this module.
+     */
+    checkRequirements() {
+        return true;
+    }
+
+    /**
+     * Check if the configuration variable is set.
+     * @param {string} conf Name of the configuration variable.
+     * @param {string} env Name of the corresponding environmnt variable.
+     */
+    checkEnv(conf, env) {
+        if (!this.config[conf]) {
+            d.warning('Configuration needs environment', env, 'to be set.');
+            return false;
+        }
+        return true;
     }
 
     /**

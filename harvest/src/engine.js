@@ -20,7 +20,12 @@ class Engine {
     use(path) {
         d.info('Using module', path);
         const ModuleClass = require(path);
-        this.modules.push(new ModuleClass(rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);}));
+        const module = new ModuleClass(config, rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
+        if (module.checkRequirements()) {
+            this.modules.push(module);
+        } else {
+            d.warning('Module', path,'is not fulfilling requirements and is ignored.');
+        }
     }
 
     /**

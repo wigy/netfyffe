@@ -29,7 +29,6 @@ const engine = require('../engine');
 router.get('/:ticker([A-Z0-9:]+)', (req, res) => {
 
     const {ticker} = req.params;
-    const value = 0.1;
 
     engine.getLatest(ticker)
         .then(value => res.send([{ticker: ticker, value: value, currency: 'EUR'}]))

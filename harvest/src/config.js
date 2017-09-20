@@ -6,9 +6,9 @@ const config = {
         // Colon separated paths to the harverster modules.
         harvestModules: process.env.HARVEST_MODULES,
         // Kraken API key.
-        kraken_api_key: process.env.KRAKEN_API_KEY,
+        krakenApiKey: process.env.KRAKEN_API_KEY,
         // Kraken API private key.
-        kraken_api_private_key: process.env.KRAKEN_API_PRIVATE_KEY,
+        krakenApiPrivateKey: process.env.KRAKEN_API_PRIVATE_KEY,
     },
 
     production: {
@@ -17,9 +17,9 @@ const config = {
         // Colon separated paths to the harverster modules.
         harvestModules: process.env.HARVEST_MODULES,
         // Kraken API key.
-        kraken_api_key: process.env.KRAKEN_API_KEY,
+        krakenApiKey: process.env.KRAKEN_API_KEY,
         // Kraken API private key.
-        kraken_api_private_key: process.env.KRAKEN_API_PRIVATE_KEY,
+        krakenApiPrivateKey: process.env.KRAKEN_API_PRIVATE_KEY,
     },
 };
 
