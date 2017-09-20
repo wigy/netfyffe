@@ -45,7 +45,6 @@ class KrakenHarvetModule extends HarvestModule {
         });
     }
 
-    // TODO: Change `For` to `Available`.
     isLatestAvailable(ticker) {
         return !!this.currencyPairs[ticker];
     }

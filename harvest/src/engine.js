@@ -20,7 +20,8 @@ class Engine {
     use(path) {
         d.info('Using module', path);
         const ModuleClass = require(path);
-        const module = new ModuleClass(config, rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
+        let module = new ModuleClass(config, rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
+        module.path = path;
         if (module.checkRequirements()) {
             this.modules.push(module);
         } else {
@@ -40,13 +41,21 @@ class Engine {
     /**
      * Find the modules and call the function.
      */
-    call(fn, ...args) {
+    async call(fn, ...args) {
         let modules = this.suitable(fn, args);
         if (!modules.length) {
             return Promise.reject('No modules implementing `' + fn + '()` for arguments ' + JSON.stringify(args));
         }
-        // TODO: If one fails, we could use here another one (use async/await).
-        return modules[0][fn].apply(modules[0], args);
+
+        while(modules.length) {
+            try {
+                let res = await modules[0][fn].apply(modules[0], args);
+                return res;
+            } catch(err) {
+                d.error('Module', modules[0].path, 'failed:', err);
+            }
+            modules.splice(0, 1);
+        }
     }
 
     /**
