@@ -7,6 +7,7 @@ class HarvestModule {
         this.config = config;
         this.rp = requestPromise;
         this.log = logger;
+        this.name = null;
     }
 
     /**

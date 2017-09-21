@@ -9,19 +9,16 @@ class Engine {
 
     constructor() {
         this.modules = [];
-        if (config.harvestModules) {
-            config.harvestModules.split(':').forEach(path => this.use(path));
-        }
+        this.init(); // TODO: Drop.
     }
 
     /**
      * Load and use the module.
      */
     use(path) {
-        d.info('Using module', path);
         const ModuleClass = require(path);
         let module = new ModuleClass(config, rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
-        module.path = path;
+        d.info('Using module', module.name, 'from', path);
         if (module.checkRequirements()) {
             this.modules.push(module);
         } else {
@@ -52,7 +49,7 @@ class Engine {
                 let res = await modules[0][fn].apply(modules[0], args);
                 return res;
             } catch(err) {
-                d.error('Module', modules[0].path, 'failed:', err);
+                d.error('Module', modules[0].name, 'failed:', err);
             }
             modules.splice(0, 1);
         }
@@ -64,6 +61,9 @@ class Engine {
     async init() {
         if (this.modules.length) {
             return;
+        }
+        if (config.harvestModules) {
+            config.harvestModules.split(':').forEach(path => this.use(path));
         }
         await globby(__dirname + '/modules/**/*-harvest-module.js').then(files => {
             files = files.map(x => x.replace(/.*\/(modules\/.*)\.js$/,'$1'));

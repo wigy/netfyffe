@@ -1,7 +1,25 @@
 const HarvestModule = require('./base');
 const KrakenClient = require('kraken-api');
 
+const CURRENCY_MAP = {
+    BCH : 'BCH',
+    DASH : 'DASH',
+    XETH : 'ETH',
+    XETC : 'ETC',
+    XLTC : 'LTC',
+    XREP : 'REP',
+    XXBT : 'XBT',
+    XXMR : 'XMR',
+    XXRP : 'XRP',
+    XZEC : 'ZEC',
+};
+
 class KrakenHarvetModule extends HarvestModule {
+
+    constructor(config, requestPromise, logger) {
+        super(config, requestPromise, logger);
+        this.name = 'Kraken';
+    }
 
     /**
      * Verify that we have API keys.
@@ -32,17 +50,22 @@ class KrakenHarvetModule extends HarvestModule {
      */
     async prepare() {
         this.currencyPairs = {};
-        let res = await this.query('Assets');
+        let res = await this.query('AssetPairs');
         if (res.error.length) {
             return Promise.reject('Failed:' +res.error.join(', '));
         }
         Object.keys(res.result).forEach(key => {
-            if (res.result[key].aclass === 'currency') {
-                let ticker = 'CUR:' + res.result[key].altname;
-                // TODO: Actually not all pairs work. Check functional pairs from AssetPairs API.
-                this.currencyPairs[ticker] = key + 'ZEUR';
+            if (res.result[key].quote === 'ZEUR' && key.substr(-2, 2) !== '.d') {
+                const currency = CURRENCY_MAP[res.result[key].base];
+                if (!currency) {
+                    this.log('Don\'t know currency', res.result[key].base);
+                } else {
+                    let ticker = 'CUR:' + currency;
+                    this.currencyPairs[ticker] = key;
+                }
              }
         });
+        this.log('Found valid tickers', Object.keys(this.currencyPairs));
     }
 
     isLatestAvailable(ticker) {
