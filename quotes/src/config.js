@@ -14,6 +14,8 @@ const config = {
             useNullAsDefault: true
         },
         dbWriteChunkSize: 100,
+        // How long latest quote is valid in seconds.
+        latestQuoteAge: 60,
     },
 
     production: {
@@ -37,6 +39,7 @@ const config = {
             useNullAsDefault: true
         },
         dbWriteChunkSize: 999999,
+        latestQuoteAge: 60,
     },
 };
 

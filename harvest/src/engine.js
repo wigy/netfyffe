@@ -9,7 +9,6 @@ class Engine {
 
     constructor() {
         this.modules = [];
-        this.init(); // TODO: Drop.
     }
 
     /**

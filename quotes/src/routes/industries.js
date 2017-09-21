@@ -14,7 +14,7 @@ const INDUSTRIES = [
     {id: 45, name: 'Information Technology'},
     {id: 50, name: 'Telecommunication Services'},
     {id: 60, name: 'Real Estate'},
-]
+];
 
 /**
  * Get available industries.

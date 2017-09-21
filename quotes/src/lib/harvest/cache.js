@@ -3,6 +3,7 @@ const moment = require('moment');
 const splitArray = require('split-array');
 const config = require('../../config');
 const db = require('../../db');
+const {time} = require('../../common');
 
 /**
  * A memory caching front end to the quote retrieval.
@@ -10,6 +11,25 @@ const db = require('../../db');
 let cache = {};
 
 module.exports = {
+
+    /**
+     * Get the latest value for a ticker.
+     * @param {string} ticker Ticker to query.
+     */
+    async latest(ticker) {
+        cache[ticker] = cache[ticker] || {};
+        if (cache[ticker].latest) {
+            if (time.since(cache[ticker].latest.timestamp) > config.latestQuoteAge) {
+                delete cache[ticker].latest;
+            } else {
+                return cache[ticker].latest;
+            }
+        }
+        let uri = config.harvest + '/latest/' + ticker;
+        let ret = await rp({uri: uri, json: true});
+        cache[ticker].latest = ret;
+        return ret;
+    },
 
     /**
      * Provide data for a ticker for the given date range (inclusive).
@@ -43,6 +63,7 @@ module.exports = {
             return Promise.resolve(hits);
         }
 
+        // TODO: Convert to async/await.
         return db('quotes').select('*').where('date', '>=', start).andWhere('date', '<=', end).andWhere('ticker', ticker)
             .then(data => {
                 // Fill in cache.

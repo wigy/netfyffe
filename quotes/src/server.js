@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 });
 app.use('/quote', require('./routes/quote'));
 app.use('/industries', require('./routes/industries'));
+app.use('/latest', require('./routes/latest'));
 app.use('/doc', express.static('./doc'));
 
 app.listen(config.port, function () {

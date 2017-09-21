@@ -12,6 +12,7 @@ services:
       - NETFYFFE_HARVEST=http://harvest:9001
     volumes:
       - ./quotes/src:/var/app/src
+      - ./quotes/seeds:/var/app/seeds
       - ./common:/var/app/src/common
     command: npm run dev
 
