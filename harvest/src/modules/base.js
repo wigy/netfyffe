@@ -17,6 +17,9 @@ class HarvestModule {
         return true;
     }
 
+    /**
+     * Hook to download intial data etc.
+     */
     async prepare() {
     }
 
@@ -48,6 +51,13 @@ class HarvestModule {
     }
 
     /**
+     * Check if module can provide classification for the given instrument.
+     */
+    isInfoAvailable(ticker) {
+        return false;
+    }
+
+    /**
      * Fetch the latest value for an ticker.
      * {ticker: "ABC:DEF", value: 1.24, currency: "EUR"}
      */
@@ -61,6 +71,14 @@ class HarvestModule {
      */
     getDailyData(ticker, start, end) {
         throw new Error('Module does not implement getDailyData().');
+    }
+
+    /**
+     * Fetch the classification an ticker.
+     * {ticker: "ABC:DEF", currency: "EUR", type: "Equity", country: "FIN", industry: "Technology"}
+     */
+    getInfo(ticker) {
+        throw new Error('Module does not implement getInfo().');
     }
 }
 

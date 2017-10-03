@@ -17,6 +17,11 @@ class Engine {
     use(path) {
         const ModuleClass = require(path);
         let module = new ModuleClass(config, rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
+        ['isLatestAvailable', 'isDailyDataAvailable', 'isInfoAvailable'].forEach(fn => {
+            if (!module[fn]) {
+                d.error('Module', module.name, 'does not implement', fn);
+            }
+        });
         d.info('Using module', module.name, 'from', path);
         if (module.checkRequirements()) {
             this.modules.push(module);
@@ -55,9 +60,16 @@ class Engine {
     }
 
     /**
-     * Load all modules.
+     * Load all modules or one specified module.
+     *
+     * @param {string} [path] A path to the single module to load.
      */
-    async init() {
+    async init(path) {
+        if (path) {
+            path = path.replace(/\.js$/,'');
+            this.use(path);
+            return this.modules[this.modules.length - 1].prepare();
+        }
         if (this.modules.length) {
             return;
         }
@@ -68,7 +80,7 @@ class Engine {
             files = files.map(x => x.replace(/.*\/(modules\/.*)\.js$/,'$1'));
             files.forEach(x => this.use('./' + x));
         });
-        await Promise.all(this.modules.map(module => module.prepare()));
+        return Promise.all(this.modules.map(module => module.prepare()));
     }
 
     /**
@@ -82,6 +94,11 @@ class Engine {
     async getDailyData(ticker, start, end) {
         await this.init();
         return this.call('getDailyData', ticker, start, end);
+    }
+
+    async getInfo(ticker) {
+        await this.init();
+        return this.call('getInfo', ticker);
     }
 }
 

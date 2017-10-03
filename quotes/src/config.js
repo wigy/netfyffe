@@ -1,5 +1,5 @@
 const config = {
-
+// TODO: This is not good way of configuring.
     develop: {
         // Server port
         port: process.env.PORT || 9000,

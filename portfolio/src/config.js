@@ -1,3 +1,4 @@
+// TODO: This is not good way of configuring.
 const config = {
 
     develop: {

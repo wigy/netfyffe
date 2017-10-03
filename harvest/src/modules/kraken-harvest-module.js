@@ -66,6 +66,7 @@ class KrakenHarvetModule extends HarvestModule {
              }
         });
         this.log('Found valid tickers', Object.keys(this.currencyPairs));
+        return Promise.resolve();
     }
 
     isLatestAvailable(ticker) {
