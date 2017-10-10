@@ -6,7 +6,10 @@ class AssetClassLookup extends HarvestLookup {
         super('asset class');
         this.data = {
             DEFAULT : {
-                'Equity': 'Equity'
+                'N/A': 'N/A',
+                'Equity': 'Equity',
+                'Fixed Income': 'Fixed Income',
+                'Real Estate': 'Real Estate',
             },
             TYPE: {
                 'ETF': null,
