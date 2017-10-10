@@ -2,6 +2,7 @@ HARVEST
 
 - Latest quotes.
 - Currency historical quotes.
+- Info.
 
 UI
 
@@ -10,4 +11,4 @@ UI
 
 QUOTES
 
-- Ability to save docker container data to git.
+- More information about countries and industries.

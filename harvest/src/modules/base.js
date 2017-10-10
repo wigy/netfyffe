@@ -8,6 +8,7 @@ class HarvestModule {
         this.rp = requestPromise;
         this.log = logger;
         this.name = null;
+        this.lib = require('../lib');
     }
 
     /**
@@ -75,7 +76,7 @@ class HarvestModule {
 
     /**
      * Fetch the classification an ticker.
-     * {ticker: "ABC:DEF", currency: "EUR", type: "Equity", country: "FIN", industry: "Technology"}
+     * {ticker: "ABC:DEF", currency: "EUR", assetClass: "Equity", country: "FIN", industry: "Technology"}
      */
     getInfo(ticker) {
         throw new Error('Module does not implement getInfo().');
