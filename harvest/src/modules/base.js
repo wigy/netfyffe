@@ -9,6 +9,11 @@ class HarvestModule {
         this.log = logger;
         this.name = null;
         this.lib = require('../lib');
+        this.headers = {
+            DEFAULT: {},
+            GET: {},
+            POST: {}
+        };
     }
 
     /**
@@ -80,6 +85,10 @@ class HarvestModule {
      */
     getInfo(ticker) {
         throw new Error('Module does not implement getInfo().');
+    }
+
+    post(url, data) {
+        console.log(url, data);
     }
 }
 

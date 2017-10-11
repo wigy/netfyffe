@@ -1,9 +1,9 @@
 const HarvestLookup = require('./base');
 
-class IndustryLookup extends HarvestLookup {
+class SectorLookup extends HarvestLookup {
 
     constructor() {
-        super('industry');
+        super('sector');
         this.names = {
             0: 'N/A',
             10: 'Energy',
@@ -20,9 +20,11 @@ class IndustryLookup extends HarvestLookup {
         this.codes = this.invert(this.names);
         this.data = {
             DEFAULT : {
+                'Technology': 'Technology',
+                'Information Technology': 'Technology',
             }
         };
     }
 }
 
-module.exports = IndustryLookup;
+module.exports = SectorLookup;
