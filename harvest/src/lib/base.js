@@ -6,6 +6,8 @@ class HarvestLookup {
     constructor(name) {
         this.name = name;
         this.data = {};
+        this.codes = {};
+        this.patterns = {};
     }
 
     /**
@@ -28,6 +30,18 @@ class HarvestLookup {
         }
         if (this.data.DEFAULT && this.data.DEFAULT[text] !== undefined) {
             return this.data.DEFAULT[text];
+        }
+        if (this.patterns.DEFAULT) {
+            let ret = null;
+            Object.keys(this.patterns.DEFAULT).forEach(key => {
+                if (this.patterns.DEFAULT[key].test(text)) {
+                    ret = key;
+                    return;
+                }
+            });
+            if (ret) {
+                return ret;
+            }
         }
         d.error('Unable to identify', this.name, text, 'in the context', hint || 'DEFAULT');
         return undefined;

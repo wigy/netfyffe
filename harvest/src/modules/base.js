@@ -7,7 +7,7 @@ const mkdirp = require('mkdirp');
  */
 class HarvestModule {
 
-    constructor(config, requestPromise, logger) {
+    constructor(config, logger) {
         this.config = config;
         this.log = logger;
         this.name = null;

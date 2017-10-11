@@ -1,5 +1,4 @@
 const config = require('./config');
-const rp = require('request-promise');
 const globby = require('globby');
 
 /**
@@ -16,7 +15,7 @@ class Engine {
      */
     use(path) {
         const ModuleClass = require(path);
-        let module = new ModuleClass(config, rp, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
+        let module = new ModuleClass(config, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
         ['isLatestAvailable', 'isDailyDataAvailable', 'isInfoAvailable'].forEach(fn => {
             if (!module[fn]) {
                 d.error('Module', module.name, 'does not implement', fn);
