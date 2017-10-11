@@ -6,3 +6,5 @@ npm-debug.log
 harvest/.env
 harvest/src/modules/private/*.js
 harvest/src/modules/private/*.json
+harvest/src/modules/cache/
+

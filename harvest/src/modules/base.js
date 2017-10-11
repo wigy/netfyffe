@@ -1,3 +1,7 @@
+const rp = require('request-promise');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+
 /**
  * Base class for harvest-modules.
  */
@@ -5,15 +9,27 @@ class HarvestModule {
 
     constructor(config, requestPromise, logger) {
         this.config = config;
-        this.rp = requestPromise;
         this.log = logger;
         this.name = null;
         this.lib = require('../lib');
+        this.cookieFetchUrl = null;
+        this.cookiesFetched = false;
         this.headers = {
-            DEFAULT: {},
+            DEFAULT: {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'en-US,en;q=0.8,fi;q=0.6',
+                'Connection': 'keep-alive',
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36',
+            },
             GET: {},
-            POST: {}
+            POST: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'Content-Type':'application/x-www-form-urlencoded',
+                'X-Requested-With':'XMLHttpRequest',
+            }
         };
+        this.jar = rp.jar();
     }
 
     /**
@@ -87,9 +103,125 @@ class HarvestModule {
         throw new Error('Module does not implement getInfo().');
     }
 
-    post(url, data) {
-        console.log(url, data);
+    /**
+     * Construct headers for the HTTP-request.
+     * @param {String} method Request method.
+     * @param {Object} extras Additional headers to override defaults.
+     */
+    getHeaders(method, extras={}) {
+        return Object.assign({}, this.headers.DEFAULT, this.headers[method] || {}, extras);
     }
+
+    /**
+     * Check if we need cookies and fetch them if not fetched yet.
+     */
+    async checkCookies() {
+        if (!this.cookieFetchUrl || this.cookiesFetched) {
+            return;
+        }
+        this.cookiesFetched = true;
+        this.get(this.cookieFetchUrl);
+    }
+
+    /**
+     * Get the path to the cache file with the given name.
+     * @param {String} cacheFile
+     */
+    cachePath(cacheFile) {
+        const dir = __dirname + '/cache/' + this.name;
+        mkdirp(dir);
+        return dir + '/' + cacheFile;
+    }
+
+    /**
+     * Check if the file is in cache and read it.
+     * @param {String} cacheFile
+     */
+    readCache(cacheFile) {
+        if (cacheFile) {
+            const path = this.cachePath(cacheFile);
+            if (fs.existsSync(path))  {
+                this.log('Reading from cache', path);
+                let data = fs.readFileSync(path);
+                if (/\.json$/.test(cacheFile)) {
+                    data = JSON.parse(data);
+                }
+                return data;
+            }
+        }
+    }
+
+    /**
+     * If cache file is defined, write file to the cache.
+     * @param {String} cacheFile
+     * @param {Any} data
+     * If file name ends to .json, data is automatically stringified and parsed.
+     */
+    writeCache(cacheFile, data) {
+        if (cacheFile) {
+            const path = this.cachePath(cacheFile);
+            this.log('Saving to cache', path);
+            if (/\.json$/.test(cacheFile)) {
+                data = JSON.stringify(data, null, 2);
+            }
+            fs.writeFileSync(path, data);
+        }
+    }
+
+    /**
+     * Post the data using the current setup.
+     * @param {String} url
+     * @param {Object} data
+     * @param {String} [cacheFile] Name of the cache file to store result.
+     */
+    async post(url, data, cacheFile) {
+
+        const cached = this.readCache(cacheFile);
+        if (cached !== undefined) {
+            return cached;
+        }
+
+        await this.checkCookies();
+
+        const origin = url.replace(/^([a-z]+:\/\/[^\/]+).*/, '$1');
+        const host = origin.replace(/^[a-z]+:\/\//, '');
+        const headers = this.getHeaders('POST', {'Host': host, 'Origin': origin, 'Referer': origin + '/'});
+        const options = {
+            method: 'POST',
+            uri: url,
+            jar: this.jar,
+            form: data,
+            gzip: true,
+            json: true,
+            headers: headers,
+            resolveWithFullResponse: true
+        };
+
+        this.log('POST ' + url, JSON.stringify(data));
+        return rp(options)
+            .then(res => {
+                this.writeCache(cacheFile, res.body);
+                return res.body;
+            });
+    }
+
+    async get(url) {
+
+        await this.checkCookies();
+
+        const headers = this.getHeaders('GET');
+        const options = {
+            method: 'GET',
+            uri: url,
+            gzip: true,
+            headers: headers,
+            jar: this.jar,
+            resolveWithFullResponse: true
+        };
+        this.log('GET ' + url);
+        return rp(options);
+    }
+
 }
 
 module.exports = HarvestModule;
