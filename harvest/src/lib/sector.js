@@ -22,6 +22,8 @@ class SectorLookup extends HarvestLookup {
             DEFAULT : {
                 'Technology': 'Technology',
                 'Information Technology': 'Technology',
+                'Financials': 'Financials',
+                'Financial': 'Financials',
             }
         };
     }

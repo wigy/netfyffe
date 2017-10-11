@@ -97,7 +97,17 @@ class HarvestModule {
 
     /**
      * Fetch the classification an ticker.
-     * {ticker: "ABC:DEF", currency: "EUR", assetClass: "Equity", country: "FIN", industry: "Technology"}
+     * {
+     *   ticker: "ABC:DEF",
+     *   name: "Name of DEF",
+     *   currency: "EUR",
+     *   assetClass: "Equity",
+     *   type: "Stock",  // also e.g. ETF
+     *   provider: null, // ETF: provider for example
+     *   country: "FIN",
+     *   sector: "Technology"
+     *   industry: "Communications Equipment"
+     * }
      */
     getInfo(ticker) {
         throw new Error('Module does not implement getInfo().');
@@ -205,7 +215,17 @@ class HarvestModule {
             });
     }
 
-    async get(url) {
+    /**
+     * Get a page using the current setup.
+     * @param {String} url
+     * @param {String} [cacheFile] Name of the cache file to store result.
+     */
+    async get(url, cacheFile) {
+
+        const cached = this.readCache(cacheFile);
+        if (cached !== undefined) {
+            return cached;
+        }
 
         await this.checkCookies();
 
@@ -219,9 +239,12 @@ class HarvestModule {
             resolveWithFullResponse: true
         };
         this.log('GET ' + url);
-        return rp(options);
+        return rp(options)
+            .then(res => {
+                this.writeCache(cacheFile, res.body);
+                return res.body;
+            });
     }
-
 }
 
 module.exports = HarvestModule;
