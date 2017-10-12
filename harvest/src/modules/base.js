@@ -80,6 +80,21 @@ class HarvestModule {
     }
 
     /**
+     * Check if module can find and parse ETF holdings.
+     * @param {String} ticker
+     */
+    isETFContentAvailable(provider, ticker) {
+        return false;
+    }
+
+    /**
+     * Check if module can look for ticker for name.
+     */
+    isTickerSearchAvailable(text, type) {
+        return false;
+    }
+
+    /**
      * Fetch the latest value for an ticker.
      * {ticker: "ABC:DEF", value: 1.24, currency: "EUR"}
      */
@@ -111,6 +126,30 @@ class HarvestModule {
      */
     getInfo(ticker) {
         throw new Error('Module does not implement getInfo().');
+    }
+
+    /**
+     * Fetch a list of ETF holdings.
+     * @param {String} provider Name of the provider.
+     * @param {String} ticker
+     * [
+     *   {ticker: "ABC:DEF", count: 120000}
+     * ]
+     */
+    getETFContent(provider, ticker) {
+        throw new Error('Module does not implement getETFContentAvailable().');
+    }
+
+    /**
+     * Perform a name lookup.
+     * @param {String} text Name to look for.
+     * @param {String} type Type of search: name or isin.
+     * [
+     *   {"name": "Matching Name", "ticker": "ABC:DEF"}
+     * ]
+     */
+    getTickerSearch(text, type) {
+        throw new Error('Module does not implement getTickerSearch().');
     }
 
     /**
@@ -238,6 +277,10 @@ class HarvestModule {
             jar: this.jar,
             resolveWithFullResponse: true
         };
+        if (/\.json$/.test(cacheFile)) {
+            options.json = true;
+        }
+
         this.log('GET ' + url);
         return rp(options)
             .then(res => {

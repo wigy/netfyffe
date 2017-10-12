@@ -7,6 +7,10 @@ class MarketLookup extends HarvestLookup {
         this.data = {
             DEFAULT : {
                 'NASDAQ': 'NASDAQ',
+                'XNAS': 'NASDAQ',
+                'XNYS': 'NYSE',
+                'XFRA': 'FRA',
+                'LTS': 'LON',
             },
             NAME : {
                 'Helsinki': 'HEL',

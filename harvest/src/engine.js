@@ -11,16 +11,26 @@ class Engine {
     }
 
     /**
+     * Get the list of supprted commands.
+     */
+    commands() {
+        return ['Latest', 'DailyData', 'Info', 'ETFContent', 'TickerSearch'];
+    }
+
+    /**
+     * Check if the given functionality exists.
+     * @param {String} cmd
+     */
+    isCommand(cmd) {
+        return this.commands().map(c => 'get' + c).indexOf(cmd) >= 0;
+    }
+
+    /**
      * Load and use the module.
      */
     use(path) {
         const ModuleClass = require(path);
         let module = new ModuleClass(config, (...msg) => {msg.splice(0, 0, path + ':'); d.apply(null, msg);});
-        ['isLatestAvailable', 'isDailyDataAvailable', 'isInfoAvailable'].forEach(fn => {
-            if (!module[fn]) {
-                d.error('Module', module.name, 'does not implement', fn);
-            }
-        });
         d.info('Using module', module.name, 'from', path);
         if (module.checkRequirements()) {
             this.modules.push(module);
@@ -98,6 +108,16 @@ class Engine {
     async getInfo(ticker) {
         await this.init();
         return this.call('getInfo', ticker);
+    }
+
+    async getETFContent(provider, ticker) {
+        await this.init();
+        return this.call('getETFContent', provider, ticker);
+    }
+
+    async getTickerSearch(text, type) {
+        await this.init();
+        return this.call('getTickerSearch', text, type);
     }
 }
 
