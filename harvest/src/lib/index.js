@@ -6,4 +6,5 @@ module.exports = {
     industry: new (require('./industry'))(),
     currency: new (require('./currency'))(),
     provider: new (require('./provider'))(),
+    type: new (require('./type'))(),
 };
