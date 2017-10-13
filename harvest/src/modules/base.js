@@ -1,6 +1,7 @@
 const rp = require('request-promise');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
+const csv=require('csvtojson');
 
 /**
  * Base class for harvest-modules.
@@ -191,7 +192,7 @@ class HarvestModule {
             const path = this.cachePath(cacheFile);
             if (fs.existsSync(path))  {
                 this.log('Reading from cache', path);
-                let data = fs.readFileSync(path);
+                let data = fs.readFileSync(path, 'utf-8');
                 if (/\.json$/.test(cacheFile)) {
                     data = JSON.parse(data);
                 }
@@ -287,6 +288,24 @@ class HarvestModule {
                 this.writeCache(cacheFile, res.body);
                 return res.body;
             });
+    }
+
+    /**
+     * Convert CSV file data to array of arrays.
+     * @param {String} data
+     */
+    async parseCSV(data) {
+        return new Promise((resolve, reject) => {
+            let ret = [];
+            csv({})
+            .fromString(data)
+            .on('csv',(row)=>{
+                ret.push(row);
+            })
+            .on('done',()=>{
+               resolve(ret);
+            });
+        });
     }
 }
 
