@@ -1,3 +1,4 @@
+const fs = require('fs');
 const config = require('./config');
 const globby = require('globby');
 
@@ -46,6 +47,21 @@ class Engine {
         let ret = [];
         fn = fn.replace(/get(.*)/,'is$1Available');
         return this.modules.filter(module => module[fn].apply(module, args));
+    }
+
+    /**
+     * Find the path for the module.
+     * @param {String} name Module name without `-harvest-module`.
+     * @return {String} Full path to module or null if not found.
+     */
+    findModule(name) {
+        if (fs.existsSync(__dirname + '/modules/private/' + name + '-harvest-module.js')) {
+            return __dirname + '/modules/private/' + name + '-harvest-module.js';
+        }
+        if (fs.existsSync(__dirname + '/modules/' + name + '-harvest-module.js')) {
+            return __dirname + '/modules/' + name + '-harvest-module.js';
+        }
+        return null;
     }
 
     /**

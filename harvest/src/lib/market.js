@@ -10,7 +10,12 @@ class MarketLookup extends HarvestLookup {
                 'XNAS': 'NASDAQ',
                 'XNYS': 'NYSE',
                 'XFRA': 'FRA',
+                'XDUS': 'FRA',
+                'XBER': 'FRA',
+                'XMUN': 'FRA',
+                'XSTU': 'FRA',
                 'LTS': 'LON',
+                'PINX': 'OTCMKTS',
             },
             NAME : {
                 'Helsinki': 'HEL',
