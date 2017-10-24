@@ -6,6 +6,7 @@
 global.d = require('neat-dump');
 const engine = require('../src/engine');
 const readline = require('readline');
+const lib = require('../src/lib');
 
 async function select(data, field, msg = 'Select one: ') {
     if (data.length < 1) {
@@ -19,24 +20,31 @@ async function select(data, field, msg = 'Select one: ') {
             console.log('  ', JSON.stringify(line));
             n++;
         });
-    }
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    });
-    return new Promise((resolve, reject) => {
-        rl.question(msg, (answer) => {
-            resolve(data[parseInt(answer) - 1]);
-            rl.close();
+
+        const rl = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout
         });
-    });
+        return new Promise((resolve, reject) => {
+            rl.question(msg, (answer) => {
+                resolve(data[parseInt(answer) - 1]);
+                rl.close();
+            });
+        });
+    }
+    return data[0];
 }
 
 if (process.argv.length < 3) {
+
     console.log('');
     console.log('Usage: study_etf.js <ETF name>');
     console.log('');
+
 } else {
+
+    let name, provider, ticker;
+
     engine.init();
     const lookup = process.argv.slice(2).join(' ');
     d('Looking for', lookup);
@@ -45,6 +53,16 @@ if (process.argv.length < 3) {
             return select(data, 'name');
         })
         .then((data) => {
-            console.log(JSON.stringify(data, null, 2));
+            name = data.name;
+            provider = lib.provider.find(name);
+            return select(data.available, 'market');
+        })
+        .then((data) => {
+            ticker = data.market + ':' + data.ticker;
+        })
+        .then(() => {
+            console.log('Name:', name);
+            console.log('Ticker:', ticker);
+            console.log('Provider:', provider);
         });
 }

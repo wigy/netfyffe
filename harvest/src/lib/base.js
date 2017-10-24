@@ -54,7 +54,7 @@ class HarvestLookup {
         if (hint && this.data && this.data[hint] && this.data[hint][text] !== undefined && this.data[hint][text] !== null) {
             return this.data[hint][text];
         }
-        if (this.data.DEFAULT && this.data.DEFAULT[text] !== undefined && this.data.DEFAULT[text] !== null) {
+        if (this.data && this.data.DEFAULT && this.data.DEFAULT[text] !== undefined && this.data.DEFAULT[text] !== null) {
             return this.data.DEFAULT[text];
         }
         if (this.patterns.DEFAULT) {
