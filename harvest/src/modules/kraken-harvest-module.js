@@ -19,6 +19,7 @@ class KrakenHarvetModule extends HarvestModule {
     constructor(config, requestPromise, logger) {
         super(config, requestPromise, logger);
         this.name = 'Kraken';
+        this.currencyPairs = null;
     }
 
     /**
@@ -48,7 +49,10 @@ class KrakenHarvetModule extends HarvestModule {
     /**
      * Load the list of currencies.
      */
-    async prepare() {
+    async loadCurrencies() {
+        if (this.currencyPairs) {
+            return this.currencyPairs;
+        }
         this.currencyPairs = {};
         let res = await this.query('AssetPairs');
         if (res.error.length) {
@@ -70,10 +74,14 @@ class KrakenHarvetModule extends HarvestModule {
     }
 
     isLatestAvailable(ticker) {
-        return !!this.currencyPairs[ticker];
+        return ticker.split(':')[0] === 'CUR';
     }
 
     async getLatest(ticker) {
+        await this.loadCurrencies();
+        if (!this.currencyPairs[ticker]) {
+            return Promise.reject('Unknown ticker ' + ticker);
+        }
         let kraken = this.kraken();
         let res = await this.query('Ticker', {pair : this.currencyPairs[ticker]});
         if (res.error.length) {
