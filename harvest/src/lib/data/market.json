@@ -3,24 +3,18 @@
         "NASDAQ": "NASDAQ",
         "XNAS": "NASDAQ",
         "XNYS": "NYSE",
-        "XFRA": "FRA",
-        "XDUS": "FRA",
-        "XBER": "FRA",
-        "XMUN": "FRA",
-        "XSTU": "FRA",
-        "LTS": "LON",
-        "PINX": "OTCMKTS",
+        "XFRA": "XFRA",
+        "XDUS": "XDUS",
+        "XBER": "XBER",
+        "XMUN": "XMUN",
+        "XSTU": "XSTU",
         "NYSE": "NYSE"
     },
     "NAME": {
-        "Helsinki": "HEL",
-        "BATS Europe": "BATS",
-        "Copenhagen": "CPH",
-        "Stockholm": "STO",
-        "OTC Markets": "OTCMKTS",
-        "London": "LON",
-        "Switzerland": "SWX",
-        "Berlin": "FRA",
-        "Stuttgart": "FRA"
+        "Helsinki": "XHEL",
+        "Copenhagen": "XCSE",
+        "Stockholm": "XSTO",
+        "Berlin": "XBER",
+        "Stuttgart": "XSTU"
     }
 }
