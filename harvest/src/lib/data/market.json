@@ -20,6 +20,7 @@
         "OTC Markets": "OTCMKTS",
         "London": "LON",
         "Switzerland": "SWX",
-        "Berlin": "FRA"
+        "Berlin": "FRA",
+        "Stuttgart": "FRA"
     }
 }
