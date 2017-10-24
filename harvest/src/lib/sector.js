@@ -18,14 +18,7 @@ class SectorLookup extends HarvestLookup {
             60: 'Real Estate',
         };
         this.codes = this.invert(this.names);
-        this.data = {
-            DEFAULT : {
-                'Technology': 'Technology',
-                'Information Technology': 'Technology',
-                'Financials': 'Financials',
-                'Financial': 'Financials',
-            }
-        };
+        this.load();
     }
 }
 

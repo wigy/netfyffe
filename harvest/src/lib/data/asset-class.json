@@ -1,0 +1,12 @@
+{
+    "DEFAULT" : {
+        "N/A": "N/A",
+        "Equity": "Equity",
+        "Fixed Income": "Fixed Income",
+        "Real Estate": "Real Estate"
+    },
+    "TYPE": {
+        "ETF": null
+    }
+}
+

@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 /**
  * Base class for utilities mapping various information to the Netfyffe official versions.
  */
@@ -5,9 +7,33 @@ class HarvestLookup {
 
     constructor(name) {
         this.name = name;
-        this.data = {};
+        this.data = null;
         this.codes = {};
         this.patterns = {};
+    }
+
+    get path() {
+        return __dirname + '/data/' + this.name + '.json';
+    }
+
+    /**
+     * Load data from `.json` file.
+     */
+    load() {
+        this.data = require(this.path);
+    }
+
+    save(text, hint) {
+        if (!this.data) {
+            return;
+        }
+        if (this.data[hint] && this.data[hint][text] === null) {
+            return;
+        }
+        this.data[hint][text] = null;
+        const str = JSON.stringify(this.data, null, 4);
+        d.warning('File changed, saving', this.path);
+        fs.writeFileSync(this.path, str);
     }
 
     /**
@@ -25,10 +51,10 @@ class HarvestLookup {
      * @param {String} [hint] Additional context hint - usually some kind of code specifying source data type.
      */
     find(text, hint) {
-        if (hint && this.data[hint] && this.data[hint][text] !== undefined) {
+        if (hint && this.data && this.data[hint] && this.data[hint][text] !== undefined && this.data[hint][text] !== null) {
             return this.data[hint][text];
         }
-        if (this.data.DEFAULT && this.data.DEFAULT[text] !== undefined) {
+        if (this.data.DEFAULT && this.data.DEFAULT[text] !== undefined && this.data.DEFAULT[text] !== null) {
             return this.data.DEFAULT[text];
         }
         if (this.patterns.DEFAULT) {
@@ -44,6 +70,7 @@ class HarvestLookup {
             }
         }
         d.error('Unable to identify', this.name, text, 'in the context', hint || 'DEFAULT');
+        this.save(text, hint || 'DEFAULT');
         return undefined;
     }
 }

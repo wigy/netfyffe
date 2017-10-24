@@ -4,12 +4,7 @@ class TypeLookup extends HarvestLookup {
 
     constructor() {
         super('type');
-        this.data = {
-            DEFAULT : {
-                'Equity': 'Equity',
-                'ETF': 'ETF',
-            }
-        };
+        this.load();
     }
 }
 

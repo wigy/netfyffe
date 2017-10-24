@@ -4,12 +4,7 @@ class CurrencyLookup extends HarvestLookup {
 
     constructor() {
         super('currency');
-        this.data = {
-            COUNTRY : {
-                FIN: 'EUR',
-                USA: 'USD',
-            }
-        };
+        this.load();
     }
 }
 
