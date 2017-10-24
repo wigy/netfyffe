@@ -17,6 +17,7 @@
         "Berlin": "XBER",
         "Stuttgart": "XSTU",
         "Shenzhen": "XSHE",
-        "OTC Markets": null
+        "Munich": "XMUN",
+        "Frankfurt": "XFRA"
     }
 }
