@@ -15,6 +15,8 @@
         "Copenhagen": "XCSE",
         "Stockholm": "XSTO",
         "Berlin": "XBER",
-        "Stuttgart": "XSTU"
+        "Stuttgart": "XSTU",
+        "Shenzhen": "XSHE",
+        "OTC Markets": null
     }
 }
