@@ -20,11 +20,11 @@ class MarketLookup extends HarvestLookup {
             NAME : {
                 'Helsinki': 'HEL',
                 'BATS Europe': 'BATS',
-                'Copenhagen': '?',
+                'Copenhagen': 'CPH',
                 'Stockholm': 'STO',
                 'OTC Markets': 'OTCMKTS',
                 'London': 'LON',
-                'Switzerland': '?'
+                'Switzerland': 'SWX'
             }
         };
     }

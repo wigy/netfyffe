@@ -119,7 +119,7 @@ class HarvestModule {
      *   currency: "EUR",
      *   assetClass: "Equity",
      *   type: "Stock",  // also e.g. ETF
-     *   provider: null, // ETF: provider for example
+     *   provider: null, // ETF provider for example
      *   country: "FIN",
      *   sector: "Technology"
      *   industry: "Communications Equipment"
@@ -133,12 +133,15 @@ class HarvestModule {
      * Fetch a list of ETF holdings.
      * @param {String} provider Name of the provider.
      * @param {String} ticker
-     * [
-     *   {ticker: "ABC:DEF", count: 120000}
-     * ]
+     * {
+     *   idBy: "ticker",
+     *   items: [{id: "ABC:DEF", count: 120000}, ...]
+     * }
+     * Field `idBy` is either `ticker` depending if the harvest module can determine ticker
+     * or otherwise it will be `name`.
      */
     getETFContent(provider, ticker) {
-        throw new Error('Module does not implement getETFContentAvailable().');
+        throw new Error('Module does not implement getETFContent().');
     }
 
     /**
