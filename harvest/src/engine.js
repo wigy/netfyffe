@@ -133,7 +133,17 @@ class Engine {
 
     async getTickerSearch(text, type) {
         await this.init();
-        return this.call('getTickerSearch', text, type);
+        text = text.trim();
+        return this.call('getTickerSearch', text, type)
+            .then(data => {
+                if (data.length === 0) {
+                    if (/Corp\.?$/i.test(text)) {
+                        text = text.replace(/Corp\.?$/i, '');
+                        return this.getTickerSearch(text, type);
+                    }
+                }
+                return data;
+            });
     }
 }
 

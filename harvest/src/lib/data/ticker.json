@@ -1,6 +1,10 @@
 {
     "DEFAULT": {},
     "Global X": {
-        "NVIDIA CORP": "NASDAQ:NVDA"
+        "NVIDIA CORP": "NASDAQ:NVDA",
+        "KEYENCE CORP": "XTKS:6861",
+        "INTUITIVE SURGICAL INC": "NASDAQ:ISRG",
+        "MITSUBISHI ELECTRIC CORP": "XTKS:6503",
+        "FANUC CORP": "XTKS:6954"
     }
 }

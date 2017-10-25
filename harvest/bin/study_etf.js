@@ -21,7 +21,7 @@ function quit(msg) {
  */
 async function findByName(lookup) {
     let ret;
-    return engine.getTickerSearch(lookup)
+    return engine.getTickerSearch(lookup, 'name')
         .then(async (data) => {
             return select(data, 'name');
         })
@@ -72,6 +72,7 @@ async function collectContent(provider, items) {
         let content = [];
         let remaining = items.length;
         items.forEach(async (item) => {
+            d.info('Looking for', item.id);
             let ticker = lib.ticker.find(item.id, provider);
             if (!ticker) {
                 let share = await findByName(item.id);
@@ -113,7 +114,7 @@ async function explore(terms) {
     .then((data) => {
         switch(data.idIs) {
             case 'name':
-                return collectContent(provider, [data.items[0]]);
+                return collectContent(provider, [data.items[4]]);
             default:
                 quit('Don\'t know how to handle identfication by', data.idIs);
         }
