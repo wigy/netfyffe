@@ -7,4 +7,5 @@ module.exports = {
     currency: new (require('./currency'))(),
     provider: new (require('./provider'))(),
     type: new (require('./type'))(),
+    ticker: new (require('./ticker'))(),
 };

@@ -67,13 +67,18 @@ async function select(data, field, msg = 'Select one: ') {
 /**
  * Go through ETF content list and perform name lookup for each.
  */
-async function collectContent(items) {
+async function collectContent(provider, items) {
     return new Promise((resolve, reject) => {
         let content = [];
         let remaining = items.length;
         items.forEach(async (item) => {
-            let share = await findByName(item.id);
-            content.push({name: share.name, ticker: share.market.market + ':' + share.market.ticker, count: item.count});
+            let ticker = lib.ticker.find(item.id, provider);
+            if (!ticker) {
+                let share = await findByName(item.id);
+                ticker = share.market.market + ':' + share.market.ticker;
+                lib.ticker.save(item.id, provider, ticker);
+            }
+            content.push({ticker: ticker, count: item.count});
             remaining--;
             if (!remaining) {
                 resolve(content);
@@ -108,7 +113,7 @@ async function explore(terms) {
     .then((data) => {
         switch(data.idIs) {
             case 'name':
-                return collectContent([data.items[3]]);
+                return collectContent(provider, [data.items[0]]);
             default:
                 quit('Don\'t know how to handle identfication by', data.idIs);
         }
@@ -119,7 +124,7 @@ async function explore(terms) {
         console.log('Provider:', provider);
         console.log('Content:');
         content.forEach((share) => {
-            console.log('  ', share.count, share.ticker, share.name);
+            console.log('  ', share.count, share.ticker);
         });
     });
 }

@@ -10,6 +10,10 @@ class HarvestLookup {
         this.data = null;
         this.codes = {};
         this.patterns = {};
+        this.options = {
+            autoInsertMissingWords: true,
+            errorForMissingWords: true,
+        };
     }
 
     get path() {
@@ -23,14 +27,21 @@ class HarvestLookup {
         this.data = require(this.path);
     }
 
-    save(text, hint) {
-        if (!this.data) {
-            return;
+    /**
+     * Save the text to the database.
+     */
+    save(text, hint, result = null) {
+        if (result === null) {
+            if (!this.data) {
+                return;
+            }
+            if (this.data[hint] && this.data[hint][text] === null) {
+                return;
+            }
         }
-        if (this.data[hint] && this.data[hint][text] === null) {
-            return;
-        }
-        this.data[hint][text] = null;
+        this.data = this.data || {};
+        this.data[hint] = this.data[hint] || {};
+        this.data[hint][text] = result;
         const str = JSON.stringify(this.data, null, 4);
         d.warning('File changed, saving', this.path);
         fs.writeFileSync(this.path, str);
@@ -69,8 +80,12 @@ class HarvestLookup {
                 return ret;
             }
         }
-        d.error('Unable to identify', this.name, text, 'in the context', hint || 'DEFAULT');
-        this.save(text, hint || 'DEFAULT');
+        if (this.options.errorForMissingWords) {
+            d.error('Unable to identify', this.name, text, 'in the context', hint || 'DEFAULT');
+        }
+        if (this.autoInsertMissingWords) {
+            this.save(text, hint || 'DEFAULT');
+        }
         return undefined;
     }
 }
