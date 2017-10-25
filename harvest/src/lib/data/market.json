@@ -18,6 +18,13 @@
         "Stuttgart": "XSTU",
         "Shenzhen": "XSHE",
         "Munich": "XMUN",
-        "Frankfurt": "XFRA"
+        "Frankfurt": "XFRA",
+        "Switzerland": "SWX",
+        "Mexico": "XMEX",
+        "Vienna": "XWBO",
+        "TradeGate": "XGAT",
+        "Tokyo": "XTKS",
+        "OTC Markets": "OTCM",
+        "London": "XLON"
     }
 }

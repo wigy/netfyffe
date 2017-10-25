@@ -109,7 +109,7 @@ class Engine {
     }
 
     /**
-     * Hooks to modules.
+     * Hooks to module functions.
      */
     async getLatest(ticker) {
         await this.init();
