@@ -8,10 +8,14 @@ const engine = require('../src/engine');
 const readline = require('readline');
 const lib = require('../src/lib');
 
+function quit(msg) {
+    d.error.apply(null, Array.from(arguments));
+    process.exit();
+}
+
 async function select(data, field, msg = 'Select one: ') {
     if (data.length < 1) {
-        d.error('No data found.');
-        process.exit();
+        quit('No data found.');
     }
     if (data.length > 1) {
         let n = 1;
@@ -58,7 +62,19 @@ if (process.argv.length < 3) {
             return select(data.available, 'market');
         })
         .then((data) => {
+            if (!data.market) {
+                quit('No market found from data', data);
+            }
+            if (!data.ticker) {
+                quit('No ticker found from data', data);
+            }
             ticker = data.market + ':' + data.ticker;
+        })
+        .then(() => {
+        })
+        .then(() => {
+        })
+        .then(() => {
         })
         .then(() => {
             console.log('Name:', name);

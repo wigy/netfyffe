@@ -10,7 +10,7 @@ const glob = require('glob');
 if (process.argv.length < 3) {
     glob(__dirname + '/../src/modules/**/*-harvest-module.js', {}, (err, files) => {
         console.log('');
-        console.log('Usage: test_module.js all|<module1:module2:...> [<getFunction> [<arg1> <arg2>...]]');
+        console.log('Usage: run_module.js all|<module1:module2:...> [<getFunction> [<arg1> <arg2>...]]');
         console.log('');
         console.log('  Available modules:');
         console.log('');
