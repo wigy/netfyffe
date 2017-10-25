@@ -25,6 +25,13 @@
         "TradeGate": "XGAT",
         "Tokyo": "XTKS",
         "OTC Markets": "OTCM",
-        "London": "XLON"
+        "London": "XLON",
+        "NSE": null,
+        "Xetra": null,
+        "BSE": null,
+        "Karachi": null,
+        "DSE": null,
+        "Dusseldorf": null,
+        "BATS Europe": null
     }
 }

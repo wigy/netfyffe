@@ -4,6 +4,7 @@ class TickerLookup extends HarvestLookup {
 
     constructor() {
         super('ticker');
+        this.options.autoInsertMissingWords = false;
         this.options.errorForMissingWords = false;
         this.load();
     }

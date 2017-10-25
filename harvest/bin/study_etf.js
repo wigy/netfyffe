@@ -114,7 +114,7 @@ async function explore(terms) {
     .then((data) => {
         switch(data.idIs) {
             case 'name':
-                return collectContent(provider, [data.items[4]]);
+                return collectContent(provider, [data.items[5]]);
             default:
                 quit('Don\'t know how to handle identfication by', data.idIs);
         }

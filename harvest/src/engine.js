@@ -137,10 +137,12 @@ class Engine {
         return this.call('getTickerSearch', text, type)
             .then(data => {
                 if (data.length === 0) {
-                    if (/Corp\.?$/i.test(text)) {
-                        text = text.replace(/Corp\.?$/i, '');
-                        return this.getTickerSearch(text, type);
-                    }
+                    [/Corp\.?$/i, /-Reg$/i, /Ltd\.?$/].forEach(regex => {
+                        if (regex.test(text)) {
+                            text = text.replace(regex, '');
+                            return this.getTickerSearch(text, type);
+                        }
+                    });
                 }
                 return data;
             });

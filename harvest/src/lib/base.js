@@ -28,7 +28,7 @@ class HarvestLookup {
     }
 
     /**
-     * Save the text to the database.
+     * Save the text placholder (or with result) to the database.
      */
     save(text, hint, result = null) {
         if (result === null) {
@@ -83,7 +83,7 @@ class HarvestLookup {
         if (this.options.errorForMissingWords) {
             d.error('Unable to identify', this.name, text, 'in the context', hint || 'DEFAULT');
         }
-        if (this.autoInsertMissingWords) {
+        if (this.options.autoInsertMissingWords) {
             this.save(text, hint || 'DEFAULT');
         }
         return undefined;
