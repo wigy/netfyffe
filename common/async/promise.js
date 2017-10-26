@@ -17,4 +17,3 @@ function seq(entries) {
 }
 
 module.exports = {seq};
-// TODO: Remove this duplicate and use common.

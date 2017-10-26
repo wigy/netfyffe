@@ -7,6 +7,7 @@ global.d = require('neat-dump');
 const engine = require('../src/engine');
 const readline = require('readline');
 const lib = require('../src/lib');
+const seq = require('../../common/async/promise').seq;
 
 /**
  * Show message and quit.
@@ -68,24 +69,24 @@ async function select(data, field, msg = 'Select one: ') {
  * Go through ETF content list and perform name lookup for each.
  */
 async function collectContent(provider, items) {
-    return new Promise((resolve, reject) => {
-        let content = [];
-        let remaining = items.length;
-        items.forEach(async (item) => {
-            d.info('Looking for', item.id);
-            let ticker = lib.ticker.find(item.id, provider);
-            if (!ticker) {
-                let share = await findByName(item.id);
+    let work = items.map((item) => ( () => new Promise((resolve, reject) => {
+        d.info('Looking for', item.id);
+        let ticker = lib.ticker.find(item.id, provider);
+        if (ticker) {
+            d.info('Got', ticker);
+            resolve({ticker: ticker, count: item.count});
+        } else {
+            findByName(item.id)
+            .then(share => {
                 ticker = share.market.market + ':' + share.market.ticker;
+                d.info('Got', ticker);
                 lib.ticker.save(item.id, provider, ticker);
-            }
-            content.push({ticker: ticker, count: item.count});
-            remaining--;
-            if (!remaining) {
-                resolve(content);
-            }
-        });
-    });
+                resolve({ticker: ticker, count: item.count});
+            })
+        }
+    })));
+
+    return seq(work);
 }
 
 /**
@@ -114,7 +115,7 @@ async function explore(terms) {
     .then((data) => {
         switch(data.idIs) {
             case 'name':
-                return collectContent(provider, [data.items[7],data.items[8]]);
+                return collectContent(provider, data.items);
             default:
                 quit('Don\'t know how to handle identfication by', data.idIs);
         }

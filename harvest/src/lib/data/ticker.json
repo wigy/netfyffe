@@ -7,6 +7,9 @@
         "MITSUBISHI ELECTRIC CORP": "XTKS:6503",
         "FANUC CORP": "XTKS:6954",
         "ABB LTD-REG": "SWX:ABBN",
-        "YASKAWA ELECTRIC CORP": "XTKS:6506"
+        "YASKAWA ELECTRIC CORP": "XTKS:6506",
+        "KUKA AG": "XFRA:KU2G",
+        "OMRON CORP": "OTCM:OMRNY",
+        "SMC CORP": "XTKS:6273"
     }
 }
