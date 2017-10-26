@@ -54,7 +54,7 @@ async function select(data, field, msg = 'Select one: ') {
         return new Promise((resolve, reject) => {
             rl.question(msg, (answer) => {
                 if (answer === '') {
-                    answer = 1;
+                    quit('Quit');
                 }
                 resolve(data[parseInt(answer) - 1]);
                 rl.close();
@@ -114,7 +114,7 @@ async function explore(terms) {
     .then((data) => {
         switch(data.idIs) {
             case 'name':
-                return collectContent(provider, [data.items[5]]);
+                return collectContent(provider, [data.items[7],data.items[8]]);
             default:
                 quit('Don\'t know how to handle identfication by', data.idIs);
         }
