@@ -69,6 +69,7 @@ class HuntHTML {
      * @param {String} selector A CSS selector expression to narrow down elements.
      * @param {Function} filter A filter matching the wanted elements.
      * @param {Function} mapper A function extracting wanted data from the elements.
+     * @param {Boolean} flat If set, do not combine objects.
      *
      * For example:
      *
@@ -79,7 +80,7 @@ class HuntHTML {
      *
      * If all elements returned by the mapper are objects, they are combined into single object.
      */
-    hunt(selector, filter, mapper) {
+    hunt(selector, filter, mapper, flat=false) {
 
         let elems = this.$(selector);
 
@@ -106,7 +107,9 @@ class HuntHTML {
 
         });
         // If they are all objects, combine them.
-        if (ret.filter(r => typeof(r)==='object').length === ret.length) {
+        if (flat) {
+            //ret = ret.map(e => e[0]);
+        } else if (ret.filter(r => typeof(r)==='object').length === ret.length) {
             ret = ret.reduce((p, c) => Object.assign(p, c), {});
         }
 
@@ -120,10 +123,10 @@ class HuntHTML {
     /**
      * Similar to hunt() but display results of each step.
      */
-    huntDebug(selector, filter, mapper) {
+    huntDebug(selector, filter, mapper, flat=false) {
         const old = this.debug;
         this.debug = true;
-        const ret = this.hunt(selector, filter, mapper);
+        const ret = this.hunt(selector, filter, mapper, flat);
         this.debug = old;
         return ret;
     }
