@@ -15,7 +15,7 @@ class Engine {
      * Get the list of supprted commands.
      */
     commands() {
-        return ['Latest', 'DailyData', 'Info', 'ETFContent', 'TickerSearch'];
+        return ['Latest', 'DailyData', 'Info', 'ETFContent', 'TickerSearch', 'Misc'];
     }
 
     /**
@@ -129,6 +129,11 @@ class Engine {
     async getETFContent(provider, ticker) {
         await this.init();
         return this.call('getETFContent', provider, ticker);
+    }
+
+    async getMisc() {
+        await this.init();
+        return this.call('getMisc');
     }
 
     async getTickerSearch(text, type) {

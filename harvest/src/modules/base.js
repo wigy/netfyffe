@@ -96,6 +96,13 @@ class HarvestModule {
     }
 
     /**
+     * Custom data fetching.
+     */
+    isMiscAvailable() {
+        return false;
+    }
+
+    /**
      * Fetch the latest value for an ticker.
      * {ticker: "ABC:DEF", value: 1.24, currency: "EUR"}
      */
@@ -163,6 +170,13 @@ class HarvestModule {
      */
     getHeaders(method, extras={}) {
         return Object.assign({}, this.headers.DEFAULT, this.headers[method] || {}, extras);
+    }
+
+    /**
+     * Custom data fetching.
+     */
+    getMisc() {
+        throw new Error('Module does not implement getMisc().');
     }
 
     /**
