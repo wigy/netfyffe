@@ -13,7 +13,6 @@ app.get('/', (req, res) => {
   res.redirect('/quote/');
 });
 app.use('/quote', require('./routes/quote'));
-app.use('/industries', require('./routes/industries'));
 app.use('/latest', require('./routes/latest'));
 app.use('/doc', express.static('./doc'));
 

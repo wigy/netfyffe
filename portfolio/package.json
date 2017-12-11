@@ -19,6 +19,7 @@
     "csv-parse": "^1.2.0",
     "encoding": "^0.1.12",
     "express": "^4.15.2",
+    "knex": "^0.14.2",
     "knex-dump": "^1.0.2",
     "lockfile": "^1.0.3",
     "mocha": "^3.2.0",
@@ -28,6 +29,6 @@
     "objection": "^0.7.11",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^3.1.13"
   }
 }
