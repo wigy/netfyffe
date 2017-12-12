@@ -13,7 +13,6 @@ services:
     volumes:
       - ./quotes/src:/var/app/src
       - ./quotes/seeds:/var/app/seeds
-      - ./common:/var/app/src/common
     command: npm run dev
 
   harvest:
@@ -24,7 +23,6 @@ services:
       - "9001:9001"
     volumes:
       - ./harvest/src:/var/app/src
-      - ./common:/var/app/src/common
     command: npm run dev
 
   portfolio:
@@ -35,7 +33,6 @@ services:
       - "9002:9002"
     volumes:
       - ./portfolio/src:/var/app/src
-      - ./common:/var/app/src/common
     command: npm run dev
 
   ui:

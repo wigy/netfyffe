@@ -3,7 +3,7 @@ const moment = require('moment');
 const splitArray = require('split-array');
 const config = require('../../config');
 const db = require('../../db');
-const {time} = require('../../common');
+const {time} = require('chronicles_of_node');
 
 /**
  * A memory caching front end to the quote retrieval.

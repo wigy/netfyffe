@@ -2,7 +2,7 @@ const express = require('express');
 const config = require('../config');
 const router = express.Router();
 const engine = require('../engine');
-const {time} = require('../common');
+const {time} = require('chronicles_of_node');
 
 /**
  * @api {get} /latest/:code Get the latest value for an instrument.

@@ -7,7 +7,7 @@ global.d = require('neat-dump');
 const engine = require('../src/engine');
 const readline = require('readline');
 const lib = require('../src/lib');
-const seq = require('../../common/async/promise').seq;
+const seq = require('chronicles_of_node').async.promise.seq;
 
 /**
  * Show message and quit.

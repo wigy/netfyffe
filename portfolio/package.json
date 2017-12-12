@@ -15,6 +15,7 @@
   "dependencies": {
     "apidoc": "^0.17.5",
     "argparse": "^1.0.9",
+    "chronicles_of_node": "^0.1.1",
     "cors": "^2.8.3",
     "csv-parse": "^1.2.0",
     "encoding": "^0.1.12",
