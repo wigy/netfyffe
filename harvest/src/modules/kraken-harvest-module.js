@@ -64,7 +64,7 @@ class KrakenHarvetModule extends HarvestModule {
                 if (!currency) {
                     this.log('Don\'t know currency', res.result[key].base);
                 } else {
-                    let ticker = 'CUR:' + currency;
+                    let ticker = 'KRAKEN:' + currency;
                     this.currencyPairs[ticker] = key;
                 }
              }
@@ -74,7 +74,7 @@ class KrakenHarvetModule extends HarvestModule {
     }
 
     isLatestAvailable(ticker) {
-        return ticker.split(':')[0] === 'CUR';
+        return ticker.split(':')[0] === 'KRAKEN';
     }
 
     async getLatest(ticker) {
