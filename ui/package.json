@@ -7,7 +7,7 @@
     "build:watch": "bin/build_config.js && tsc -p src/ -w",
     "serve": "lite-server -c=bs-config.js",
     "prestart": "npm run build",
-    "start": "concurrently \"npm run build:watch\" \"npm run serve\"",
+    "start": "concurrently \"npm run build\" \"npm run serve\"",
     "dev": "concurrently \"npm run build:watch\" \"npm run serve\"",
     "lint": "tslint ./src/**/*.ts -t verbose"
   },
