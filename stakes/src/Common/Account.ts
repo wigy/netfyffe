@@ -1,19 +1,19 @@
 import { DataObject } from './DataObject';
 import { AccountType } from './AccountType';
+import { Transaction } from './Transaction';
 import { Investor } from './Investor';
 
 export class Account extends DataObject{
 
   type: AccountType;
-  owner: Investor | undefined;
+  txs: Transaction[];
 
   constructor(data: {
     id: number,
     type: AccountType,
-    owner?: Investor,
   }) {
     super(data.id, 'Account');
     this.type = data.type;
-    this.owner = data.owner;
+    this.txs = [];
   }
 }

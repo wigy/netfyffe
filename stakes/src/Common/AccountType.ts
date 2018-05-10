@@ -1,5 +1,5 @@
 export enum AccountType {
-  CurrentAccount,
+  BankAccount,
   SavingsAccount,
   FundAccount
 };
