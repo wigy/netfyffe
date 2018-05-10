@@ -6,8 +6,8 @@ exports.up = function(knex, Promise) {
     table.string('tag', 16).notNullable();
     table.string('fullName', 256).defaultTo(null);
 
-    table.index('tag');
-    table.index('nick');
+    table.unique('tag');
+    table.unique('nick');
   });
 };
 

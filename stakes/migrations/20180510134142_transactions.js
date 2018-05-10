@@ -6,7 +6,8 @@ exports.up = function(knex, Promise) {
       'Deposit',
       'Withdrawal'
     ]).notNullable();
-    table.integer('amount').notNullable();
+    table.date('date').notNullable();
+    table.string('amount').notNullable();
   });
 };
 
