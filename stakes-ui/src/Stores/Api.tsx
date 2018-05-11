@@ -3,7 +3,7 @@ import { Inherits } from '../Common/Types/Inherits';
 
 class Api  {
 
-  public static getAll(TargetClass: Inherits<DataObject>) : Promise<any> {
+  public static getAll(TargetClass: Inherits<DataObject>) : Promise<DataObject[]> {
     const sample = new TargetClass({});
     // TODO: Make configurable.
     return fetch('http://localhost:9003/' + sample.apiName)
