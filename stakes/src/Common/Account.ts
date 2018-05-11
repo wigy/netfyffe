@@ -1,3 +1,4 @@
+import { Collection } from './Types/Collection';
 import { DataObject } from './DataObject';
 import { AccountType } from './AccountType';
 import { Transaction } from './Transaction';
@@ -15,5 +16,9 @@ export class Account extends DataObject{
     super(data.id, 'Account');
     this.type = data.type;
     this.txs = [];
+  }
+
+  collections() : Collection[] {
+    return [{name: 'transfers', linkField: 'accountId', tableName: 'transfers'}];
   }
 }

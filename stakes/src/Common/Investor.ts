@@ -1,3 +1,4 @@
+import { Collection } from './Types/Collection';
 import { DataObject} from './DataObject';
 
 export class Investor extends DataObject{
@@ -21,5 +22,9 @@ export class Investor extends DataObject{
     this.tag = data.tag;
     this.fullName = data.fullName;
     this.accounts = [];
+  }
+
+  collections() : Collection[] {
+    return [{name: 'accounts', linkField: 'investorId', tableName: 'accounts'}];
   }
 }
