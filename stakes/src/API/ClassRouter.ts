@@ -20,7 +20,7 @@ export class ClassRouter {
         })
     });
 
-    // Get single entry and fill in dependencies.
+    // Get single entry and fill in collections.
     router.get('/:id', (req: Request, res: Response) => {
       const id = req.params.id;
       const target = new targetClass({id: id});

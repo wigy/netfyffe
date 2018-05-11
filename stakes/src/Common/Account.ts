@@ -1,13 +1,13 @@
 import { Collection } from './Types/Collection';
 import { DataObject } from './DataObject';
 import { AccountType } from './AccountType';
-import { Transaction } from './Transaction';
+import { Transfer } from './Transfer';
 import { Investor } from './Investor';
 
 export class Account extends DataObject{
 
   type: AccountType;
-  txs: Transaction[];
+  txs: Transfer[];
 
   constructor(data: {
     id: number,

@@ -1,18 +1,18 @@
 import { DataObject } from './DataObject';
-import { TransactionType } from './TransactionType';
+import { TransferType } from './TransferType';
 import { BigNumber } from 'bignumber.js';
 
-export class Transaction extends DataObject{
+export class Transfer extends DataObject{
 
-  type: TransactionType;
+  type: TransferType;
   amount: BigNumber;
 
   constructor(data: {
     id: number,
-    type: TransactionType,
+    type: TransferType,
     amount: BigNumber
   }) {
-    super(data.id, 'Transaction');
+    super(data.id, 'Transfer');
     this.type = data.type;
     this.amount = data.amount;
   }
