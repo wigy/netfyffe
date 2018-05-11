@@ -1,17 +1,19 @@
+//import { Investor } from '../Common/Investor';
+
 class Api  {
 
-  public static investors() {
-    fetch('http://localhost:9003/investors')
+  public static getAll() : Promise<any> {
+
+    return fetch('http://localhost:9003/investors')
       .then((response) => {
         return response.json();
       })
-      .then((myJson) => {
-        console.log(myJson);
+      .then((data) => {
+        console.log(data);
       })
       .catch((err) => {
         console.error('API ERROR:', err);
-      })
-    return 1;
+      });
   }
 }
 

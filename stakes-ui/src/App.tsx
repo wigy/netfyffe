@@ -7,7 +7,7 @@ import Api from './Stores/Api';
 class App extends React.Component {
   public render() {
 
-    Api.investors();
+    Api.getAll();
 
     return (
       <div className="App">
