@@ -1,13 +1,12 @@
-import { Collection } from './Types/Collection';
-import { DataObject } from './DataObject';
 import { AccountType } from './AccountType';
+import { DataObject } from './DataObject';
 import { Transfer } from './Transfer';
-import { Investor } from './Investor';
+import { ICollection } from './Types/Collection';
 
 export class Account extends DataObject{
 
-  type: AccountType;
-  txs: Transfer[];
+  public type: AccountType;
+  public transfers: Transfer[];
 
   constructor(data: {
     id: number,
@@ -15,10 +14,10 @@ export class Account extends DataObject{
   }) {
     super(data.id, 'Account');
     this.type = data.type;
-    this.txs = [];
+    this.transfers = [];
   }
 
-  collections() : Collection[] {
+  public collections() : ICollection[] {
     return [{name: 'transfers', linkField: 'accountId', tableName: 'transfers'}];
   }
 }

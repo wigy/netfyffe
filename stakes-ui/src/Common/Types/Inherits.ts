@@ -1,1 +1,1 @@
-export type Inherits<T> = { new (...args: any[]): T; };
+export interface Inherits<T> { new (...args: any[]): T; };

@@ -1,4 +1,4 @@
-import { Collection } from './Types/Collection';
+import { ICollection } from './Types/Collection';
 
 export class DataObject {
 
@@ -10,7 +10,7 @@ export class DataObject {
     this.className = className;
   }
 
-  collections() : Collection[] {
+  public collections() : ICollection[] {
     return []
   }
 }

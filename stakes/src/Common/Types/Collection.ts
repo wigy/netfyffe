@@ -1,4 +1,4 @@
-export type Collection = {
+export interface ICollection {
   name: string,
   linkField: string,
   tableName: string

@@ -1,13 +1,13 @@
-import { Collection } from './Types/Collection';
 import { DataObject} from './DataObject';
+import { ICollection } from './Types/Collection';
 
 export class Investor extends DataObject{
 
-  nick: string;
-  password: string;
-  tag: string;
-  fullName: string;
-  accounts: Account[];
+  public nick: string;
+  public password: string;
+  public tag: string;
+  public fullName: string;
+  public accounts: Account[];
 
   constructor(data: {
     id: number,
@@ -24,7 +24,7 @@ export class Investor extends DataObject{
     this.accounts = [];
   }
 
-  collections() : Collection[] {
+  public collections() : ICollection[] {
     return [{name: 'accounts', linkField: 'investorId', tableName: 'accounts'}];
   }
 }

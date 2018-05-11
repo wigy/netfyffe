@@ -1,4 +1,4 @@
-//import { Investor } from '../Common/Investor';
+// import { Investor } from '../Common/Investor';
 
 class Api  {
 

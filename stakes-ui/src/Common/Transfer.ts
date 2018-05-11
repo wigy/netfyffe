@@ -1,11 +1,11 @@
+import { BigNumber } from 'bignumber.js';
 import { DataObject } from './DataObject';
 import { TransferType } from './TransferType';
-import { BigNumber } from 'bignumber.js';
 
 export class Transfer extends DataObject{
 
-  type: TransferType;
-  amount: BigNumber;
+  public type: TransferType;
+  public amount: BigNumber;
 
   constructor(data: {
     id: number,
