@@ -1,16 +1,16 @@
-import { Investor } from '../Common/Investor';
+import { DataObject } from '../Common/DataObject';
+import { Inherits } from '../Common/Types/Inherits';
 
 class Api  {
 
-  public static getAll() : Promise<any> {
+  public static getAll(TargetClass: Inherits<DataObject>) : Promise<any> {
+    const sample = new TargetClass({});
     // TODO: Make configurable.
-    return fetch('http://localhost:9003/investors')
+    return fetch('http://localhost:9003/' + sample.apiName)
       .then((response) => {
         return response.json();
       })
-      .then((data) => {
-        console.log(data.map((d: any) => new Investor(d)));
-      })
+      .then((data) => data.map((d: any) => new TargetClass(d)))
       .catch((err) => {
         console.error('API ERROR:', err);
       });
