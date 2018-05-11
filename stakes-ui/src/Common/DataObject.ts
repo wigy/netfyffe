@@ -2,12 +2,14 @@ import { ICollection } from './Types/Collection';
 
 export class DataObject {
 
-  public id: number;
+  public id: number|undefined;
   public className: string;
+  public apiName: string;
 
-  constructor(id: number, className: string) {
+  constructor(className: string, apiName: string, id?: number) {
     this.id = id;
     this.className = className;
+    this.apiName = apiName;
   }
 
   public collections() : ICollection[] {

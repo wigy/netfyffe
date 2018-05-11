@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/investors', ClassRouter.forClass('investors', Investor));
-app.use('/accounts', ClassRouter.forClass('accounts', Account));
+app.use('/investors', ClassRouter.forClass(Investor));
+app.use('/accounts', ClassRouter.forClass(Account));
 
 export default app;

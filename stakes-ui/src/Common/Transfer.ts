@@ -12,7 +12,7 @@ export class Transfer extends DataObject{
     type: TransferType,
     amount: BigNumber
   }) {
-    super(data.id, 'Transfer');
+    super('Transfer', 'transfers', data.id);
     this.type = data.type;
     this.amount = data.amount;
   }

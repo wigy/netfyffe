@@ -16,7 +16,7 @@ export class Investor extends DataObject{
     tag: string,
     fullName: string,
   }) {
-    super(data.id, 'Investor');
+    super('Investor', 'investors', data.id);
     this.nick = data.nick;
     this.password = data.password;
     this.tag = data.tag;

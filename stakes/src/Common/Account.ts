@@ -12,7 +12,7 @@ export class Account extends DataObject{
     id: number,
     type: AccountType,
   }) {
-    super(data.id, 'Account');
+    super('Account', 'accounts', data.id);
     this.type = data.type;
     this.transfers = [];
   }

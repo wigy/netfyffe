@@ -5,16 +5,17 @@ import { Inherits } from '../Common/Types/Inherits';
 
 export namespace ClassRouter {
 
-  export function forClass(tableName: string, targetClass: Inherits<DataObject>) : Router {
+  export function forClass(targetClass: Inherits<DataObject>) : Router {
 
     const config = require('../../knexfile.js');
     const router: Router = Router();
+    const target = new targetClass({});
 
     // Get all entries.
     router.get('/', (req: Request, res: Response) => {
       Knex(config)
         .select('*')
-        .from(tableName)
+        .from(target.apiName)
         .then((data) => {
           res.send(data);
         })
@@ -23,10 +24,9 @@ export namespace ClassRouter {
     // Get single entry and fill in collections.
     router.get('/:id', (req: Request, res: Response) => {
       const id = req.params.id;
-      const target = new targetClass({id: id});
       Knex(config)
         .select('*')
-        .from(tableName)
+        .from(target.apiName)
         .where({id: id})
         .then((data) => {
           if (data.length) {
