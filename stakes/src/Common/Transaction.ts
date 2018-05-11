@@ -1,6 +1,6 @@
 import { DataObject } from './DataObject';
 import { TransactionType } from './TransactionType';
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 export class Transaction extends DataObject{
 
