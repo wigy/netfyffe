@@ -1,20 +1,22 @@
-import './Hello.css';
 
 import * as React from 'react';
+import { Investor } from '../Common/Investor';
+
+import './Hello.css';
 
 export interface Props {
-  investors?: string[];
+  investors?: Investor[];
   onIncrement?: () => void;
   onDecrement?: () => void;
 }
 
 function Hello({ investors, onIncrement, onDecrement }: Props) {
-
   return (
     <div className="hello">
       <div className="greeting">
-        Hello!
+        Stakes
       </div>
+      {investors && investors.map((investor, index) => <div key={index}>{investor.nick}</div>)}
       <div>
         <button onClick={onDecrement}>-</button>
         <button onClick={onIncrement}>+</button>

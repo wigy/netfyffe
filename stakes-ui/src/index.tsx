@@ -11,8 +11,10 @@ import { createStore } from 'redux';
 import { enthusiasm } from './reducers/index';
 // import { StoreState } from './types/index';
 
+import { Investor } from './Common/Investor';
+
 const store = createStore(enthusiasm, {
-  investors: ['Eka I', 'Toka I']
+  investors: [new Investor({id: 1, nick: 'Wigy'}), new Investor({id: 1, nick: 'Warre'})]
 });
 
 ReactDOM.render(

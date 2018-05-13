@@ -4,17 +4,17 @@ import { ICollection } from './Types';
 export class Investor extends DataObject{
 
   public nick: string;
-  public password: string;
-  public tag: string;
-  public fullName: string;
+  public password?: string;
+  public tag?: string;
+  public fullName?: string;
   public accounts: Account[];
 
   constructor(data: {
     id: number,
     nick: string,
-    password: string,
-    tag: string,
-    fullName: string,
+    password?: string,
+    tag?: string,
+    fullName?: string,
   }) {
     super('Investor', 'investors', data.id);
     this.nick = data.nick;
