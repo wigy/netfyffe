@@ -1,7 +1,7 @@
 import Knex = require('knex');
 import { Request, Response, Router, RequestHandler } from 'express';
 import { DataObject } from '../Common/DataObject';
-import { Inherits } from '../Common/Types/Inherits';
+import { Inherits } from '../Common/Types';
 
 export namespace ClassRouter {
 
