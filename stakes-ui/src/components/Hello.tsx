@@ -3,21 +3,17 @@ import './Hello.css';
 import * as React from 'react';
 
 export interface Props {
-  name?: string;
-  enthusiasmLevel?: number;
+  investors?: string[];
   onIncrement?: () => void;
   onDecrement?: () => void;
 }
 
-function Hello({ name, enthusiasmLevel = 1, onIncrement, onDecrement }: Props) {
-  if (enthusiasmLevel <= 0) {
-    throw new Error('You could be a little more enthusiastic. :D');
-  }
+function Hello({ investors, onIncrement, onDecrement }: Props) {
 
   return (
     <div className="hello">
       <div className="greeting">
-        Hello {name + getExclamationMarks(enthusiasmLevel)}
+        Hello!
       </div>
       <div>
         <button onClick={onDecrement}>-</button>
@@ -28,9 +24,3 @@ function Hello({ name, enthusiasmLevel = 1, onIncrement, onDecrement }: Props) {
 }
 
 export default Hello;
-
-// helpers
-
-function getExclamationMarks(numChars: number) {
-  return Array(numChars + 1).join('!');
-}

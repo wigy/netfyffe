@@ -12,8 +12,7 @@ import { enthusiasm } from './reducers/index';
 // import { StoreState } from './types/index';
 
 const store = createStore(enthusiasm, {
-  enthusiasmLevel: 1,
-  languageName: 'TypeScript',
+  investors: ['Eka I', 'Toka I']
 });
 
 ReactDOM.render(
