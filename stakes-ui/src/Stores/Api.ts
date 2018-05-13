@@ -7,6 +7,9 @@ export function getAll<T extends Inherits<DataObject>>(TargetClass: T) : Promise
   // TODO: Make configurable.
   return fetch('http://localhost:9003/' + sample.apiName)
     .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
       return response.json();
     })
     .then((data) => data.map((d: IData) => new TargetClass(d)))
