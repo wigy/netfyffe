@@ -1,4 +1,4 @@
-import { ICollection } from './Types/Collection';
+import { ICollection } from './Types';
 
 export class DataObject {
 

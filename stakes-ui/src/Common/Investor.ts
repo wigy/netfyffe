@@ -1,5 +1,5 @@
 import { DataObject} from './DataObject';
-import { ICollection } from './Types/Collection';
+import { ICollection } from './Types';
 
 export class Investor extends DataObject{
 

@@ -1,7 +1,7 @@
 import { AccountType } from './AccountType';
 import { DataObject } from './DataObject';
 import { Transfer } from './Transfer';
-import { ICollection } from './Types/Collection';
+import { ICollection } from './Types';
 
 export class Account extends DataObject{
 
