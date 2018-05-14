@@ -1,13 +1,15 @@
-import { EnthusiasmAction } from '../actions';
+import { AppAction } from '../actions';
 import { StoreState } from '../types/index';
-import { INCREMENT_ENTHUSIASM, DECREMENT_ENTHUSIASM } from '../constants/index';
+import { START_LOADING, END_LOADING, INVESTORS_LOADED } from '../constants/index';
 
-export function enthusiasm(state: StoreState, action: EnthusiasmAction): StoreState {
+export function enthusiasm(state: StoreState, action: AppAction): StoreState {
   switch (action.type) {
-    case INCREMENT_ENTHUSIASM:
-      return { ...state };
-    case DECREMENT_ENTHUSIASM:
-      return { ...state };
+    case START_LOADING:
+      return Object.assign({}, {...state}, {loading: true});
+    case END_LOADING:
+      return Object.assign({}, {...state}, {loading: false});
+    case INVESTORS_LOADED:
+    return Object.assign({}, {...state}, {investors: action.data});
   }
   return state;
 }

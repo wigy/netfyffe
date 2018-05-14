@@ -3,7 +3,7 @@ import { ICollection } from './Types';
 
 export class Investor extends DataObject{
 
-  public nick: string;
+  public nick?: string;
   public password?: string;
   public tag?: string;
   public fullName?: string;
@@ -11,7 +11,7 @@ export class Investor extends DataObject{
 
   constructor(data: {
     id: number,
-    nick: string,
+    nick?: string,
     password?: string,
     tag?: string,
     fullName?: string,
