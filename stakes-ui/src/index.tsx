@@ -1,21 +1,21 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-// import App from './App';
-// import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
-
-import Hello from './components/Hello';
-
+import { BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
-import { enthusiasm } from './reducers/index';
-import { create } from './types/index';
 
+import App from './App';
+
+import './index.css';
+
+import { reducers } from './reducers/index';
+import { create } from './types/index';
+import { getAll } from './Stores/Api';
 import { startLoading, endLoading, investorsLoaded } from './actions/index';
 import { Investor } from './Common/Investor';
-import { getAll } from './Stores/Api';
 
-const store = createStore(enthusiasm, create());
+const store = createStore(reducers, create());
 
 store.dispatch(startLoading());
 
@@ -31,7 +31,9 @@ getAll(Investor)
 
 ReactDOM.render(
   <Provider store={store}>
-    <Hello />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

@@ -1,21 +1,17 @@
 import * as React from 'react';
+import { Route } from 'react-router-dom';
 
 import './App.css';
 
-import { Investor } from './Common/Investor';
-import { getAll } from './Stores/Api';
+import InvestorList from './components/InvestorList';
 
 class App extends React.Component {
 
   public render() {
-    getAll(Investor)
-      .then((data) => {
-        console.log(data);
-      })
-
     return (
       <div className="App">
-        <h1>Stakes</h1>
+        <Route exact={true} path="/investors" component={InvestorList}/>
+        <Route path="/investors/:investorsId" component={InvestorList}/>
       </div>
     );
   }

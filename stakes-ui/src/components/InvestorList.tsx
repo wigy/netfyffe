@@ -5,20 +5,18 @@ import * as actions from '../actions/';
 import { StoreState } from '../types/index';
 import { Investor } from '../Common/Investor';
 
-import './Hello.css';
+import './InvestorList.css';
 
 export interface Props {
   investors?: Investor[];
+  // TODO: Just sample. Remove.
   onIncrement?: () => void;
   onDecrement?: () => void;
 }
 
-function Hello({ investors, onIncrement, onDecrement }: Props) {
+function InvestorList({ investors, onIncrement, onDecrement }: Props) {
   return (
-    <div className="hello">
-      <div className="greeting">
-        Stakes
-      </div>
+    <div className="InvestorList">
       {investors && investors.map((investor, index) => <div key={index}>{investor.nick}</div>)}
       <div>
         <button onClick={onDecrement}>-</button>
@@ -35,9 +33,10 @@ function mapStateToProps({ investors }: StoreState) {
 }
 function mapDispatchToProps(dispatch: Dispatch<actions.StartLoading>) {
   return {
+    // TODO: Just sample. Remove.
     onDecrement: () => dispatch(actions.startLoading()),
     onIncrement: () => dispatch(actions.startLoading()),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Hello);
+export default connect(mapStateToProps, mapDispatchToProps)(InvestorList);
