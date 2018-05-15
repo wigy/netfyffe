@@ -1,6 +1,6 @@
-import { DataObject } from './Common/DataObject';
-import { IData } from './Common/Types';
-import { Inherits } from './Common/Types';
+import { DataObject } from './DataObject';
+import { IData } from './Types';
+import { Inherits } from './Types';
 
 export function getAll<T extends Inherits<DataObject>>(TargetClass: T) : Promise<T[]> {
   const sample = new TargetClass({id: 99});
