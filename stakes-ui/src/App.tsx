@@ -10,8 +10,24 @@ class App extends React.Component {
   public render() {
     return (
       <div className="App">
-        <Route exact={true} path="/investors" component={InvestorList}/>
-        <Route path="/investors/:investorsId" component={InvestorList}/>
+        <div className="TopPanel Panel">
+        Top
+        </div>
+        <div className="SidePanel Panel">
+          <div className="Frame">
+            <Route path="/investors" component={InvestorList}/>
+          </div>
+        </div>
+        <div className="MainTopPanel Panel">
+          <div className="Frame">
+          Main top
+          </div>
+        </div>
+        <div className="MainPanel Panel">
+          <div className="Frame">
+          Main
+          </div>
+        </div>
       </div>
     );
   }

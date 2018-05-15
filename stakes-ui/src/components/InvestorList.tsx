@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { connect, Dispatch } from 'react-redux';
 
 import * as actions from '../actions/';
@@ -17,7 +18,11 @@ export interface Props {
 function InvestorList({ investors, onIncrement, onDecrement }: Props) {
   return (
     <div className="InvestorList">
-      {investors && investors.map((investor, index) => <div key={index}>{investor.nick}</div>)}
+      {investors && investors.map((investor, index) => (
+        <div key={index}>
+          <Link to={'/investors/' + investor.id}>{investor.nick}</Link>
+        </div>
+        ))}
       <div>
         <button onClick={onDecrement}>-</button>
         <button onClick={onIncrement}>+</button>
