@@ -11,7 +11,7 @@ import './index.css';
 
 import { reducers } from './reducers/index';
 import { create } from './types/index';
-import { getAll } from './Stores/Api';
+import { getAll } from './Api';
 import { startLoading, endLoading, investorsLoaded } from './actions/index';
 import { Investor } from './Common/Investor';
 
