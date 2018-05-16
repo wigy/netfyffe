@@ -11,28 +11,15 @@ import './index.css';
 
 import { reducers } from './reducers/index';
 import { create } from './types/index';
-import { getAll } from './Common/Api';
-import { startLoading, endLoading, investorsLoaded } from './actions/index';
-import { Investor } from './Common/Investor';
+import { StoreManager } from './store/StoreManager';
 
 const store = createStore(reducers, create());
-
-store.dispatch(startLoading());
-
-getAll(Investor)
-  .then((data) => {
-    store.dispatch(endLoading());
-    store.dispatch(investorsLoaded(data));
-  })
-  .catch((err) => {
-    store.dispatch(endLoading());
-    console.error(err);
-  });
+const manager = new StoreManager(store);
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <App manager={manager}/>
     </BrowserRouter>
   </Provider>,
   document.getElementById('root') as HTMLElement

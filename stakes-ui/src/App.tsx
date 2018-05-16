@@ -3,9 +3,19 @@ import { Route } from 'react-router-dom';
 
 import './App.css';
 
+import { StoreManager } from './store/StoreManager';
 import InvestorList from './components/InvestorList';
+import { Investor } from './Common/Investor';
 
-class App extends React.Component {
+export interface Props {
+  manager: StoreManager;
+}
+
+class App extends React.Component<Props> {
+
+  public componentDidMount() {
+    this.props.manager.loadAll(Investor);
+  }
 
   public render() {
     return (
