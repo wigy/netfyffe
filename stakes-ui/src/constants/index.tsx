@@ -4,5 +4,5 @@ export type START_LOADING = typeof START_LOADING;
 export const END_LOADING = 'END_LOADING';
 export type END_LOADING = typeof END_LOADING;
 
-export const INVESTORS_LOADED = 'INVESTORS_LOADED';
-export type INVESTORS_LOADED = typeof INVESTORS_LOADED;
+export const DATA_LOADED = 'DATA_LOADED';
+export type DATA_LOADED = typeof DATA_LOADED;

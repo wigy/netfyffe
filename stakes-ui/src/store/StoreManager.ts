@@ -3,7 +3,7 @@ import { Store } from 'redux';
 import { DataObject } from '../Common/DataObject';
 import { Inherits } from '../Common/Types';
 import { getAll } from '../Common/Api';
-import { startLoading, endLoading, investorsLoaded } from '../actions/index';
+import { startLoading, endLoading, dataLoaded } from '../actions/index';
 
 export class StoreManager {
 
@@ -13,13 +13,13 @@ export class StoreManager {
     this.store = store;
   }
 
-  public loadAll<T extends Inherits<DataObject>>(TargetClass: T): void {
+  public loadAll<T extends Inherits<DataObject>>(target: string, TargetClass: T): void {
     this.store.dispatch(startLoading());
 
     getAll(TargetClass)
       .then((data) => {
         this.store.dispatch(endLoading());
-        this.store.dispatch(investorsLoaded(data));
+        this.store.dispatch(dataLoaded(target, data));
       })
       .catch((err) => {
         this.store.dispatch(endLoading());

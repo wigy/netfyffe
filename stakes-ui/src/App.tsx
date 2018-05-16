@@ -14,7 +14,7 @@ export interface Props {
 class App extends React.Component<Props> {
 
   public componentDidMount() {
-    this.props.manager.loadAll(Investor);
+    this.props.manager.loadAll('investors', Investor);
   }
 
   public render() {

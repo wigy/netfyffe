@@ -9,12 +9,13 @@ export interface EndLoading {
   type: constants.END_LOADING;
 }
 
-export interface InvestorsLoaded {
+export interface DataLoaded {
+  target: string,
   data: Investor[];
-  type: constants.INVESTORS_LOADED;
+  type: constants.DATA_LOADED;
 }
 
-export type AppAction = StartLoading | EndLoading | InvestorsLoaded;
+export type AppAction = StartLoading | EndLoading | DataLoaded;
 
 export function startLoading(): StartLoading {
   return {
@@ -29,9 +30,10 @@ export function endLoading(): EndLoading {
 }
 
 // TODO: Hmm, Investor[] not working here.
-export function investorsLoaded(data: any[]): InvestorsLoaded {
+export function dataLoaded(target: string, data: any[]): DataLoaded {
   return {
+    target,
     data,
-    type: constants.INVESTORS_LOADED,
+    type: constants.DATA_LOADED,
   }
 }
