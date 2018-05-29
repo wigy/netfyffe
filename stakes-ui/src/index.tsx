@@ -10,7 +10,7 @@ import App from './App';
 import './index.css';
 
 import { reducers } from './reducers/index';
-import { create } from './types/index';
+import { create } from './store';
 import { StoreManager } from './store/StoreManager';
 
 const store = createStore(reducers, create());

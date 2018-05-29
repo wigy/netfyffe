@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect, Dispatch } from 'react-redux';
 
 import * as actions from '../actions/';
-import { StoreState } from '../types/index';
+import { StoreState } from '../store/StoreState';
 import { Investor } from '../Common/Investor';
 
 import './InvestorList.css';

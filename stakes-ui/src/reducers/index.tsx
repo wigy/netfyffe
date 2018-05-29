@@ -1,5 +1,5 @@
 import { AppAction } from '../actions';
-import { StoreState } from '../types/index';
+import { StoreState } from '../store/StoreState';
 import { START_LOADING, END_LOADING, DATA_LOADED } from '../constants/index';
 
 export function reducers(state: StoreState, action: AppAction): StoreState {

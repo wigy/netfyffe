@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { Investor } from '../Common/Investor';
-import { StoreState } from '../types/index';
+import { StoreState } from '../store/StoreState';
 
 import './InvestorView.css';
 
