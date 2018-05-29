@@ -5,6 +5,7 @@ import './App.css';
 
 import { StoreManager } from './store/StoreManager';
 import InvestorList from './components/InvestorList';
+import InvestorView from './components/InvestorView';
 import { Investor } from './Common/Investor';
 
 export interface Props {
@@ -35,7 +36,7 @@ class App extends React.Component<Props> {
         </div>
         <div className="MainPanel Panel">
           <div className="Frame">
-          Main
+            <Route path="/investors/:id" component={InvestorView}/>
           </div>
         </div>
       </div>
