@@ -131,9 +131,9 @@ class Engine {
         return this.call('getETFContent', provider, ticker);
     }
 
-    async getMisc() {
+    async getMisc(...args) {
         await this.init();
-        return this.call('getMisc');
+        return this.call('getMisc', ...args);
     }
 
     async getTickerSearch(text, type) {

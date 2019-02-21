@@ -5,8 +5,8 @@ const cheerio = require('cheerio');
  */
 class HuntHTML {
 
-    constructor(html) {
-        this.debug = false;
+    constructor(html, debug = false) {
+        this.debug = debug;
         this.html = html;
         this.$ = cheerio.load(html);
     }
