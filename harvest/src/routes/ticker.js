@@ -5,7 +5,7 @@ const storage = require('../storage');
 const router = express.Router();
 
 /**
- * @api {get} /ticker/:code/:start/:end Collect daily data for an instrument.
+ * @api {GET} /ticker/:code/:start/:end Collect daily data for an instrument.
  * @apiName QuoteData
  * @apiGroup Ticker
  *
@@ -43,44 +43,13 @@ const router = express.Router();
  */
 router.get('/:ticker([-A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
 
-    const {ticker, start, end} = req.params;
+  const { ticker, start, end } = req.params;
 
-    storage.getDailyData(ticker, start, end)
-        .then(data => res.send(data))
-        .catch(err => {
-            d.error(err);
-            res.status(500).send("Internal server error");
-        });
-    return;
-    function tickerFetcher(start, end, ticker) {
-        d.info('Fetching from', start, 'to', end, 'for', ticker);
-        return engine.getDailyData(ticker, start, end)
-        .then(data => {
-            // Prepare fast lookup table per date.
-            let lookup = {};
-            data.map(q => lookup[q.date]=q);
-            // Fill in gaps in the date range by creating new entries with nulls.
-            let ret = [];
-            for(let s = moment(start), e = moment(end); s.diff(e) <= 0; s.add(1,'day')) {
-                let day = s.format('YYYY-MM-DD');
-                if (lookup[day]) {
-                    ret.push(lookup[day]);
-                } else {
-                    ret.push({date: day, open: null, close: null, high: null, low: null, ticker: ticker, volume: 0});
-                }
-            }
-
-            return ret;
-        });
-    }
-
-    tickerFetcher(start, end, ticker)
-    .then(data => {
-        res.send(data);
-    })
+  storage.getDailyData(ticker, start, end)
+    .then(data => res.send(data))
     .catch(err => {
-        d.error(err);
-        res.status(404).send({error: 'TickerNotFound'});
+      d.error(err);
+      res.status(404).send({"error": "TickerNotFound"});
     });
 });
 

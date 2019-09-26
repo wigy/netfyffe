@@ -182,26 +182,4 @@ router.get('/:ticker', (req, res) => {
     res.redirect('/quote/' + ticker + '/' + from + '/' + to);
 });
 
-/**
-* @api {get} /quote/:ticker/:start/:end Get quotes for the ticker for given days.
-* @apiName TickerQuoteRange
-* @apiGroup Quote
-* @apiParam {string} ticker Name of the ticker.
-* @apiParam {string} start First date in `YYYY-MM-DD` format.
-* @apiParam {string} end Last date in `YYYY-MM-DD` format.
-* @apiDescription
-*
-* Get the quotes for a single ticker for defined starting and ending days.
-* The result format is the same as without dates.
-*/
-router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
-    const {ticker, start, end} = req.params;
-    harvestCache.quotes(ticker, start, end)
-        .then(data => res.send(data))
-        .catch(err => {
-            d.error(err);
-            res.status(500).send("Internal server error");
-        });
-});
-
 module.exports = router;
