@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
-    "dev": "npm run migrate && nodemon src/server.js",
+    "dev": "npm run migrate && nodemon -i src/modules/cache/ src/server.js",
     "migrate": "knex --knexfile src/knexfile.js migrate:latest",
     "doc": "apidoc -i src"
   },

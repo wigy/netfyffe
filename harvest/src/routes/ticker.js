@@ -55,6 +55,46 @@ router.get('/:ticker([-A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2
 });
 
 /**
+ * @api {GET} /ticker/:code/:date Get data for one day for an instrument.
+ * @apiName TickerQuoteSingle
+ * @apiGroup Ticker
+ *
+ * @apiParam {String} ticker Instrument ticker code.
+ * @apiParam {String} date Date as YYYY-MM-DD.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "ticker": "FOO:BAR",
+ *       "date": "2017-01-03",
+ *       "open": 10.01
+ *       "close": 10.23
+ *       "low": 9.97
+ *       "high": 10.12
+ *       "volume": 12900
+ *     }
+ *
+ * @apiError TickerNotFound The ticker was not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "TickerNotFound"
+ *     }
+ */
+router.get('/:ticker([-A-Z0-9:]+)/:date(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
+
+  const { ticker, date } = req.params;
+
+  storage.getDailyData(ticker, date, date)
+    .then(data => res.send(data[0]))
+    .catch(err => {
+      d.error(err);
+      res.status(404).send({"error": "TickerNotFound"});
+    });
+});
+
+/**
 * @api {GET} /ticker/:ticker Get quotes for the ticker for 30 days.
 * @apiVersion 1.0.0
 * @apiName TickerQuote30
