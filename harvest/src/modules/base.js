@@ -277,7 +277,7 @@ class HarvestModule {
      * @param {String} url
      * @param {String} [cacheFile] Name of the cache file to store result.
      */
-    async get(url, cacheFile) {
+    async get(url, cacheFile, opts = {}) {
 
         const cached = this.readCache(cacheFile);
         if (cached !== undefined) {
@@ -298,7 +298,7 @@ class HarvestModule {
         if (/\.json$/.test(cacheFile)) {
             options.json = true;
         }
-
+        Object.assign(options, opts);
         this.log('GET ' + url);
         return rp(options)
             .then(res => {

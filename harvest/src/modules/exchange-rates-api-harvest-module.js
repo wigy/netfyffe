@@ -22,9 +22,8 @@ class ExchangeRatesApiHarvestModule extends HarvestModule {
 
     async getLatest(ticker) {
       const [, currency] = ticker.split(':');
-      const data = await fetch(`https://api.exchangeratesapi.io/latest?base=EUR&symbols=${currency}`);
-      const json = await data.json();
-      return 1 / json.rates[currency];
+      const data = await this.get(`https://api.exchangeratesapi.io/latest?base=EUR&symbols=${currency}`, null, {json: true});
+      return 1 / data.rates[currency];
     }
 
     isDailyDataAvailable(ticker, start, end) {
@@ -33,9 +32,8 @@ class ExchangeRatesApiHarvestModule extends HarvestModule {
 
     async getDailyData(ticker, first, last) {
       const [, currency] = ticker.split(':');
-      const data = await fetch(`https://api.exchangeratesapi.io/history?start_at=${first}&end_at=${last}&symbols=${currency}`);
-      const json = await data.json();
-      return Object.entries(json.rates).map(([date, rate]) => ({
+      const data = await this.get(`https://api.exchangeratesapi.io/history?start_at=${first}&end_at=${last}&symbols=${currency}`, `${currency}.${first}.${last}.json`)
+      return Object.entries(data.rates).map(([date, rate]) => ({
         ticker,
         date,
         close: 1 / rate[currency],
