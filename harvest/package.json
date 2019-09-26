@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "dev": "npm run migrate && nodemon src/server.js",
+    "migrate": "knex --knexfile src/knexfile.js migrate:latest",
     "doc": "apidoc -i src"
   },
   "apidoc": {
@@ -31,6 +32,7 @@
     "csvtojson": "^1.1.9",
     "express": "^4.14.1",
     "globby": "^6.1.0",
+    "knex": "^0.19.4",
     "kraken-api": "^1.0.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.17.1",
@@ -39,6 +41,7 @@
     "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "request-promise": "^4.1.1",
+    "sqlite3": "^4.1.0",
     "tough-cookie": "^2.3.3"
   }
 }

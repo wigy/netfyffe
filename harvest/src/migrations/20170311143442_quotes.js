@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
         table.decimal('high');
         table.decimal('low');
         table.decimal('close');
-        table.integer('volume').notNullable();
+        table.integer('volume');
 
         table.unique(['ticker', 'date']);
     });

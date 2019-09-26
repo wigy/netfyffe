@@ -1,8 +1,6 @@
-const rp = require('request-promise');
 const express = require('express');
 const moment = require('moment');
-const config = require('../config');
-const engine = require('../engine');
+const storage = require('../storage');
 
 const router = express.Router();
 
@@ -43,10 +41,17 @@ const router = express.Router();
  *       "error": "TickerNotFound"
  *     }
  */
-router.get('/:ticker([A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
+router.get('/:ticker([-A-Z0-9:]+)/:start(\\d{4}-\\d{2}-\\d{2})/:end(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
 
     const {ticker, start, end} = req.params;
 
+    storage.getDailyData(ticker, start, end)
+        .then(data => res.send(data))
+        .catch(err => {
+            d.error(err);
+            res.status(500).send("Internal server error");
+        });
+    return;
     function tickerFetcher(start, end, ticker) {
         d.info('Fetching from', start, 'to', end, 'for', ticker);
         return engine.getDailyData(ticker, start, end)
