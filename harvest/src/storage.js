@@ -12,8 +12,13 @@ async function fillDailyData(ticker, start, end) {
 
   const cache = {};
 
-  // Expand the range to ensure data for starting day.
+  // Expand the range to ensure data for starting day and reduce future request of same date vicinity.
   start = moment(start).subtract(7, 'days').format('YYYY-MM-DD');
+  end = moment(end).add(7, 'days').format('YYYY-MM-DD');
+  if (end >= moment().format('YYYY-MM-DD')) {
+    end = moment().subtract(1, 'day').format('YYYY-MM-DD');
+  }
+
   // Look for old data.
   const oldData = await db('quotes').select('*').where('date', '>=', start).andWhere('date', '<=', end).andWhere('ticker', ticker).orderBy('date');
   // Fill in cache.
