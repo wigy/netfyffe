@@ -17,11 +17,14 @@ class ExchangeRatesApiHarvestModule extends HarvestModule {
 
     isLatestAvailable(ticker) {
       const [exchange, currency] = ticker.split(':');
-      return exchange === 'CURRENCY' && this.currencies.has(currency);
+      return exchange === 'CURRENCY' && (this.currencies.has(currency) || currency === 'EUR');
     }
 
     async getLatest(ticker) {
       const [, currency] = ticker.split(':');
+      if (currency === 'EUR') {
+        return 1.0;
+      }
       const data = await this.get(`https://api.exchangeratesapi.io/latest?base=EUR&symbols=${currency}`, null, {json: true});
       return 1 / data.rates[currency];
     }
@@ -32,6 +35,22 @@ class ExchangeRatesApiHarvestModule extends HarvestModule {
 
     async getDailyData(ticker, first, last) {
       const [, currency] = ticker.split(':');
+      if (currency === 'EUR') {
+        const ret = [];
+        for(let s = moment(first), e = moment(last); s.diff(e) <= 0; s.add(1,'day')) {
+          const date = s.format('YYYY-MM-DD');
+          ret.push({
+            ticker: 'CURRENCY:EUR',
+            date,
+            close: 1,
+            open: 1,
+            high: 1,
+            low: 1,
+            volume: null
+          });
+        }
+        return ret;
+      }
       const data = await this.get(`https://api.exchangeratesapi.io/history?start_at=${first}&end_at=${last}&symbols=${currency}`, `${currency}.${first}.${last}.json`)
       return Object.entries(data.rates).map(([date, rate]) => ({
         ticker,
