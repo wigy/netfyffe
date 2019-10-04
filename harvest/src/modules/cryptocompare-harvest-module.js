@@ -24,13 +24,23 @@ class CryptoCompareHarvestModule extends HarvestModule {
       });
     }
 
+    ex(exchange) {
+      switch(exchange) {
+        case 'GDAX':
+          return 'COINBASE';
+      }
+      return exchange;
+    }
+
     isLatestAvailable(ticker) {
-      const [exchange, coin] = ticker.split(':');
+      let [exchange, coin] = ticker.split(':');
+      exchange = this.ex(exchange);
       return this.exchanges[exchange] && this.exchanges[exchange].trades.includes(coin);
     }
 
     async getLatest(ticker) {
-      const [exchange, coin] = ticker.split(':');
+      let [exchange, coin] = ticker.split(':');
+      exchange = this.ex(exchange);
       const price = await cc.price(coin, 'EUR', {exchanges: [this.exchanges[exchange].name]});
       return price.EUR;
     }
@@ -40,7 +50,8 @@ class CryptoCompareHarvestModule extends HarvestModule {
     }
 
     async getDailyData(ticker, first, last) {
-      const [exchange, coin] = ticker.split(':');
+      let [exchange, coin] = ticker.split(':');
+      exchange = this.ex(exchange);
       let dates = [];
       let ret = [];
       for (const date = moment(first); date.format('YYYY-MM-DD') <= last; date.add(1, 'day')) {
