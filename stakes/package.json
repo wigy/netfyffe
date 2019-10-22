@@ -16,7 +16,7 @@
     "bignumber.js": "^7.0.1",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "knex": "^0.14.6",
+    "knex": "^0.19.5",
     "nodemon": "^1.17.4",
     "sqlite3": "^4.0.0",
     "typescript": "^2.8.3"
