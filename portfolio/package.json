@@ -17,19 +17,19 @@
     "argparse": "^1.0.9",
     "chronicles_of_node": "^0.1.1",
     "cors": "^2.8.3",
-    "csv-parse": "^1.2.0",
+    "csv-parse": "^4.6.5",
     "encoding": "^0.1.12",
     "express": "^4.15.2",
     "knex": "^0.14.6",
-    "knex-dump": "^1.0.2",
+    "knex-dump": "^1.0.8",
     "lockfile": "^1.0.3",
-    "mocha": "^3.2.0",
+    "mocha": "^6.2.2",
     "moment": "^2.18.1",
     "neat-dump": "^1.0.11",
     "nodemon": "^1.11.0",
     "objection": "^0.7.11",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
-    "sqlite3": "^3.1.13"
+    "sqlite3": "^4.1.0"
   }
 }
