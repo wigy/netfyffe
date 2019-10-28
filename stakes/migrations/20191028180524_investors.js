@@ -1,13 +1,13 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('investors', function (table) {
     table.increments('id');
-    table.string('nick', 64).notNullable();
+    table.string('email', 256).notNullable();
     table.string('password', 256).defaultTo(null);
+    table.string('name', 256).defaultTo(null);
     table.string('tag', 16).notNullable();
-    table.string('fullName', 256).defaultTo(null);
 
     table.unique('tag');
-    table.unique('nick');
+    table.unique('email');
   });
 };
 
