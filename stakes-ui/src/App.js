@@ -1,23 +1,19 @@
 import React from 'react';
+import FundsPage from './pages/FundsPage';
 import './App.css';
-
-import RTDSClient from 'rtds-client';
-
-const config = {
-  SERVER_PORT: 3201
-}
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 function App() {
-  const loc = document.location;
-  const url = `${loc.protocol}//${loc.hostname}:${config.SERVER_PORT}`;
-  const socket = new RTDSClient(url);
-  socket.send('login', {user: 'tommi.ronkainen@gmail.com', password: 'pass'});
-  socket.send('subscribe', {type: 'investors'});
   return (
     <div className="App">
-      <p>
-        App.
-      </p>
+      <Router>
+        <Link to="/">Home</Link> |
+        <Link to="/funds">Funds</Link>
+        <hr />
+        <Switch>
+          <Route path="/funds" component={FundsPage} />
+        </Switch>
+      </Router>
     </div>
   );
 }
