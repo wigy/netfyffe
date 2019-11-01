@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDataSync } from 'rtds-client';
+import { Link } from "react-router-dom";
 
 
 function FundsPage() {
@@ -8,9 +9,9 @@ function FundsPage() {
 
   return (
     <div className="FundsPage">
-      <p>
-        {JSON.stringify(funds)}
-      </p>
+      {funds.map((fund) => <div key={fund.id}>
+        <Link to={`/funds/${fund.id}`}>[{fund.tag}] {fund.name}</Link>
+      </div>)}
     </div>
   );
 }
