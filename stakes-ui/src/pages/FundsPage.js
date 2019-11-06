@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDataSync } from 'rtds-client';
+import { useDataRead } from 'rtds-client';
 import { Link } from "react-router-dom";
 
 
 function FundsPage() {
   const [funds, setFunds] = useState([]);
-  useDataSync('funds', setFunds);
+  useDataRead('funds', setFunds);
 
   return (
     <div className="FundsPage">

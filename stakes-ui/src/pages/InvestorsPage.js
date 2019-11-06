@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useDataSync, useDataCreation } from 'rtds-client';
+import { useDataRead, useDataCreation } from 'rtds-client';
 import { Link } from "react-router-dom";
 
 
 function InvestorsPage() {
   const [investors, setInvestors] = useState([]);
-  useDataSync('investors', setInvestors);
+  useDataRead('investors', setInvestors);
   const create = useDataCreation();
 
   const id = Math.random() + '' + Math.random();
@@ -14,9 +14,10 @@ function InvestorsPage() {
     <div className="InvestorsPage">
       {investors.map((investor) => <div key={investor.id}>
         <Link to={`/investors/${investor.id}`}>[{investor.tag}] {investor.name}</Link>
+        <input type="button" value="Del" />
       </div>)}
       <br />
-      <input onClick={() => create({investors: {name: 'Foo ' + id, email: id + '.x@y', tag: id + 'Foo'}})} type="button" value="Add New"></input>
+      <input onClick={() => create({investors: {name: 'Foo ' + id, email: id + '.x@y', tag: id + 'Foo'}})} type="button" value="Add New" />
     </div>
   );
 }
