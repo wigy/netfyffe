@@ -2,6 +2,7 @@ import React from 'react';
 import DashboardPage from './pages/DashboardPage';
 import FundPage from './pages/FundPage';
 import FundsPage from './pages/FundsPage';
+import InvestorPage from './pages/InvestorPage';
 import InvestorsPage from './pages/InvestorsPage';
 import HomePage from './pages/HomePage';
 import './App.css';
@@ -15,6 +16,7 @@ function App() {
         <hr />
         <Switch>
           <Route path="/dashboard" component={DashboardPage} />
+          <Route path="/investors/:id" component={InvestorPage} />
           <Route path="/investors" component={InvestorsPage} />
           <Route path="/funds/:id" component={FundPage} />
           <Route path="/funds" component={FundsPage} />

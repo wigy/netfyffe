@@ -18,7 +18,13 @@ server.addChannel('investors', {
     const id = (await knex('investors').insert(data))[0];
     return knex('investors').select('*').where({ id }).first();
   },
-  affects: async (object) => ['investors']
+  affects: async (object) => ['investors', 'investor'],
+  update: async (object) => knex('investors').update(object).where({ id: object.id }),
+  del: async (object) => knex('investors').where({ id: object.id }).del(),
+});
+server.addChannel('investor', {
+  read: async (filter) => knex('investors').select('id', 'name', 'email', 'tag').where(filter.expression),
+  affects: async (object) => ['investors', 'investor']
 });
 server.addChannel('funds', {
   read: async () => knex('funds').select('*')
