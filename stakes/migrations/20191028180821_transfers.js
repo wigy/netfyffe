@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
     table.integer('toId').unsigned().defaultTo(null);
     table.integer('commentId').unsigned().notNullable();
 
-    table.foreign('fromId').references('accounts.id');
-    table.foreign('toId').references('accounts.id');
+    table.foreign('fromId').references('value_changes.id');
+    table.foreign('toId').references('value_changes.id');
     table.foreign('commentId').references('comments.id');
 
     table.index('fromId');

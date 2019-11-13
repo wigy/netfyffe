@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
-import { useDataRead, useDataUpdate } from 'rtds-client';
+import { useDataRead } from 'rtds-client';
 import { useParams } from "react-router";
 
 function FundPage() {
   const [fund, setFund] = useState([{}]);
+  const [shares, setShares] = useState([]);
   const { id } = useParams();
-  const update = useDataUpdate();
   useDataRead('fund', { id }, setFund);
+  useDataRead('shares', { fundId: id }, setShares);
 
-  const name = Math.random() + '' + Math.random();
   return (
     <div className="FundPage">
-      Fund {fund[0].name}
+      {fund[0].name}
       <br />
-      <input onClick={() => update({fund: {id, name }})} type="button" value="Change Name"></input>
+      {shares.map(share => (
+        <div key={share.id}>
+          <b>{share.date}  {share.amount} {share.investorName}</b><br/>
+          &nbsp;&nbsp;&nbsp;{share.fromFundName} {share.fromAccountName} {share.fromValueAmount}<br />
+          &nbsp;&nbsp;&nbsp;{share.toFundName} {share.toAccountName} {share.toValueAmount}<br />
+          &nbsp;&nbsp;&nbsp;{JSON.stringify(share.comments)}
+        </div>
+      ))}
     </div>
   );
 }

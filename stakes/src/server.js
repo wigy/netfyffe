@@ -34,6 +34,33 @@ server.addChannel('fund', {
   affects: async (object) => ['funds', 'fund'],
   update: async (object) => knex('funds').update(object).where({ id: object.id })
 });
+server.addChannel('shares', {
+  read: async (filter) => (await knex('shares')
+    .select(
+      'shares.id',
+      'shares.date',
+      'shares.amount',
+      'investors.name as investorName',
+      'fromFund.name as fromFundName',
+      'fromAccount.name as fromAccountName',
+      'fromValue.amount as fromValueAmount',
+      'toValue.amount as toValueAmount',
+      'toFund.name as toFundName',
+      'toAccount.name as toAccountName',
+      'comments.data as comments')
+    .join('investors', 'investors.id', 'shares.investorId')
+    .join('transfers', 'transfers.id', 'shares.transferId')
+    .join('comments', 'comments.id', 'transfers.commentId')
+    .leftJoin('value_changes as fromValue', 'fromValue.id', 'transfers.fromId')
+    .leftJoin('value_changes as toValue', 'toValue.id', 'transfers.toId')
+    .leftJoin('accounts as fromAccount', 'fromAccount.id', 'fromValue.accountId')
+    .leftJoin('accounts as toAccount', 'toAccount.id', 'toValue.accountId')
+    .leftJoin('funds as fromFund', 'fromFund.id', 'fromAccount.fundId')
+    .leftJoin('funds as toFund', 'toFund.id', 'toAccount.fundId')
+    .where({'shares.fundId': filter.expression.fundId})
+    .orderBy('shares.date')).map(e => ({...e, comments: JSON.parse(e.comments)}))
+    // TODO: Sqlite-specific fix.
+});
 server.useDebug();
 server.use404();
 server.run();
