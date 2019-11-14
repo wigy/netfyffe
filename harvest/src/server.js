@@ -9,6 +9,6 @@ app.use('/doc', express.static('./doc'));
 app.use('/ticker', require('./routes/ticker'));
 app.use('/latest', require('./routes/latest'));
 
-app.listen(config.port, function () {
-  d.info('App listening on port ' + config.port);
+app.listen(config.PORT, function () {
+  d.info('App listening on port ' + config.PORT);
 });

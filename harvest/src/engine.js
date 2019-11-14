@@ -98,8 +98,8 @@ class Engine {
         if (this.modules.length) {
             return;
         }
-        if (config.harvestModules) {
-            config.harvestModules.split(':').forEach(path => this.use(path));
+        if (config.HARVEST_MODULES) {
+            config.HARVEST_MODULES.split(':').forEach(path => this.use(path));
         }
         await globby(__dirname + '/modules/**/*-harvest-module.js').then(files => {
             files = files.map(x => x.replace(/.*\/(modules\/.*)\.js$/,'$1'));
