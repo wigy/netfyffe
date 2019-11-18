@@ -131,7 +131,7 @@ server.addChannel('funds', {
                 "members": {
                   "table": "funds",
                   "select": ["id", "name"],
-                  "leftJoin": ["funds.id"m "accounts.fundId"]
+                  "leftJoin": ["funds.id", "accounts.fundId"]
                 }
               }
             ]
