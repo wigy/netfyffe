@@ -16,8 +16,8 @@ function FundPage() {
       {shares.map(share => (
         <div key={share.id}>
           <b>{share.date}  {share.amount} {share.investor.name}</b><br/>
-          &nbsp;&nbsp;&nbsp;{share.from.account.fund.name} {share.from.account.name} {share.from.amount}<br />
-          &nbsp;&nbsp;&nbsp;{share.to.account.fund.name} {share.to.account.name} {share.to.amount}<br />
+          &nbsp;&nbsp;&nbsp;{share.transfer.from.account.fund.name} {share.transfer.from.account.name} {share.transfer.from.amount}<br />
+          &nbsp;&nbsp;&nbsp;{share.transfer.to.account.fund.name} {share.transfer.to.account.name} {share.transfer.to.amount}<br />
           &nbsp;&nbsp;&nbsp;{JSON.stringify(share.comment.data)}
         </div>
       ))}

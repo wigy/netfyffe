@@ -2,6 +2,86 @@ const { SocketServerSync } = require('rtds-server');
 const knex = require('knex')(require('../knexfile'));
 const config = require('./config');
 
+/** Sketches for rtds query implementation */
+const { Query, Driver } = require('rtds-query');
+const driver = Driver.create(`sqlite:///${__dirname}/../development.sqlite`);
+/*
+// investors
+const q1 = new Query({
+  table: 'investors',
+  select: ['id', 'name', 'email', 'tag']
+});
+driver.getAll(q1).then((data) => console.log(data));
+*/
+
+// shares
+const q4 = new Query({
+  table: 'shares',
+  select: ['id', 'date', 'amount'],
+  members: [
+    {
+      table: 'investors',
+      as: 'investor',
+      select: ['id', 'name'],
+      join: ['shares.investorId', 'investor.id']
+    },
+    {
+      table: 'transfers',
+      as: 'transfer',
+      select: 'id',
+      join: ['shares.transferId', 'transfer.id'],
+      members: [
+        {
+          table: 'value_changes',
+          as: 'from',
+          select: ['id', 'amount'],
+          leftJoin: ['from.id', 'transfer.fromId'],
+          members: [
+            /* {
+              table: 'accounts',
+              as: 'account',
+              select: ['id', 'name', 'number'],
+              leftJoin: ['account.id', 'from.accountId'],
+              members: [
+                {
+                  table: 'funds',
+                  as: 'fund',
+                  select: ['id', 'name'],
+                  leftJoin: ['fund.id', 'account.fundId']
+                }
+              ]
+            } */
+          ]
+        },
+        {
+          table: 'value_changes',
+          as: 'to',
+          select: ['id', 'amount'],
+          leftJoin: ['to.id', 'transfer.toId'],
+          members: [
+            {
+              table: 'accounts',
+              as: 'account',
+              select: ['id', 'name', 'number'],
+              leftJoin: ['account.id', 'to.accountId'],
+              members: [
+                {
+                  table: 'funds',
+                  as: 'fund',
+                  select: ['id', 'name'],
+                  leftJoin: ['fund.id', 'account.fundId']
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+});
+driver.getAll(q4).then((data) => console.dir(data, {depth: null}));
+/*******************************************/
+
 async function auth(cred) {
   const user = await knex('investors')
     .select('id', 'name', 'email', 'tag')
@@ -22,10 +102,12 @@ server.addChannel('investors', {
   update: async (object) => knex('investors').update(object).where({ id: object.id }),
   del: async (object) => knex('investors').where({ id: object.id }).del(),
 });
+
 server.addChannel('investor', {
   read: async (filter) => knex('investors').select('id', 'name', 'email', 'tag').where(filter.expression),
   affects: async (object) => ['investors', 'investor']
 });
+
 server.addChannel('fund', {
   read: async (filter) => knex('funds').select('*').where(filter.expression),
   affects: async (object) => ['funds', 'fund'],
@@ -36,7 +118,7 @@ server.addChannel('fund', {
 
   {
     "table": "funds",
-    "select": ["id", "name": "tag"],
+    "select": ["id", "name", "tag"],
     "collections": [
       {
         "table": "accounts",
@@ -83,14 +165,7 @@ server.addChannel('funds', {
   Proposal for definition format:
 
   {
-    "table": "shares",
-    "select": ["id", "date": "amount"],
     "members": [
-      {
-        "table": "investors",
-        "select": ["id", "name"],
-        "join": ["shares.investorId", "investors.id"]
-      },
       {
         "table": "comments",
         "select": ["id", "data"],
@@ -113,7 +188,7 @@ server.addChannel('funds', {
                 "members": {
                   "table": "funds",
                   "select": ["id", "name"],
-                  "leftJoin": ["funds.id"m "accounts.fundId"]
+                  "leftJoin": ["funds.id", "accounts.fundId"]
                 }
               }
             ]
@@ -177,27 +252,29 @@ server.addChannel('shares', {
       date: e.date,
       amount: e.amount,
       investor: {id: e.investorId, name: e.investorName},
-      from: {
-        id: e.fromValueId,
-        amount: e.fromValueAmount,
-        account: {
-          id: e.fromAccountId,
-          name: e.fromAccountName,
-          fund: {
-            id: e.fromFundId,
-            name: e.fromFundName
+      transfer: {
+        from: {
+          id: e.fromValueId,
+          amount: e.fromValueAmount,
+          account: {
+            id: e.fromAccountId,
+            name: e.fromAccountName,
+            fund: {
+              id: e.fromFundId,
+              name: e.fromFundName
+            }
           }
-        }
-      },
-      to: {
-        id: e.toValueId,
-        amount: e.toValueAmount,
-        account: {
-          id: e.toAccountId,
-          name: e.toAccountName,
-          fund: {
-            id: e.toFundId,
-            name: e.toFundName
+        },
+        to: {
+          id: e.toValueId,
+          amount: e.toValueAmount,
+          account: {
+            id: e.toAccountId,
+            name: e.toAccountName,
+            fund: {
+              id: e.toFundId,
+              name: e.toFundName
+            }
           }
         }
       },
