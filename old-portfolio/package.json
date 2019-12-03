@@ -20,7 +20,7 @@
     "csv-parse": "^4.6.5",
     "encoding": "^0.1.12",
     "express": "^4.15.2",
-    "knex": "^0.14.6",
+    "knex": "^0.19.5",
     "knex-dump": "^1.0.8",
     "lockfile": "^1.0.3",
     "mocha": "^6.2.2",
