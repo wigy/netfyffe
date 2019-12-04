@@ -5,8 +5,9 @@ const config = require('./config');
 /** Sketches for rtds query implementation */
 const { Query, Driver } = require('rtds-query');
 const driver = Driver.create(`sqlite:///${__dirname}/../development.sqlite`);
-/*
+
 // investors
+/*
 const q1 = new Query({
   table: 'investors',
   select: ['id', 'name', 'email', 'tag']
@@ -15,6 +16,7 @@ driver.getAll(q1).then((data) => console.log(data));
 */
 
 // shares
+/*
 const q4 = new Query({
   table: 'shares',
   select: ['id', 'date', 'amount'],
@@ -32,12 +34,18 @@ const q4 = new Query({
       join: ['shares.transferId', 'transfer.id'],
       members: [
         {
+          table: 'comments',
+          select: ['id', 'data'],
+          process: {'data': 'json'},
+          join: ['comments.id', 'transfer.commentId']
+        },
+        {
           table: 'value_changes',
           as: 'from',
           select: ['id', 'amount'],
           leftJoin: ['from.id', 'transfer.fromId'],
           members: [
-            /* {
+            {
               table: 'accounts',
               as: 'account',
               select: ['id', 'name', 'number'],
@@ -50,7 +58,7 @@ const q4 = new Query({
                   leftJoin: ['fund.id', 'account.fundId']
                 }
               ]
-            } */
+            }
           ]
         },
         {
@@ -80,6 +88,7 @@ const q4 = new Query({
   ]
 });
 driver.getAll(q4).then((data) => console.dir(data, {depth: null}));
+*/
 /*******************************************/
 
 async function auth(cred) {
@@ -123,7 +132,7 @@ server.addChannel('fund', {
       {
         "table": "accounts",
         "select": ["id", "number", "name"],
-        "aggregate": ["funds.id", "accounts.fundId"]
+        "join": ["funds.id", "accounts.fundId"]
       }
     ]
   }
@@ -169,51 +178,8 @@ server.addChannel('funds', {
       {
         "table": "comments",
         "select": ["id", "data"],
-        "join": ["shares.investorId", "investors.id"]
-      },
-      {
-        "table": "transfers",
-        "join": ["shares.investorId", "investors.id"],
-        "members": [
-          {
-            "name": "from",
-            "table": "value_changes",
-            "select": ["id", "amount"]
-            "leftJoin": ["from.id", "transfers.fromId"],
-            "members": [
-              {
-                "table": "accounts",
-                "select": ["id", "name", "number"],
-                "leftJoin": ["accounts.id", "from.accountId"],
-                "members": {
-                  "table": "funds",
-                  "select": ["id", "name"],
-                  "leftJoin": ["funds.id", "accounts.fundId"]
-                }
-              }
-            ]
-          },
-          {
-            "name": "to",
-            "table": "value_changes",
-            "select": ["id", "amount"]
-            "leftJoin": ["to.id", "transfers.toId"],
-            "members": [
-              {
-                "table": "accounts",
-                "select": ["id", "name", "number"],
-                "leftJoin": ["accounts.id", "to.accountId"],
-                "members": {
-                  "table": "funds",
-                  "select": ["id", "name"],
-                  "leftJoin": ["funds.id", "accounts.fundId"]
-                }
-              }
-            ]
-          }
-        ]
+        "join": ["transfer.commentId", "comments.id"]
       }
-    ]
   }
 */
 server.addChannel('shares', {
@@ -280,7 +246,6 @@ server.addChannel('shares', {
       },
       comment: {id: e.commentsId, data: JSON.parse(e.commentsData)}
     }))
-    // TODO: JSON.parse is sqlite-specific fix. Switch to PSQL permanently?
 });
 server.useDebug();
 server.use404();
