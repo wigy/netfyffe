@@ -2,18 +2,64 @@ const { SocketServerSync } = require('rtds-server');
 const knex = require('knex')(require('../knexfile'));
 const config = require('./config');
 
+const USE_NEW_QUERY = true;
+
+// Silly temporary authentication.
+async function auth(cred) {
+  const user = await knex('investors')
+    .select('id', 'name', 'email', 'tag')
+    .where({email: cred.user})
+    .first();
+  // TODO: Password check.
+  return user;
+}
+
 /** Sketches for rtds query implementation */
 const { Query, Driver } = require('rtds-query');
 const driver = Driver.create(`sqlite:///${__dirname}/../development.sqlite`);
 
-// investors
-/*
-const q1 = new Query({
+class LiveQueryChannel {
+  constructor(query) {
+    this.query = new Query(query);
+  }
+  async read() {
+    return this.query.getAll(driver);
+  }
+  async create(data) {
+    const id = (await knex('investors').insert(data))[0];
+    return knex('investors').select('*').where({ id }).first();
+  }
+  async affects(object) { return ['investors', 'investor']; }
+  async update(object) { return knex('investors').update(object).where({ id: object.id }); }
+  async del(object) { return knex('investors').where({ id: object.id }).del(); }
+}
+
+class SocketServerLiveQuery extends SocketServerSync {
+  addChannel(channel, channelInstance) {
+    if (this.channels[channel]) {
+      throw new Error(`Channel ${channel} already defined.`);
+    }
+    this.channels[channel] = channelInstance;
+  }
+  makeChannel(query, options = {}) {
+    this.addChannel('investors', new LiveQueryChannel(query));
+  }
+}
+
+if (USE_NEW_QUERY) {
+
+const server = new SocketServerLiveQuery(config, { auth });
+
+server.makeChannel({
   table: 'investors',
   select: ['id', 'name', 'email', 'tag']
 });
-driver.getAll(q1).then((data) => console.log(data));
-*/
+
+server.useDebug();
+server.use404();
+server.run();
+
+} else {
 
 // shares
 /*
@@ -91,16 +137,8 @@ driver.getAll(q4).then((data) => console.dir(data, {depth: null}));
 */
 /*******************************************/
 
-async function auth(cred) {
-  const user = await knex('investors')
-    .select('id', 'name', 'email', 'tag')
-    .where({email: cred.user})
-    .first();
-  // TODO: Password check.
-  return user;
-}
-
 const server = new SocketServerSync(config, { auth });
+
 server.addChannel('investors', {
   read: async () => knex('investors').select('id', 'name', 'email', 'tag'),
   create: async (data) => {
@@ -250,3 +288,4 @@ server.addChannel('shares', {
 server.useDebug();
 server.use404();
 server.run();
+}
