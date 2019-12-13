@@ -19,30 +19,50 @@ const { Query, Driver } = require('rtds-query');
 const driver = Driver.create(`sqlite:///${__dirname}/../development.sqlite`);
 
 class LiveQueryChannel {
-  constructor(query) {
-    this.query = new Query(query);
+  constructor(queryCreate, queryRead, queryUpdate, queryDelete) {
+    this.queryCreate = queryCreate && new Query(queryCreate);
+    this.queryRead = queryRead && new Query(queryRead);
+    this.queryUpdate = queryUpdate && new Query(queryUpdate);
+    this.queryDelete = queryDelete && new Query(queryDelete);
+    if (!queryCreate) {
+      this.create = undefined;
+    }
+    if (!queryRead) {
+      this.read = undefined;
+    }
+    if (!queryUpdate) {
+      this.update = undefined;
+    }
+    if (!queryDelete) {
+      this.del = undefined;
+    }
   }
+
   async read() {
-    return this.query.getAll(driver);
+    return this.queryRead.getAll(driver);
   }
+
   async create(data) {
-    const id = (await knex('investors').insert(data))[0];
-    return knex('investors').select('*').where({ id }).first();
+    return this.queryCreate.createOne(driver, data);
   }
+
   async affects(object) { return ['investors', 'investor']; }
   async update(object) { return knex('investors').update(object).where({ id: object.id }); }
   async del(object) { return knex('investors').where({ id: object.id }).del(); }
 }
 
 class SocketServerLiveQuery extends SocketServerSync {
+
   addChannel(channel, channelInstance) {
     if (this.channels[channel]) {
       throw new Error(`Channel ${channel} already defined.`);
     }
     this.channels[channel] = channelInstance;
   }
-  makeChannel(query, options = {}) {
-    this.addChannel('investors', new LiveQueryChannel(query));
+
+  makeChannel(queryCreate, queryRead, queryUpdate, queryDelete) {
+    const channel = new LiveQueryChannel(queryCreate, queryRead);
+    this.addChannel('investors', channel);
   }
 }
 
@@ -51,8 +71,11 @@ if (USE_NEW_QUERY) {
 const server = new SocketServerLiveQuery(config, { auth });
 
 server.makeChannel({
-  table: 'investors',
-  select: ['id', 'name', 'email', 'tag']
+  insert: ['name', 'email', 'tag'],
+  table: 'investors'
+}, {
+  select: ['id', 'name', 'email', 'tag'],
+  table: 'investors'
 });
 
 server.useDebug();
