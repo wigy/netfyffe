@@ -24,6 +24,7 @@ class LiveQueryChannel {
     this.queryRead = queryRead && new Query(queryRead);
     this.queryUpdate = queryUpdate && new Query(queryUpdate);
     this.queryDelete = queryDelete && new Query(queryDelete);
+    // Mark unused part as missing.
     if (!queryCreate) {
       this.create = undefined;
     }
