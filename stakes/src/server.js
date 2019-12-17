@@ -47,9 +47,16 @@ class LiveQueryChannel {
     return this.queryCreate.createOne(driver, data);
   }
 
+  async update(data) {
+    return this.queryUpdate.updateOne(driver, data);
+  }
+
+  async del(data) {
+    return this.queryDelete.deleteOne(driver, data);
+  }
+
+  // TODO: Okay, this is the beef and needs to be implemented.
   async affects(object) { return ['investors', 'investor']; }
-  async update(object) { return knex('investors').update(object).where({ id: object.id }); }
-  async del(object) { return knex('investors').where({ id: object.id }).del(); }
 }
 
 class SocketServerLiveQuery extends SocketServerSync {
@@ -62,7 +69,7 @@ class SocketServerLiveQuery extends SocketServerSync {
   }
 
   makeChannel(queryCreate, queryRead, queryUpdate, queryDelete) {
-    const channel = new LiveQueryChannel(queryCreate, queryRead);
+    const channel = new LiveQueryChannel(queryCreate, queryRead, queryUpdate, queryDelete);
     this.addChannel('investors', channel);
   }
 }
@@ -76,6 +83,12 @@ server.makeChannel({
   table: 'investors'
 }, {
   select: ['id', 'name', 'email', 'tag'],
+  table: 'investors'
+}, {
+  update: ['name', 'email', 'tag'],
+  table: 'investors'
+}, {
+  delete: ['id'],
   table: 'investors'
 });
 
