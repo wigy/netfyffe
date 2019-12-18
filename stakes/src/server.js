@@ -40,19 +40,19 @@ class LiveQueryChannel {
   }
 
   async read() {
-    return this.queryRead.getAll(driver);
+    return this.queryRead.select(driver);
   }
 
   async create(data) {
-    return this.queryCreate.createOne(driver, data);
+    return this.queryCreate.create(driver, data);
   }
 
   async update(data) {
-    return this.queryUpdate.updateOne(driver, data);
+    return this.queryUpdate.update(driver, data);
   }
 
   async del(data) {
-    return this.queryDelete.deleteOne(driver, data);
+    return this.queryDelete.delete(driver, data);
   }
 
   // TODO: Okay, this is the beef and needs to be implemented.
@@ -170,7 +170,7 @@ const q4 = new Query({
     }
   ]
 });
-driver.getAll(q4).then((data) => console.dir(data, {depth: null}));
+driver.select(q4).then((data) => console.dir(data, {depth: null}));
 */
 /*******************************************/
 
