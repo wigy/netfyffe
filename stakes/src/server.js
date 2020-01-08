@@ -16,47 +16,55 @@ async function auth(cred) {
 
 /** Sketches for rtds query implementation */
 const { Query, Driver } = require('rtds-query');
+const { Channel } = require('rtds-server');
 const driver = Driver.create(`sqlite:///${__dirname}/../development.sqlite`);
 
-class LiveQueryChannel {
-  constructor(queryCreate, queryRead, queryUpdate, queryDelete) {
-    this.queryCreate = queryCreate && new Query(queryCreate);
-    this.queryRead = queryRead && new Query(queryRead);
-    this.queryUpdate = queryUpdate && new Query(queryUpdate);
-    this.queryDelete = queryDelete && new Query(queryDelete);
-    // Mark unused part as missing.
-    if (!queryCreate) {
-      this.create = undefined;
+class LiveQueryChannel extends Channel {
+  constructor(channelName, { queryCreate, queryRead, queryUpdate, queryDelete }) {
+    const callbacks = {};
+
+    if (queryCreate) {
+      queryCreate = new Query(queryCreate);
+      callbacks.create = async (data) => {
+        return queryCreate.create(driver, data);
+      };
     }
-    if (!queryRead) {
-      this.read = undefined;
+    if (queryRead) {
+      queryRead = new Query(queryRead);
+      callbacks.read = async (filter, req) => {
+        const pks = await queryRead.selectPKs().allPKs(driver, filter.expression);
+        req.connection.updateLatestRead(this, filter.expression, pks);
+        return queryRead.select(driver, filter.expression);
+      };
     }
-    if (!queryUpdate) {
-      this.update = undefined;
+    if (queryUpdate) {
+      queryUpdate = new Query(queryUpdate);
+      callbacks.update = async (data) => {
+        return queryUpdate.update(driver, data);
+      };
     }
-    if (!queryDelete) {
-      this.del = undefined;
+    if (queryDelete) {
+      queryDelete = new Query(queryDelete);
+      callbacks.del = async (data) => {
+        return queryDelete.delete(driver, data);
+      };
     }
+
+    // TODO: Okay, this is the beef and needs to be implemented.
+    callbacks.affects = async (object) => { return ['investors', 'investor']; }
+
+    super(channelName, callbacks);
   }
 
-  async read() {
-    return this.queryRead.select(driver);
+  subscribe(connection) {
+    // TODO: Not needed?
+    console.log('SUB', connection.id);
   }
 
-  async create(data) {
-    return this.queryCreate.create(driver, data);
+  unsubscribe(connection) {
+    // TODO: Not needed?
+    console.log('UNSUB', connection.id);
   }
-
-  async update(data) {
-    return this.queryUpdate.update(driver, data);
-  }
-
-  async del(data) {
-    return this.queryDelete.delete(driver, data);
-  }
-
-  // TODO: Okay, this is the beef and needs to be implemented.
-  async affects(object) { return ['investors', 'investor']; }
 }
 
 class SocketServerLiveQuery extends SocketServerSync {
@@ -68,8 +76,8 @@ class SocketServerLiveQuery extends SocketServerSync {
     this.channels[channel] = channelInstance;
   }
 
-  makeChannel(queryCreate, queryRead, queryUpdate, queryDelete) {
-    const channel = new LiveQueryChannel(queryCreate, queryRead, queryUpdate, queryDelete);
+  makeChannel(channelName, queryCreate, queryRead, queryUpdate, queryDelete) {
+    const channel = new LiveQueryChannel(channelName, { queryCreate, queryRead, queryUpdate, queryDelete });
     this.addChannel('investors', channel);
   }
 }
@@ -78,7 +86,7 @@ if (USE_NEW_QUERY) {
 
 const server = new SocketServerLiveQuery(config, { auth });
 
-server.makeChannel({
+server.makeChannel('investors', {
   insert: ['name', 'email', 'tag'],
   table: 'investors'
 }, {
