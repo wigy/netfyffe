@@ -29,20 +29,23 @@ class LiveQueryChannel extends Channel {
         return queryCreate.create(driver, data);
       };
     }
+
     if (queryRead) {
       queryRead = new Query(queryRead);
       callbacks.read = async (filter, req) => {
         const pks = await queryRead.selectPKs().allPKs(driver, filter.expression);
-        req.connection.updateLatestRead(this, filter.expression, pks);
+        req.connection.updateLatestRead(this, filter, pks);
         return queryRead.select(driver, filter.expression);
       };
     }
+
     if (queryUpdate) {
       queryUpdate = new Query(queryUpdate);
       callbacks.update = async (data) => {
         return queryUpdate.update(driver, data);
       };
     }
+
     if (queryDelete) {
       queryDelete = new Query(queryDelete);
       callbacks.del = async (data) => {
@@ -50,20 +53,12 @@ class LiveQueryChannel extends Channel {
       };
     }
 
-    // TODO: Okay, this is the beef and needs to be implemented.
-    callbacks.affects = async (object) => { return ['investors', 'investor']; }
-
     super(channelName, callbacks);
-  }
 
-  subscribe(connection) {
-    // TODO: Not needed?
-    console.log('SUB', connection.id);
-  }
-
-  unsubscribe(connection) {
-    // TODO: Not needed?
-    console.log('UNSUB', connection.id);
+    this.queryCreate = queryCreate;
+    this.queryRead = queryRead;
+    this.queryUpdate = queryUpdate;
+    this.queryDelete = queryDelete;
   }
 }
 
@@ -78,7 +73,49 @@ class SocketServerLiveQuery extends SocketServerSync {
 
   makeChannel(channelName, queryCreate, queryRead, queryUpdate, queryDelete) {
     const channel = new LiveQueryChannel(channelName, { queryCreate, queryRead, queryUpdate, queryDelete });
-    this.addChannel('investors', channel);
+    this.addChannel(channelName, channel);
+  }
+
+  /**
+   * Read the subscription data again and emit back to the connection.
+   * @param {Subscription} sub
+   */
+  async refresh(sub) {
+    const data = await sub.channel.read(sub.filter, {connection: sub.connection});
+    sub.connection.socket.emit(sub.channel.name, data);
+  }
+
+  /**
+   * Find all affected subscriptions and refresh them.
+   * @param {Request} req
+   * @param {Object[]} objects
+   */
+  async synchronize(req, objects) {
+    for (const item of objects) {
+      if (item === undefined) {
+        continue;
+      }
+      const { channel, object } = item;
+      // TODO: We need to find table and PK for an object in reliable way.
+      const table = channel;
+      const pk = object.id;
+      // TODO: This could be the point where we use Redis to parallelize updates.
+      // TODO: We need to maintain mapping from tables to subscriptions affected.
+      //       Then this can be done in much faster manner.
+      let seenSubs = [];
+      for (const conn of Object.values(this.connections)) {
+        for (const [channel, subs] of Object.entries(conn.subscriptions)) {
+          for (const sub of subs) {
+            if (sub.hasSeen(table, pk)) {
+              seenSubs.push(sub);
+            }
+          }
+        }
+      }
+      for (const sub of seenSubs) {
+        await this.refresh(sub);
+      }
+    }
   }
 }
 
