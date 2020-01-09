@@ -96,6 +96,7 @@ class SocketServerLiveQuery extends SocketServerSync {
         continue;
       }
       const { channel, object } = item;
+      // TODO: This needs extensive debugging info, with some flag.
       // TODO: We need to find table and PK for an object in reliable way.
       const table = channel;
       const pk = object.id;
