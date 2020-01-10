@@ -35,7 +35,8 @@ class LiveQueryChannel extends Channel {
       callbacks.read = async (filter, req) => {
         const pks = await queryRead.selectPKs().allPKs(driver, filter.expression);
         req.connection.updateLatestRead(this, filter, pks);
-        return queryRead.select(driver, filter.expression);
+        req.server.logSync(`Client ${req.connection.id} has now seen`, pks, `on ${channelName}.`);
+        return await queryRead.select(driver, filter.expression);
       };
     }
 
@@ -62,7 +63,16 @@ class LiveQueryChannel extends Channel {
   }
 }
 
+// If set, display logic of syncing.
+const DEBUG_SYNCING = true;
+
 class SocketServerLiveQuery extends SocketServerSync {
+
+  constructor(...args) {
+    super(...args);
+    // A mapping form table names to set of subscriptions having dependency to the table.
+    this.dependencies = {};
+  }
 
   addChannel(channel, channelInstance) {
     if (this.channels[channel]) {
@@ -71,7 +81,15 @@ class SocketServerLiveQuery extends SocketServerSync {
     this.channels[channel] = channelInstance;
   }
 
-  makeChannel(channelName, queryCreate, queryRead, queryUpdate, queryDelete) {
+  /**
+   * Create new channel from CRUD queries.
+   * @param {String} channelName
+   * @param {Object} queryRead
+   * @param {Object} [queryCreate]
+   * @param {Object} [queryUpdate]
+   * @param {Object} [queryDelete]
+   */
+  makeChannel(channelName, queryRead, queryCreate = null, queryUpdate = null, queryDelete = null) {
     const channel = new LiveQueryChannel(channelName, { queryCreate, queryRead, queryUpdate, queryDelete });
     this.addChannel(channelName, channel);
   }
@@ -81,8 +99,52 @@ class SocketServerLiveQuery extends SocketServerSync {
    * @param {Subscription} sub
    */
   async refresh(sub) {
-    const data = await sub.channel.read(sub.filter, {connection: sub.connection});
+    const data = await sub.channel.read(sub.filter, {
+      connection: sub.connection,
+      server: this
+    });
     sub.connection.socket.emit(sub.channel.name, data);
+  }
+
+  /**
+   * Log synchronization debug messages.
+   * @param  {any[]} args
+   */
+  logSync(...args) {
+    if (DEBUG_SYNCING) {
+      this.log('debug', '\u001b[33m{Sync}\u001b[0m', ...args);
+    }
+  }
+
+  /**
+   * Create new dependencies between tables and subscriptions.
+   * @param {Subscription} sub
+   * @param {Object<Set<Number>>>} pks
+   */
+  updateDependency(sub, pks) {
+    Object.keys(pks).forEach(tableName => {
+      this.dependencies[tableName] = this.dependencies[tableName] || new Set();
+      this.dependencies[tableName].add(sub);
+    });
+  }
+
+  /**
+   * Nothing to do.
+   * @param {Subscription} sub
+   */
+  addSubscription(sub) {
+  }
+
+  /**
+   * Remove from all dependencies.
+   * @param {Subscription} sub
+   */
+  dropSubscription(sub) {
+    Object.keys(this.dependencies).forEach(tableName => {
+      if (this.dependencies[tableName]) {
+        this.dependencies[tableName].delete(sub);
+      }
+    });
   }
 
   /**
@@ -91,28 +153,60 @@ class SocketServerLiveQuery extends SocketServerSync {
    * @param {Object[]} objects
    */
   async synchronize(req, objects) {
+    // If set, scan through all subscriptions (for debugging purposes)-
+    const SAFE = false;
+
     for (const item of objects) {
       if (item === undefined) {
         continue;
       }
+
       const { channel, object } = item;
-      // TODO: This needs extensive debugging info, with some flag.
+
       // TODO: We need to find table and PK for an object in reliable way.
-      const table = channel;
+      const tableName = channel;
       const pk = object.id;
+      if (pk === undefined) {
+        throw new Error('Proper primary key handling not yet implemented.');
+      }
+      this.logSync(`Refreshing ${tableName} object with PK`, pk);
+
       // TODO: This could be the point where we use Redis to parallelize updates.
-      // TODO: We need to maintain mapping from tables to subscriptions affected.
-      //       Then this can be done in much faster manner.
+
       let seenSubs = [];
-      for (const conn of Object.values(this.connections)) {
-        for (const [channel, subs] of Object.entries(conn.subscriptions)) {
-          for (const sub of subs) {
-            if (sub.hasSeen(table, pk)) {
-              seenSubs.push(sub);
+      if (SAFE) {
+        // Idiot proof implementation scanning all.
+        for (const conn of Object.values(this.connections)) {
+          this.logSync(`  Connection ${conn.id}`);
+          for (const [channelName, subs] of Object.entries(conn.subscriptions)) {
+            this.logSync(`    Channel ${channelName} subscriptions per filter`);
+            for (const sub of subs) {
+              if (sub.hasSeen(tableName, pk)) {
+                seenSubs.push(sub);
+                this.logSync(`      [X] ${sub.filter}`);
+              } else {
+                this.logSync(`      [ ] ${sub.filter}`);
+              }
             }
           }
         }
+      } else {
+        // Smart implementation exploiting dependency book-keeping.
+        if (this.dependencies[tableName]) {
+          this.logSync(`  Found ${this.dependencies[tableName].size} dependencies`);
+          for (const sub of this.dependencies[tableName]) {
+            if (sub.hasSeen(tableName, pk)) {
+              seenSubs.push(sub);
+              this.logSync(`      [X] ${sub.connection.id} ${sub.channel.name} ${sub.filter}`);
+            } else {
+              this.logSync(`      [ ] ${sub.connection.id} ${sub.channel.name} ${sub.filter}`);
+            }
+          }
+        } else {
+          this.logSync(`  Found no dependencies`);
+        }
       }
+
       for (const sub of seenSubs) {
         await this.refresh(sub);
       }
@@ -125,10 +219,10 @@ if (USE_NEW_QUERY) {
 const server = new SocketServerLiveQuery(config, { auth });
 
 server.makeChannel('investors', {
-  insert: ['name', 'email', 'tag'],
+  select: ['id', 'name', 'email', 'tag'],
   table: 'investors'
 }, {
-  select: ['id', 'name', 'email', 'tag'],
+  insert: ['name', 'email', 'tag'],
   table: 'investors'
 }, {
   update: ['name', 'email', 'tag'],
@@ -136,6 +230,35 @@ server.makeChannel('investors', {
 }, {
   delete: ['id'],
   table: 'investors'
+});
+
+server.makeChannel('investor', {
+  select: ['id', 'name', 'email', 'tag'],
+  table: 'investors'
+});
+
+server.makeChannel('accounts', {
+  select: ['id', 'name', 'number'],
+  table: 'accounts'
+});
+
+server.makeChannel('account', {
+  select: ['id', 'name', 'number'],
+  table: 'accounts',
+  members: [
+    {
+      table: 'funds',
+      as: 'fund',
+      select: ['id', 'name', 'tag'],
+      join: ['accounts.fundId', 'fund.id']
+    },
+    {
+      table: 'services',
+      as: 'service',
+      select: ['id', 'name', 'tag'],
+      join: ['accounts.serviceId', 'service.id']
+    }
+  ]
 });
 
 server.useDebug();
