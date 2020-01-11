@@ -50,7 +50,9 @@ class LiveQueryChannel extends Channel {
     if (queryDelete) {
       queryDelete = new Query(queryDelete);
       callbacks.del = async (data) => {
-        return queryDelete.delete(driver, data);
+        // TODO: Need to fetch PKs explicitly re-using delete query.
+        await queryDelete.delete(driver, data);
+        return data;
       };
     }
 
@@ -151,11 +153,12 @@ class SocketServerLiveQuery extends SocketServerSync {
    * Find all affected subscriptions and refresh them.
    * @param {Request} req
    * @param {Object[]} objects
+   * @param {String} event Either 'create', 'update' or 'delete'.
    */
-  async synchronize(req, objects) {
+  async synchronize(req, objects, event) {
+
     // If set, scan through all subscriptions (for debugging purposes)-
     const SAFE = false;
-
     for (const item of objects) {
       if (item === undefined) {
         continue;
@@ -165,7 +168,7 @@ class SocketServerLiveQuery extends SocketServerSync {
 
       // TODO: We need to find table and PK for an object in reliable way.
       const tableName = channel;
-      const pk = object.id;
+      const pk = event === 'create' ? null : object.id;
       if (pk === undefined) {
         throw new Error('Proper primary key handling not yet implemented.');
       }
