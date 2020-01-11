@@ -240,6 +240,15 @@ server.makeChannel('investor', {
 server.makeChannel('accounts', {
   select: ['id', 'name', 'number'],
   table: 'accounts'
+}, {
+  insert: ['name', 'number', 'serviceId', 'fundId'],
+  table: 'accounts'
+}, {
+  update: ['name', 'number', 'serviceId', 'fundId'],
+  table: 'accounts'
+}, {
+  delete: ['id'],
+  table: 'accounts'
 });
 
 server.makeChannel('account', {

@@ -18,7 +18,7 @@ function AccountsPage() {
         <input onClick={() => update({accounts: {id: account.id, name: account.name + 'X'}})} type="button" value="Update" />
       </div>)}
       <br />
-      <input onClick={() => create({accounts: {name: 'Foo ' + Math.random()}})} type="button" value="Add New" />
+      <input onClick={() => create({accounts: {name: 'Foo ' + Math.random(), serviceId: 1, fundId: 1}})} type="button" value="Add New" />
     </div>
   );
 }
