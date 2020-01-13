@@ -284,84 +284,85 @@ async function main() {
     ]
   });
 
+  server.makeChannel('fund', {
+    table: 'funds',
+    select: ['id', 'name', 'tag']
+  });
+
+  server.makeChannel('shares', {
+    table: 'shares',
+    select: ['id', 'date', 'amount', 'fundId'],
+    members: [
+      {
+        table: 'investors',
+        as: 'investor',
+        select: ['id', 'name'],
+        join: ['shares.investorId', 'investor.id']
+      },
+      {
+        table: 'transfers',
+        as: 'transfer',
+        select: 'id',
+        join: ['shares.transferId', 'transfer.id'],
+        members: [
+          {
+            table: 'comments',
+            select: ['id', 'data'],
+            process: {'data': 'json'},
+            join: ['comments.id', 'transfer.commentId']
+          },
+          {
+            table: 'value_changes',
+            as: 'from',
+            select: ['id', 'amount'],
+            leftJoin: ['from.id', 'transfer.fromId'],
+            members: [
+              {
+                table: 'accounts',
+                as: 'account',
+                select: ['id', 'name', 'number'],
+                leftJoin: ['account.id', 'from.accountId'],
+                members: [
+                  {
+                    table: 'funds',
+                    as: 'fund',
+                    select: ['id', 'name'],
+                    leftJoin: ['fund.id', 'account.fundId']
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            table: 'value_changes',
+            as: 'to',
+            select: ['id', 'amount'],
+            leftJoin: ['to.id', 'transfer.toId'],
+            members: [
+              {
+                table: 'accounts',
+                as: 'account',
+                select: ['id', 'name', 'number'],
+                leftJoin: ['account.id', 'to.accountId'],
+                members: [
+                  {
+                    table: 'funds',
+                    as: 'fund',
+                    select: ['id', 'name'],
+                    leftJoin: ['fund.id', 'account.fundId']
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  });
+
   server.useDebug();
   server.use404();
   server.run();
 }
 
 main().catch(err => console.error(err));
-
-// shares
-/*
-const q4 = new Query({
-  table: 'shares',
-  select: ['id', 'date', 'amount'],
-  members: [
-    {
-      table: 'investors',
-      as: 'investor',
-      select: ['id', 'name'],
-      join: ['shares.investorId', 'investor.id']
-    },
-    {
-      table: 'transfers',
-      as: 'transfer',
-      select: 'id',
-      join: ['shares.transferId', 'transfer.id'],
-      members: [
-        {
-          table: 'comments',
-          select: ['id', 'data'],
-          process: {'data': 'json'},
-          join: ['comments.id', 'transfer.commentId']
-        },
-        {
-          table: 'value_changes',
-          as: 'from',
-          select: ['id', 'amount'],
-          leftJoin: ['from.id', 'transfer.fromId'],
-          members: [
-            {
-              table: 'accounts',
-              as: 'account',
-              select: ['id', 'name', 'number'],
-              leftJoin: ['account.id', 'from.accountId'],
-              members: [
-                {
-                  table: 'funds',
-                  as: 'fund',
-                  select: ['id', 'name'],
-                  leftJoin: ['fund.id', 'account.fundId']
-                }
-              ]
-            }
-          ]
-        },
-        {
-          table: 'value_changes',
-          as: 'to',
-          select: ['id', 'amount'],
-          leftJoin: ['to.id', 'transfer.toId'],
-          members: [
-            {
-              table: 'accounts',
-              as: 'account',
-              select: ['id', 'name', 'number'],
-              leftJoin: ['account.id', 'to.accountId'],
-              members: [
-                {
-                  table: 'funds',
-                  as: 'fund',
-                  select: ['id', 'name'],
-                  leftJoin: ['fund.id', 'account.fundId']
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-});
-driver.select(q4).then((data) => console.dir(data, {depth: null}));
-*/
