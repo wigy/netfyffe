@@ -10,7 +10,7 @@ function AccountPage() {
   if (!account.length) {
     return '';
   }
-  console.log(account);
+
   return (
     <div className="AccountPage">
       Account {account[0].name}
