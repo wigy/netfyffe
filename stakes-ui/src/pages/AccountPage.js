@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 function AccountPage() {
   const [account, setAccount] = useState([]);
   const { id } = useParams();
-  useDataRead('account', { id }, setAccount);
+  useDataRead('account', { id: parseInt(id) }, setAccount);
 
   if (!account.length) {
     return '';

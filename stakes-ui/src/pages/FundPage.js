@@ -7,7 +7,7 @@ function FundPage() {
   const [shares, setShares] = useState([]);
 
   const { id } = useParams();
-  useDataRead('fund', { id }, setFund);
+  useDataRead('fund', { id: parseInt(id) }, setFund);
   useDataRead('shares', { 'fundId': id }, setShares);
 
   return (

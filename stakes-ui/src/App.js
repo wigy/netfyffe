@@ -9,8 +9,11 @@ import InvestorsPage from './pages/InvestorsPage';
 import HomePage from './pages/HomePage';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { client } from "rtds-client";
+import Config from './Config';
 
 function App() {
+  client.configure({port: Config.SERVER_PORT});
   return (
     <div className="App">
       <Router>

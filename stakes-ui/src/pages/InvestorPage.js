@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 function InvestorPage() {
   const [investor, setInvestor] = useState([]);
   const { id } = useParams();
-  useDataRead('investor', { id }, setInvestor);
+  useDataRead('investor', { id: parseInt(id) }, setInvestor);
 
   if (!investor.length) {
     return '';
