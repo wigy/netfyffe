@@ -34,7 +34,7 @@ class LiveQueryChannel extends Channel {
         const pks = await queryRead.selectPKs().allPKs(driver, filter.expression);
         req.connection.updateLatestRead(this, filter, pks);
         req.server.logSync(`Client ${req.connection.id} has now seen`, pks, `on ${channelName}.`);
-        return await queryRead.select(driver, filter.expression);
+        return queryRead.select(driver, filter.expression);
       };
     }
 
