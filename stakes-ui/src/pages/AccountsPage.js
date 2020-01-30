@@ -14,11 +14,11 @@ function AccountsPage() {
     <div className="AccountsPage">
       {accounts.map((account) => <div key={account.id}>
         <Link to={`/accounts/${account.id}`}>{account.number} {account.name}</Link>
-        <input onClick={() => del({accounts: {id: account.id}})} type="button" value="Del" />
-        <input onClick={() => update({accounts: {id: account.id, name: account.name + 'X'}})} type="button" value="Update" />
+        <input onClick={() => del({account: {id: account.id}})} type="button" value="Del" />
+        <input onClick={() => update({account: {id: account.id, name: account.name + 'X'}})} type="button" value="Update" />
       </div>)}
       <br />
-      <input onClick={() => create({accounts: {name: 'Foo ' + Math.random(), serviceId: 1, fundId: 1}})} type="button" value="Add New" />
+      <input onClick={() => create({account: {name: 'Foo ' + Math.random(), serviceId: 1, fundId: 1}})} type="button" value="Add New" />
     </div>
   );
 }

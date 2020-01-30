@@ -1,7 +1,6 @@
 import React from 'react';
 import { client, useLoginStatus } from 'rtds-client';
-import { useHistory } from "react-router-dom";
-
+import { useHistory } from 'react-router-dom';
 
 function HomePage() {
   const isLoggedIn = useLoginStatus();
@@ -13,7 +12,7 @@ function HomePage() {
   }
 
   async function login() {
-    await client.login({user: 'tommi.ronkainen@gmail.com', password: 'pass'});
+    await client.login({ user: 'tommi.ronkainen@gmail.com', password: 'pass' });
     // TODO: Handle promise rejection.
     history.push('/dashboard');
   }

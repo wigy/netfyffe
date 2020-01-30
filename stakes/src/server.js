@@ -22,6 +22,11 @@ async function main() {
   server.makeChannel('investors', {
     select: ['id', 'name', 'email', 'tag'],
     table: 'investors'
+  });
+
+  server.makeChannel('investor', {
+    select: ['id', 'name', 'email', 'tag'],
+    table: 'investors'
   }, {
     insert: ['name', 'email', 'tag'],
     table: 'investors'
@@ -33,22 +38,8 @@ async function main() {
     table: 'investors'
   });
 
-  server.makeChannel('investor', {
-    select: ['id', 'name', 'email', 'tag'],
-    table: 'investors'
-  });
-
   server.makeChannel('accounts', {
     select: ['id', 'name', 'number'],
-    table: 'accounts'
-  }, {
-    insert: ['name', 'number', 'serviceId', 'fundId'],
-    table: 'accounts'
-  }, {
-    update: ['name', 'number', 'serviceId', 'fundId'],
-    table: 'accounts'
-  }, {
-    delete: ['id'],
     table: 'accounts'
   });
 
@@ -69,6 +60,15 @@ async function main() {
         join: ['accounts.serviceId', 'service.id']
       }
     ]
+  }, {
+    insert: ['name', 'number', 'serviceId', 'fundId'],
+    table: 'accounts'
+  }, {
+    update: ['name', 'number', 'serviceId', 'fundId'],
+    table: 'accounts'
+  }, {
+    delete: ['id'],
+    table: 'accounts'
   });
 
   server.makeChannel('funds', {

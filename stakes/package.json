@@ -17,8 +17,8 @@
     "knex": "^0.20.7",
     "libfyffe": "^0.4.0",
     "nodemon": "^2.0.2",
-    "rtds-query": "^0.3.0",
-    "rtds-server": "^0.1.0",
+    "rtds-query": "^0.9.0",
+    "rtds-server": "^0.9.0",
     "socket.io": "^2.3.0",
     "sqlite3": "^4.1.1"
   }
