@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDataRead } from 'rtds-client';
-import { useParams } from "react-router";
+import { useParams } from 'react-router';
 
 function AccountPage() {
   const [account, setAccount] = useState([]);

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDataRead } from 'rtds-client';
-import { Link } from "react-router-dom";
-
+import { Link } from 'react-router-dom';
 
 function FundsPage() {
   const [funds, setFunds] = useState([]);
