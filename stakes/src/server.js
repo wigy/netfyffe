@@ -96,7 +96,7 @@ async function main() {
       {
         table: 'investors',
         as: 'investor',
-        select: ['id', 'name'],
+        select: ['id', 'name', 'tag'],
         join: ['shares.investorId', 'investor.id']
       },
       {

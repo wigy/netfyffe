@@ -1,10 +1,14 @@
 import React from 'react';
 import TagImage from './TagImage';
 import PropTypes from 'prop-types';
+import { Box, Typography } from '@material-ui/core';
 
 function FundTitle(props) {
   const { fund } = props;
-  return <h1><TagImage tag={fund.tag} /> {fund.name}</h1>;
+  return <Box>
+    <TagImage tag={fund.tag} />
+    <Typography color="primary" variant="h1" display="inline">{fund.name}</Typography>
+  </Box>;
 }
 
 FundTitle.propTypes = {

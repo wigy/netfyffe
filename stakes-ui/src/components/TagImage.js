@@ -1,17 +1,22 @@
 import React, { useContext } from 'react';
 import TilitintinContext from '../context/TilitintinContext';
 import PropTypes from 'prop-types';
+import { Avatar } from '@material-ui/core';
 
 function TagImage(props) {
-  const { tag } = props;
+  const { tag, avatar } = props;
   const tilitintin = useContext(TilitintinContext);
   const url = tilitintin.tags[tag] || '/pics/white.png';
   // TODO: Use style.
-  return <span><img style={{ height: '100px' }} src={url} alt={`Tag ${tag}`} />[{tag}]</span>;
+  if (avatar) {
+    return <Avatar src={url} alt={tag} />;
+  }
+  return <img style={{ height: '100px' }} src={url} alt={tag} />;
 }
 
 TagImage.propTypes = {
-  tag: PropTypes.string
+  tag: PropTypes.string,
+  avatar: PropTypes.bool
 };
 
 export default TagImage;

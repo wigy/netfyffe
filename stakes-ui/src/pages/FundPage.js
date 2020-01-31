@@ -4,15 +4,23 @@ import { useParams } from 'react-router';
 import useStyles from '../styles';
 import { Paper, Grid } from '@material-ui/core';
 import FundTitle from '../components/FundTitle';
+import ShareChangeList from '../components/ShareChangeList';
+import InvestorShares from '../components/InvestorShares';
 
 function FundPage() {
   const [fund, setFund] = useState([{}]);
-  const [/* shares */, setShares] = useState([]);
+  const [shares, setShares] = useState([]);
   const classes = useStyles();
 
   const { id } = useParams();
   useDataRead('fund', { id: parseInt(id) }, setFund);
   useDataRead('shares', { fundId: parseInt(id) }, setShares);
+
+  const investors = {};
+  shares.forEach(share => {
+    investors[share.investor.id] = investors[share.investor.id] || share.investor;
+    investors[share.investor.id].shares = (investors[share.investor.id].shares || 0) + share.amount;
+  });
 
   return (
     <Grid container spacing={3}>
@@ -23,12 +31,12 @@ function FundPage() {
       </Grid>
       <Grid item xs={12} md={4} lg={3}>
         <Paper className={classes.paper}>
-        Section 1
+          <InvestorShares investors={Object.values(investors)} />
         </Paper>
       </Grid>
       <Grid item xs={12} md={8} lg={9}>
         <Paper className={classes.paper}>
-        Section 2
+          <ShareChangeList shares={shares} />
         </Paper>
       </Grid>
     </Grid>
@@ -36,17 +44,3 @@ function FundPage() {
 }
 
 export default FundPage;
-/*
-<div className="FundPage">
-<h1>{fund[0].name}</h1>
-<br />
-{shares.map(share => (
-  <div key={share.id}>
-    <b>{share.date}  {share.amount} {share.investor.name}</b><br/>
-    &nbsp;&nbsp;&nbsp;{share.transfer.from.account.fund.name} {share.transfer.from.account.name} {share.transfer.from.amount}<br />
-    &nbsp;&nbsp;&nbsp;{share.transfer.to.account.fund.name} {share.transfer.to.account.name} {share.transfer.to.amount}<br />
-    &nbsp;&nbsp;&nbsp;{JSON.stringify(share.transfer.comments.data)}<br />
-  </div>
-))}
-</div>
-*/
