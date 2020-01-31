@@ -1,9 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import MuiAppBar from '@material-ui/core/AppBar';
-import { Toolbar, IconButton, Typography, Badge, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { Toolbar, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import useStyles from '../styles';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -15,70 +13,46 @@ function AppBar() {
   const classes = useStyles();
   const history = useHistory();
 
-  const [open, setOpen] = React.useState(false);
-
   const goto = (where) => history.push(where);
-
-  // TODO: Remove drawer.
 
   return (
     <>
-      <MuiAppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <MuiAppBar position="absolute" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={() => setOpen(true)}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+            onClick={() => {}}
+            className={classes.menuButton}
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Stakes
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <Button
+            color="secondary"
+            variant="outlined"
+            startIcon={<DashboardIcon />}
+            onClick={() => goto('/dashboard')}>
+              Dashboard
+          </Button>
+          &nbsp;
+          <Button
+            color="secondary"
+            variant="outlined"
+            startIcon={<AccountBalanceIcon />}
+            onClick={() => goto('/funds')}>
+              Funds
+          </Button>
+          &nbsp;
+          <Button
+            color="secondary"
+            variant="outlined"
+            startIcon={<PeopleIcon />}
+            onClick={() => goto('/investors')}>
+              Investors
+          </Button>
         </Toolbar>
       </MuiAppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={() => setOpen(false)}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem button onClick={() => goto('/dashboard')}>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItem>
-          <ListItem button onClick={() => goto('/investors')}>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Investors" />
-          </ListItem>
-          <ListItem button onClick={() => goto('/funds')}>
-            <ListItemIcon>
-              <AccountBalanceIcon />
-            </ListItemIcon>
-            <ListItemText primary="Funds" />
-          </ListItem>
-        </List>
-        <Divider />
-      </Drawer>
     </>
   );
 }

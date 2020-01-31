@@ -9,6 +9,9 @@ function TagImage(props) {
   const url = tilitintin.tags[tag] || '/pics/white.png';
   // TODO: Use style.
   if (avatar) {
+    if (!tilitintin.tags[tag]) {
+      return <Avatar>{tag.substr(0, 3)}</Avatar>;
+    }
     return <Avatar src={url} alt={tag} />;
   }
   return <img style={{ height: '100px' }} src={url} alt={tag} />;
