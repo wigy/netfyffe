@@ -2,6 +2,7 @@ const { SocketServerLive } = require('rtds-server');
 const { Driver } = require('rtds-query');
 const knex = require('knex')(require('../knexfile'));
 const config = require('./config');
+const { getTags } = require('./tilitintin');
 
 // Silly temporary authentication.
 async function auth(cred) {
@@ -157,6 +158,16 @@ async function main() {
         ]
       }
     ]
+  });
+
+  // Custom handlers.
+  server.use('get-tags', async (req, next) => {
+    if (config.TILITINTIN_URL) {
+      const tags = await getTags();
+      req.socket.emit('tags-success', tags);
+    } else {
+      req.socket.emit('tags-error', 'Not configured.');
+    }
   });
 
   server.useDebug();

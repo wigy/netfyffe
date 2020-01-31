@@ -19,6 +19,8 @@ function AppBar() {
 
   const goto = (where) => history.push(where);
 
+  // TODO: Remove drawer.
+
   return (
     <>
       <MuiAppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
