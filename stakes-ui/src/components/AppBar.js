@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 import MuiAppBar from '@material-ui/core/AppBar';
 import { Toolbar, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
