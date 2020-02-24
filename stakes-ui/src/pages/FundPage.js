@@ -4,11 +4,10 @@ import { useParams } from 'react-router';
 import useStyles from '../styles';
 import { Paper, Grid } from '@material-ui/core';
 import FundTitle from '../components/FundTitle';
-import ShareChangeList from '../components/ShareChangeList';
-import InvestorShares from '../components/InvestorShares';
+import ShareChangeTable from '../components/ShareChangeTable';
 
 function FundPage() {
-  const [fund, setFund] = useState([{}]);
+  const [/* fund */, setFund] = useState([{}]);
   const [shares, setShares] = useState([]);
   const classes = useStyles();
 
@@ -26,18 +25,11 @@ function FundPage() {
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <FundTitle fund={fund[0]} />
+          <FundTitle fund={{} /* fund[0] */} />
         </Paper>
       </Grid>
-      <Grid item xs={12} md={4} lg={3}>
-        <Paper className={classes.paper}>
-          <InvestorShares investors={Object.values(investors)} />
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={8} lg={9}>
-        <Paper className={classes.paper}>
-          <ShareChangeList shares={shares} />
-        </Paper>
+      <Grid item xs={12} md={12} lg={12}>
+        <ShareChangeTable shares={shares} />
       </Grid>
     </Grid>
   );

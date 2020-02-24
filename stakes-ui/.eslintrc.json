@@ -23,6 +23,7 @@
     }
   },
   "plugins": [
-      "react"
+      "react",
+      "react-hooks"
   ]
 }
