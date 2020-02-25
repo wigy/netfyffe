@@ -14,7 +14,7 @@ import ShareChange from './ShareChange';
 import Percent from './Percent';
 
 function ShareChangeTable(props) {
-  const { shares } = props;
+  const { shares, cashOnly } = props;
   const byDate = {};
   const investorsById = {};
   const total = {};
@@ -57,7 +57,7 @@ function ShareChangeTable(props) {
                 <TableCell align="right" key={i.id}>
                   {byDate[date][i.id] && byDate[date][i.id].map((entry, idx) => (
                     <div key={idx}>
-                      <ShareChange amount={entry.amount} transfer={entry.transfer}/>
+                      <ShareChange cashOnly={cashOnly} amount={entry.amount} transfer={entry.transfer}/>
                     </div>
                   ))
                   }
@@ -82,6 +82,7 @@ function ShareChangeTable(props) {
 }
 
 ShareChangeTable.propTypes = {
+  cashOnly: PropTypes.bool,
   shares: PropTypes.arrayOf(PropTypes.object)
 };
 

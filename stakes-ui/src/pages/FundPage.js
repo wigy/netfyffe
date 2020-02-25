@@ -7,7 +7,7 @@ import FundTitle from '../components/FundTitle';
 import ShareChangeTable from '../components/ShareChangeTable';
 
 function FundPage() {
-  const [/* fund */, setFund] = useState([{}]);
+  const [fund, setFund] = useState([{}]);
   const [shares, setShares] = useState([]);
   const classes = useStyles();
 
@@ -29,7 +29,7 @@ function FundPage() {
         </Paper>
       </Grid>
       <Grid item xs={12} md={12} lg={12}>
-        <ShareChangeTable shares={shares} />
+        <ShareChangeTable cashOnly={fund[0].name === 'Cash'} shares={shares} />
       </Grid>
     </Grid>
   );

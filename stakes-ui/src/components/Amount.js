@@ -9,16 +9,15 @@ function Amount(props) {
   const [body, digits] = (num + sep + '000000000000000000').split('.');
   const bodyParts = Number(body).toLocaleString().split(/[^0-9]/);
 
+  const __html = (
+    (isNegative ? '&mdash;' : (signed ? '+' : ''))) +
+    bodyParts.join('&nbsp;') +
+    ',' +
+    digits.substr(0, decimals === undefined ? 2 : decimals) +
+    (unit ? `&nbsp;${unit}` : '');
+
   return (
-    <span>
-      {isNegative
-        ? <span>&mdash;</span>
-        : (signed ? '+' : '')
-      }
-      {bodyParts.join(' ')},
-      {digits.substr(0, decimals === undefined ? 2 : decimals)}
-      {unit && ` ${unit}`}
-    </span>
+    <span dangerouslySetInnerHTML={{ __html }}/>
   );
 }
 

@@ -79,7 +79,15 @@ async function main() {
       {
         table: 'accounts',
         select: ['id', 'number', 'name'],
-        join: ['funds.id', 'accounts.fundId']
+        join: ['funds.id', 'accounts.fundId'],
+        members: [
+          {
+            table: 'services',
+            as: 'service',
+            select: ['id', 'name', 'tag'],
+            join: ['service.id', 'accounts.serviceId'],
+          }
+        ]
       }
     ]
   });

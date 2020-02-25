@@ -7,6 +7,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import { useHistory } from 'react-router-dom';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 function AppBar() {
   const classes = useStyles();
@@ -41,6 +42,14 @@ function AppBar() {
             startIcon={<AccountBalanceIcon />}
             onClick={() => goto('/funds')}>
               Funds
+          </Button>
+          &nbsp;
+          <Button
+            color="secondary"
+            variant="outlined"
+            startIcon={<AttachMoneyIcon />}
+            onClick={() => goto('/accounts')}>
+              Accounts
           </Button>
           &nbsp;
           <Button
