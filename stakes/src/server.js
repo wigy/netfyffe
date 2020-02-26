@@ -60,6 +60,78 @@ async function main() {
         select: ['id', 'name', 'tag'],
         join: ['accounts.serviceId', 'service.id']
       }
+    ],
+    collections: [
+      {
+        table: 'value_changes',
+        as: 'valueChanges',
+        select: ['id', 'date', 'amount'],
+        leftJoin: ['accounts.id', 'valueChanges.accountId'],
+        members: [
+          {
+            table: 'comments',
+            as: 'comment',
+            select: ['id', 'data'],
+            leftJoin: ['comment.id', 'valueChanges.commentId'],
+            process: {'data': 'json'},
+            members: [
+              {
+                table: 'transfers',
+                pk: ['commentId'],
+                select: ['commentId'],
+                as: 'transfer',
+                leftJoin: ['comment.id', 'transfer.commentId'],
+                members: [
+                  {
+                    table: 'value_changes',
+                    as: 'from',
+                    select: ['id', 'amount'],
+                    leftJoin: ['from.id', 'transfer.fromId'],
+                    members: [
+                      {
+                        table: 'accounts',
+                        as: 'account',
+                        select: ['id', 'name', 'number'],
+                        leftJoin: ['account.id', 'from.accountId'],
+                        members: [
+                          {
+                            table: 'funds',
+                            as: 'fund',
+                            select: ['id', 'name'],
+                            leftJoin: ['fund.id', 'account.fundId']
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    table: 'value_changes',
+                    as: 'to',
+                    select: ['id', 'amount'],
+                    leftJoin: ['to.id', 'transfer.toId'],
+                    members: [
+                      {
+                        table: 'accounts',
+                        as: 'account',
+                        select: ['id', 'name', 'number'],
+                        leftJoin: ['account.id', 'to.accountId'],
+                        members: [
+                          {
+                            table: 'funds',
+                            as: 'fund',
+                            select: ['id', 'name'],
+                            leftJoin: ['fund.id', 'account.fundId']
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ]
   }, {
     insert: ['name', 'number', 'serviceId', 'fundId'],
@@ -85,7 +157,7 @@ async function main() {
             table: 'services',
             as: 'service',
             select: ['id', 'name', 'tag'],
-            join: ['service.id', 'accounts.serviceId'],
+            leftJoin: ['service.id', 'accounts.serviceId'],
           }
         ]
       }
@@ -178,7 +250,7 @@ async function main() {
     }
   });
 
-  server.useDebug();
+  // server.useDebug();
   server.use404();
   server.run();
 }
