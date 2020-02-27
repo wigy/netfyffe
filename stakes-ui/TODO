@@ -1,0 +1,7 @@
+== BUGS
+
+[ ] Changing account does not trigger redraw.
+
+== Other
+
+[ ] Use styles.js in account tree.

@@ -3,9 +3,13 @@ import { useDataRead } from 'rtds-client';
 import { useParams } from 'react-router';
 import { Grid, Paper } from '@material-ui/core';
 import FundTree from '../components/FundTree';
+import AccountTitle from '../components/AccountTitle';
+import useStyles from '../styles';
+import ValueChangeList from '../components/ValueChangeList';
 
 function AccountPage() {
-  const [account, setAccount] = useState([]);
+  const [account, setAccount] = useState([{ fund: {}, service: {}, valueChanges: [] }]);
+  const classes = useStyles();
   const { id } = useParams();
   useDataRead('account', { id: parseInt(id) }, setAccount);
   const [funds, setFunds] = useState([]);
@@ -18,9 +22,12 @@ function AccountPage() {
           <FundTree funds={funds}/>
         </Paper>
       </Grid>
-      <Grid item xs={12} md={6} lg={5}>
+      <Grid item xs={12} md={6} lg={8}>
+        <Paper className={classes.paper}>
+          <AccountTitle account={account[0]}/>
+        </Paper>
         <Paper>
-          Nothing yet... {JSON.stringify(account)}
+          <ValueChangeList changes={account[0].valueChanges} />
         </Paper>
       </Grid>
     </Grid>

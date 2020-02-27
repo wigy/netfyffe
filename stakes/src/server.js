@@ -66,7 +66,8 @@ async function main() {
         table: 'value_changes',
         as: 'valueChanges',
         select: ['id', 'date', 'amount'],
-        leftJoin: ['accounts.id', 'valueChanges.accountId'],
+        join: ['accounts.id', 'valueChanges.accountId'],
+        order: 'valueChanges.date',
         members: [
           {
             table: 'comments',
@@ -77,8 +78,7 @@ async function main() {
             members: [
               {
                 table: 'transfers',
-                pk: ['commentId'],
-                select: ['commentId'],
+                select: ['id', 'commentId'],
                 as: 'transfer',
                 leftJoin: ['comment.id', 'transfer.commentId'],
                 members: [

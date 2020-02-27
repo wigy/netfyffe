@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { deepOrange, deepPurple, red, green, lightGreen, yellow, pink, indigo } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,7 +37,9 @@ const useStyles = makeStyles(theme => ({
     display: 'none'
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    fontSize: theme.fontSize,
+    color: 'transparent'
   },
   drawerPaper: {
     position: 'relative',
@@ -70,9 +73,42 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column'
+  },
+  orange: {
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500]
+  },
+  purple: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500]
+  },
+  green: {
+    color: theme.palette.getContrastText(green[500]),
+    backgroundColor: green[500]
+  },
+  lightGreen: {
+    color: theme.palette.getContrastText(lightGreen[500]),
+    backgroundColor: lightGreen[500]
+  },
+  red: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500]
+  },
+  pink: {
+    color: theme.palette.getContrastText(pink[500]),
+    backgroundColor: pink[500]
+  },
+  yellow: {
+    color: theme.palette.getContrastText(yellow[500]),
+    backgroundColor: yellow[500]
+  },
+  indigo: {
+    color: theme.palette.getContrastText(indigo[500]),
+    backgroundColor: indigo[500]
   }
 }));
 
