@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import AccountPage from './pages/AccountPage';
@@ -11,41 +12,65 @@ import InvestorsPage from './pages/InvestorsPage';
 import HomePage from './pages/HomePage';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AppBar from './components/AppBar';
-import { client } from 'rtds-client';
-import Config from './Config';
+import { useDataRead } from 'rtds-client';
 import theme from './theme';
 import useStyles from './styles';
-import { Container, Box } from '@material-ui/core';
+import { Container, Box, Divider, Drawer } from '@material-ui/core';
 import Copyright from './components/Copyright';
 import TilitintinContext from './context/TilitintinContext';
+import FundTree from './components/FundTree';
+import FundList from './components/FundList';
+import { PropTypes } from 'prop-types';
 
-function App() {
+function App(props) {
+  const [open, setOpen] = useState(true);
+  const [funds, setFunds] = useState([]);
   const classes = useStyles();
-  client.configure({ port: Config.SERVER_PORT });
 
   const context = {
-    tags: {}
+    tags: props.tags
   };
-  client.try({ channel: 'get-tags' }, {
-    successChannel: 'tags-success',
-    successCallback: (data) => (context.tags = data),
-    failChannel: 'tags-error'
-  }).catch(() => console.log('Failed to locate tags.'));
+
+  useDataRead('funds', setFunds);
+
+  const drawer = (
+    <div className={classes.drawer}>
+      <div className={classes.drawerHeader} />
+      <Divider />
+      <Switch>
+        <Route path="/accounts" component={() => <FundTree funds={funds}/>} />
+        <Route path="/funds" component={() => <FundList funds={funds} />} />
+      </Switch>
+    </div>
+  );
 
   return (
     <TilitintinContext.Provider value={context}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router>
-          <AppBar />
+          <AppBar
+            className={clsx(classes.appBar, {
+              [classes.appBarShift]: open
+            })}
+            onMenuClick={() => setOpen(!open)}
+          />
+          <Drawer
+            variant="persistent"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={open}
+            classes={{ paper: classes.drawerPaper }}
+          >
+            {drawer}
+          </Drawer>
           <div className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/dashboard" component={DashboardPage} />
-                <Route path="/accounts/:id" component={AccountPage} />
-                <Route path="/accounts" component={AccountsPage} />
+                <Route path="/accounts/:id" component={() => <AccountPage funds={funds}/>} />
+                <Route path="/accounts" component={() => <AccountsPage funds={funds}/>} />
                 <Route path="/investors/:id" component={InvestorPage} />
                 <Route path="/investors" component={InvestorsPage} />
                 <Route path="/funds/:id" component={FundPage} />
@@ -61,5 +86,9 @@ function App() {
     </TilitintinContext.Provider>
   );
 }
+
+App.propTypes = {
+  tags: PropTypes.object
+};
 
 export default App;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Avatar } from '@material-ui/core';
 
 function TagImage(props) {
-  const { tag, avatar, small, className } = props;
+  const { tag, avatar, small, medium, className } = props;
   const tilitintin = useContext(TilitintinContext);
   const url = tilitintin.tags[tag] || '/pics/white.png';
   if (avatar) {
@@ -13,13 +13,15 @@ function TagImage(props) {
     }
     return <Avatar className={className} src={url} alt={tag} />;
   }
-  return <img className={className} style={{ width: small ? '24px' : '100px' }} src={url} alt={tag} />;
+  const size = (small ? '24px' : (medium ? '64px' : '100px'));
+  return <img className={className} style={{ width: size }} src={url} alt={tag} />;
 }
 
 TagImage.propTypes = {
   avatar: PropTypes.bool,
   className: PropTypes.string,
   small: PropTypes.bool,
+  medium: PropTypes.bool,
   tag: PropTypes.string
 };
 

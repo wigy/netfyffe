@@ -8,8 +8,10 @@ import { useHistory } from 'react-router-dom';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { PropTypes } from 'prop-types';
 
-function AppBar() {
+function AppBar(props) {
+  const { className, onMenuClick } = props;
   const classes = useStyles();
   const history = useHistory();
 
@@ -17,13 +19,13 @@ function AppBar() {
 
   return (
     <>
-      <MuiAppBar position="absolute" className={classes.appBar}>
+      <MuiAppBar position="fixed" className={className}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={() => {}}
+            onClick={() => onMenuClick()}
             className={classes.menuButton}
           >
             <MenuIcon />
@@ -64,5 +66,10 @@ function AppBar() {
     </>
   );
 }
+
+AppBar.propTypes = {
+  className: PropTypes.string,
+  onMenuClick: PropTypes.func
+};
 
 export default AppBar;

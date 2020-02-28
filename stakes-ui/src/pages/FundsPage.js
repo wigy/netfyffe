@@ -1,19 +1,11 @@
-import React, { useState } from 'react';
-import { useDataRead } from 'rtds-client';
+import React from 'react';
 import { Grid, Paper } from '@material-ui/core';
 
 function FundsPage() {
-  const [, setFunds] = useState([]);
-  useDataRead('funds', setFunds);
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={6} lg={4}>
-        <Paper>
-          Nothing yet...
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={6} lg={5}>
+      <Grid item xs={12} md={12} lg={12}>
         <Paper>
           Nothing yet...
         </Paper>

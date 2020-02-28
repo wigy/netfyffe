@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { deepOrange, deepPurple, red, green, lightGreen, yellow, pink, indigo } from '@material-ui/core/colors';
 
+const drawerWidth = 400;
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -24,11 +26,26 @@ const useStyles = makeStyles(theme => ({
   },
   appBarShift: {
     marginLeft: 240,
-    width: `calc(100% - ${240}px)`,
+    width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  appBarSpacer: theme.mixins.toolbar,
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end'
   },
   menuButton: {
     marginRight: 36
@@ -38,17 +55,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
-    fontSize: theme.fontSize,
-    color: 'transparent'
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: 240,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    fontSize: theme.fontSize
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -61,7 +68,6 @@ const useStyles = makeStyles(theme => ({
       width: theme.spacing(9)
     }
   },
-  appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
