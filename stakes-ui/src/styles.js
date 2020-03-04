@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
   appBarSpacer: theme.mixins.toolbar,
   drawer: {
-    width: drawerWidth,
+    width: drawerWidth - 1,
     flexShrink: 0
   },
   drawerPaper: {
