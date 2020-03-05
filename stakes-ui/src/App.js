@@ -43,7 +43,7 @@ function App(props) {
       </Switch>
     </div>
   );
-  console.log(theme);
+
   return (
     <TilitintinContext.Provider value={context}>
       <ThemeProvider theme={theme}>

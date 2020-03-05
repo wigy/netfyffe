@@ -7,7 +7,7 @@ const { getTags } = require('./tilitintin');
 // Silly temporary authentication.
 async function auth(cred) {
   const user = await knex('investors')
-    .select('id', 'name', 'email', 'tag')
+    .select('id', 'name', 'email', 'tag', 'color')
     .where({email: cred.user})
     .first();
   // TODO: Password check.
@@ -21,12 +21,12 @@ async function main() {
   await driver.initialize();
 
   server.makeChannel('investors', {
-    select: ['id', 'name', 'email', 'tag'],
+    select: ['id', 'name', 'email', 'tag', 'color'],
     table: 'investors'
   });
 
   server.makeChannel('investor', {
-    select: ['id', 'name', 'email', 'tag'],
+    select: ['id', 'name', 'email', 'tag', 'color'],
     table: 'investors'
   }, {
     insert: ['name', 'email', 'tag'],
@@ -176,7 +176,7 @@ async function main() {
       {
         table: 'investors',
         as: 'investor',
-        select: ['id', 'name', 'tag'],
+        select: ['id', 'name', 'tag', 'color'],
         join: ['shares.investorId', 'investor.id']
       },
       {

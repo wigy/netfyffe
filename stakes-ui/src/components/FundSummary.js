@@ -24,6 +24,7 @@ function FundSummary(props) {
   const data = Object.keys(sharesById).map(id => ({
     id,
     name: investorsById[id].name,
+    color: investorsById[id].color,
     shares: sharesById[id],
     percentage: Math.round(1000 * sharesById[id] / total) / 10
   }));
@@ -41,23 +42,8 @@ function FundSummary(props) {
               datasets: [
                 {
                   data: data.map(e => e.percentage),
-                  // TODO: Colors. Use function mapping from investors?
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                  ],
+                  backgroundColor: data.map(e => `rgba(${e.color},0.3)`),
+                  borderColor: data.map(e => `rgba(${e.color},1)`),
                   borderWidth: 1
                 }
               ]
