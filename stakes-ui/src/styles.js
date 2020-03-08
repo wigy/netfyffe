@@ -7,6 +7,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
+  // Toolbar.
   toolbar: {
     paddingRight: 24
   },
@@ -117,6 +118,11 @@ const useStyles = makeStyles(theme => ({
   indigo: {
     color: theme.palette.getContrastText(indigo[500]),
     backgroundColor: indigo[500]
+  },
+  // Miscellaneous.
+  title: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   }
 }));
 
