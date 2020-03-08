@@ -32,6 +32,7 @@ function AppBar(props) {
           </IconButton>
           <Button
             variant="outlined"
+            className={classes.toolBarButton}
             startIcon={<DashboardIcon />}
             onClick={() => goto('/dashboard')}>
               Dashboard
@@ -39,6 +40,7 @@ function AppBar(props) {
           &nbsp;
           <Button
             variant="outlined"
+            className={classes.toolBarButton}
             startIcon={<AccountBalanceIcon />}
             onClick={() => goto('/funds')}>
               Funds
@@ -46,6 +48,7 @@ function AppBar(props) {
           &nbsp;
           <Button
             variant="outlined"
+            className={classes.toolBarButton}
             startIcon={<AttachMoneyIcon />}
             onClick={() => goto('/accounts')}>
               Accounts
@@ -53,6 +56,7 @@ function AppBar(props) {
           &nbsp;
           <Button
             variant="outlined"
+            className={classes.toolBarButton}
             startIcon={<PeopleIcon />}
             onClick={() => goto('/investors')}>
               Investors

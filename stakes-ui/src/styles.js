@@ -10,12 +10,9 @@ const useStyles = makeStyles(theme => ({
   toolbar: {
     paddingRight: 24
   },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar
+  toolBarButton: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -33,29 +30,32 @@ const useStyles = makeStyles(theme => ({
     })
   },
   appBarSpacer: theme.mixins.toolbar,
+  menuButton: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    marginRight: theme.spacing(4)
+  },
+  // Drawer.
   drawer: {
     width: drawerWidth - 1,
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
+    overflowX: 'hidden'
   },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
-  },
-  menuButton: {
-    marginRight: 36
-  },
-  menuButtonHidden: {
-    display: 'none'
-  },
-  title: {
-    flexGrow: 1,
-    fontSize: theme.fontSize
+    fontFamily: theme.typography.h4.fontFamily,
+    fontWeight: theme.typography.h4.fontWeight,
+    fontSize: theme.typography.h4.fontSize,
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    textShadow: '2px 2px black',
+    boxShadow: theme.shadows[3]
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -68,22 +68,24 @@ const useStyles = makeStyles(theme => ({
       width: theme.spacing(9)
     }
   },
+  // General containers.
   content: {
     flexGrow: 1,
     height: '100vh',
     overflow: 'auto'
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1)
   },
   paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column'
   },
+  // Colors.
   orange: {
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500]

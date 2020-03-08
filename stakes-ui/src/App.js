@@ -15,12 +15,11 @@ import AppBar from './components/AppBar';
 import { useDataRead } from 'rtds-client';
 import theme from './theme';
 import useStyles from './styles';
-import { Container, Box, Divider, Drawer } from '@material-ui/core';
+import { Container, Box } from '@material-ui/core';
 import Copyright from './components/Copyright';
 import TilitintinContext from './context/TilitintinContext';
-import FundTree from './components/FundTree';
-import FundList from './components/FundList';
 import { PropTypes } from 'prop-types';
+import Drawer from './components/Drawer';
 
 function App(props) {
   const [open, setOpen] = useState(true);
@@ -33,17 +32,6 @@ function App(props) {
 
   useDataRead('funds', setFunds);
 
-  const drawer = (
-    <div className={classes.drawer}>
-      <div className={classes.drawerHeader} />
-      <Divider />
-      <Switch>
-        <Route path="/accounts" component={() => <FundTree funds={funds}/>} />
-        <Route path="/funds" component={() => <FundList funds={funds} />} />
-      </Switch>
-    </div>
-  );
-
   return (
     <TilitintinContext.Provider value={context}>
       <ThemeProvider theme={theme}>
@@ -55,14 +43,7 @@ function App(props) {
             })}
             onMenuClick={() => setOpen(!open)}
           />
-          <Drawer
-            variant="persistent"
-            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-            open={open}
-            classes={{ paper: classes.drawerPaper }}
-          >
-            {drawer}
-          </Drawer>
+          <Drawer open={open} funds={funds}/>
           <div className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Container maxWidth="lg" className={classes.container}>

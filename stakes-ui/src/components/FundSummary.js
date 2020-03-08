@@ -3,10 +3,12 @@ import { PropTypes } from 'prop-types';
 import { Grid, Paper } from '@material-ui/core';
 import useStyles from '../styles';
 import { Pie } from 'react-chartjs-2';
+import theme from '../theme';
 
 function FundSummary(props) {
   const { /* fund, */ shares } = props;
   const classes = useStyles();
+  const { caption, body2 } = theme.typography;
 
   let total = 0;
   const sharesById = {};
@@ -52,11 +54,10 @@ function FundSummary(props) {
               title: {
                 display: true,
                 text: 'Shares per investor',
-                fontFamily: '"Times New Roman", Georgia, Serif',
-                fontSize: 18
+                fontFamily: caption.fontFamily
               },
               tooltips: {
-                bodyFontFamily: '"Times New Roman", Georgia, Serif',
+                bodyFontFamily: body2.fontFamily,
                 callbacks: {
                   label: function(tooltipItem, data) {
                     const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
