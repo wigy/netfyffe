@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useDataRead } from 'rtds-client';
 import { useParams } from 'react-router';
-import { Grid, Paper } from '@material-ui/core';
+import { Grid, Paper, AppBar, Tab, Tabs } from '@material-ui/core';
 import AccountTitle from '../components/AccountTitle';
 import useStyles from '../styles';
 import ValueChangeList from '../components/ValueChangeList';
+import TabPanel from '../components/TabPanel';
 
 function AccountPage() {
   const [account, setAccount] = useState([{ fund: {}, service: {}, valueChanges: [] }]);
+  const [tab, setTab] = useState(0);
   const classes = useStyles();
   const { id } = useParams();
   useDataRead('account', { id: parseInt(id) }, setAccount);
@@ -18,8 +20,21 @@ function AccountPage() {
         <Paper className={classes.paper}>
           <AccountTitle account={account[0]}/>
         </Paper>
+      </Grid>
+      <Grid item xs={12} md={12} lg={12}>
         <Paper>
-          <ValueChangeList changes={account[0].valueChanges} />
+          <AppBar position="static">
+            <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)}>
+              <Tab label="Summary"/>
+              <Tab label="Capital History"/>
+            </Tabs>
+          </AppBar>
+          <TabPanel value={tab} index={0}>
+            TODO: Summary
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <ValueChangeList changes={account[0].valueChanges} />
+          </TabPanel>
         </Paper>
       </Grid>
     </Grid>

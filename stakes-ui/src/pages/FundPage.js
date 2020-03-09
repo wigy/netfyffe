@@ -32,22 +32,24 @@ function FundPage() {
         </Paper>
       </Grid>
       <Grid item xs={12} md={12} lg={12}>
-        <AppBar position="static">
-          <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)}>
-            <Tab label="Summary"/>
-            <Tab label="Shares"/>
-            <Tab label="Value History"/>
-          </Tabs>
-        </AppBar>
-        <TabPanel value={tab} index={0}>
-          <FundSummary fund={fund[0]} shares={shares} />
-        </TabPanel>
-        <TabPanel value={tab} index={1}>
-          <ShareChangeTable cashOnly={fund[0].name === 'Cash'} shares={shares} />
-        </TabPanel>
-        <TabPanel value={tab} index={2}>
+        <Paper>
+          <AppBar position="static">
+            <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)}>
+              <Tab label="Summary"/>
+              <Tab label="Shares"/>
+              <Tab label="Value History"/>
+            </Tabs>
+          </AppBar>
+          <TabPanel value={tab} index={0}>
+            <FundSummary fund={fund[0]} shares={shares} />
+          </TabPanel>
+          <TabPanel value={tab} index={1}>
+            <ShareChangeTable cashOnly={fund[0].name === 'Cash'} shares={shares} />
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
           TODO: Value history.
-        </TabPanel>
+          </TabPanel>
+        </Paper>
       </Grid>
     </Grid>
   );
