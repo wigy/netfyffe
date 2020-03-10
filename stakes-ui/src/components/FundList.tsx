@@ -1,22 +1,22 @@
 import React from 'react';
 import { List } from '@material-ui/core';
 import FundListItem from './FundListItem';
-import { PropTypes } from 'prop-types';
+import { Fund } from '../types';
 
-function FundList(props) {
+interface FundListProps {
+  funds: Fund[];
+}
+
+function FundList(props: FundListProps): JSX.Element {
   const { funds } = props;
 
   return (
     <List>
       {
-        funds.map(fund => <FundListItem key={fund.id} fund={fund}/>)
+        funds.map((fund: Fund) => <FundListItem key={fund.id} fund={fund}/>)
       }
     </List>
   );
 }
-
-FundList.propTypes = {
-  funds: PropTypes.arrayOf(PropTypes.object)
-};
 
 export default FundList;

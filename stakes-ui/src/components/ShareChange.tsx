@@ -1,8 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Amount from './Amount';
+import { Transfer } from '../types';
 
-function ShareChange(props) {
+interface ShareChangeProps {
+  amount: number;
+  cashOnly?: boolean;
+  transfer: Transfer;
+}
+
+function ShareChange(props: ShareChangeProps): JSX.Element {
   const { amount, transfer, cashOnly } = props;
   const target = amount < 0 && transfer.from.amount < 0
     ? transfer.from
@@ -15,11 +21,5 @@ function ShareChange(props) {
     </span>
   );
 }
-
-ShareChange.propTypes = {
-  amount: PropTypes.number,
-  cashOnly: PropTypes.bool,
-  transfer: PropTypes.object
-};
 
 export default ShareChange;

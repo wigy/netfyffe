@@ -3,7 +3,7 @@ import { deepOrange, deepPurple, red, green, lightGreen, yellow, pink, indigo } 
 
 const drawerWidth = 400;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex'
   },

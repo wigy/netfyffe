@@ -3,7 +3,7 @@ import { withTheme } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
 import useStyles from '../styles';
 
-function DashboardPage(props) {
+function DashboardPage() {
   const classes = useStyles();
 
   return (

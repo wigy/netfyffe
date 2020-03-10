@@ -1,7 +1,8 @@
 import React from 'react';
 import { Grid, Paper } from '@material-ui/core';
 
-function FundsPage() {
+// eslint-disable-next-line
+function FundsPage(): JSX.Element {
 
   return (
     <Grid container spacing={3}>

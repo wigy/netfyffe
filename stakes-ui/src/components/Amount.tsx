@@ -1,7 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function Amount(props) {
+interface AmountProps {
+  amount: number;
+  signed?: boolean;
+  decimals?: number;
+  unit?: string;
+}
+
+function Amount(props: AmountProps): JSX.Element {
   const { amount, signed, unit } = props;
   let decimals = props.decimals || 0;
   const isNegative = amount < 0;
@@ -28,12 +34,5 @@ function Amount(props) {
     <span dangerouslySetInnerHTML={{ __html }}/>
   );
 }
-
-Amount.propTypes = {
-  amount: PropTypes.number,
-  signed: PropTypes.bool,
-  decimals: PropTypes.number,
-  unit: PropTypes.string
-};
 
 export default Amount;

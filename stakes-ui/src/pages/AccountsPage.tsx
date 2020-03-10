@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, Grid } from '@material-ui/core';
 
-function AccountsPage(props) {
+function AccountsPage(): JSX.Element {
 
   return (
     <Grid container spacing={3}>

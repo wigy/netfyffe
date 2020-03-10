@@ -50,7 +50,7 @@ function ShareChangeTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.entries(byDate).map(([date, shares]) => (
+          {Object.keys(byDate).map(date => (
             <TableRow key={date}>
               <TableCell>{moment(date).format('LL')}</TableCell>
               {investors.map(i => (

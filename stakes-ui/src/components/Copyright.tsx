@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 
-function Copyright() {
+function Copyright(): JSX.Element {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}

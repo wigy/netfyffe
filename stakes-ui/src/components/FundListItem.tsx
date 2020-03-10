@@ -1,15 +1,19 @@
 import React from 'react';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { PropTypes } from 'prop-types';
 import TagImage from './TagImage';
 import { useHistory } from 'react-router-dom';
+import { Fund } from '../types/index.d';
 
-function FundListItem(props) {
+interface FundListItemProps {
+  fund: Fund;
+}
+
+function FundListItem(props: FundListItemProps): JSX.Element {
   const { fund } = props;
   const history = useHistory();
 
   return (
-    <ListItem button onClick={() => history.push(`/funds/${fund.id}`)}>
+    <ListItem button onClick={(): void => history.push(`/funds/${fund.id}`)}>
       <ListItemIcon>
         <TagImage tag={fund.tag} medium />
       </ListItemIcon>
@@ -17,9 +21,5 @@ function FundListItem(props) {
     </ListItem>
   );
 }
-
-FundListItem.propTypes = {
-  fund: PropTypes.object.isRequired
-};
 
 export default FundListItem;

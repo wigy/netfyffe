@@ -1,9 +1,15 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
 import TagImage from './TagImage';
 import { Typography, Grid } from '@material-ui/core';
+import { Investor } from '../types';
 
-function InvestorLabel(props) {
+interface InvestorLabelProps {
+  align: string;
+  investor: Investor;
+  text: string;
+}
+
+function InvestorLabel(props: InvestorLabelProps): JSX.Element {
   const { investor, text, align } = props;
   return <Grid container justify={align === 'right' ? 'flex-end' : 'flex-start'} alignItems="center" spacing={2}>
     <Grid item>
@@ -17,9 +23,3 @@ function InvestorLabel(props) {
 }
 
 export default InvestorLabel;
-
-InvestorLabel.propTypes = {
-  align: PropTypes.string,
-  investor: PropTypes.object,
-  text: PropTypes.any
-};
