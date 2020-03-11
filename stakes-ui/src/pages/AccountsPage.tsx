@@ -1,7 +1,12 @@
 import React from 'react';
 import { Paper, Grid } from '@material-ui/core';
+import { Fund } from '../types/index.d';
 
-function AccountsPage(): JSX.Element {
+interface AccountsPageProps {
+  funds: Fund[];
+}
+
+function AccountsPage(props: AccountsPageProps): JSX.Element {
 
   return (
     <Grid container spacing={3}>

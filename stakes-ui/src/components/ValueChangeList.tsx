@@ -1,9 +1,13 @@
 import React from 'react';
 import { List } from '@material-ui/core';
-import { PropTypes } from 'prop-types';
 import ValueChangeListItem from './ValueChangeListItem';
+import { ValueChange } from '../types/index.d';
 
-function ValueChangeList(props) {
+interface ValueChangeListProps {
+  changes: ValueChange[];
+}
+
+function ValueChangeList(props: ValueChangeListProps): JSX.Element {
   const { changes } = props;
   return (
     <List>
@@ -15,9 +19,5 @@ function ValueChangeList(props) {
     </List>
   );
 }
-
-ValueChangeList.propTypes = {
-  changes: PropTypes.arrayOf(PropTypes.object)
-};
 
 export default ValueChangeList;

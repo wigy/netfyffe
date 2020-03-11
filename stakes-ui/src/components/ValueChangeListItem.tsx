@@ -1,11 +1,15 @@
 import React from 'react';
 import { ListItem, ListItemText, ListItemAvatar } from '@material-ui/core';
-import { PropTypes } from 'prop-types';
 import Amount from './Amount';
 import TransferImage from './TransferImage';
 import moment from 'moment';
+import { ValueChange } from '../types/index.d';
 
-function ValueChangeListItem(props) {
+interface ValueChangeListItemProps {
+  change: ValueChange;
+}
+
+function ValueChangeListItem(props: ValueChangeListItemProps): JSX.Element {
   const { change } = props;
   const transfer = change.comment.transfer;
   const data = change.comment.data;
@@ -46,9 +50,5 @@ function ValueChangeListItem(props) {
     </ListItem>
   );
 }
-
-ValueChangeListItem.propTypes = {
-  change: PropTypes.object
-};
 
 export default ValueChangeListItem;

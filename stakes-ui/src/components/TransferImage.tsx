@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar } from '@material-ui/core';
+import { Avatar, SvgIconProps } from '@material-ui/core';
 import useStyles from '../styles';
 import HelpIcon from '@material-ui/icons/Help';
 import SyncIcon from '@material-ui/icons/Sync';
@@ -13,11 +13,20 @@ import AssignmentReturnIcon from '@material-ui/icons/AssignmentReturn';
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
+import { ColorName, Comment } from '../types';
 
-function TransferImage(props) {
+interface TransferImageProps {
+  comment: Comment;
+}
+
+function TransferImage(props: TransferImageProps): JSX.Element {
   const { comment } = props;
   const classes = useStyles();
-  let Icon, color, text, str;
+  let Icon: (props: SvgIconProps) => JSX.Element;
+  let color: ColorName;
+  let text: string;
+  let str: string;
+
   const type = comment && comment.data && (comment.data.subtype || comment.data.type);
   switch (type) {
     case 'divestment':

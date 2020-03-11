@@ -7,9 +7,10 @@ import FundTitle from '../components/FundTitle';
 import ShareChangeTable from '../components/ShareChangeTable';
 import TabPanel from '../components/TabPanel';
 import FundSummary from '../components/FundSummary';
+import { InvestorMap, Fund } from '../types/index.d';
 
-function FundPage() {
-  const [fund, setFund] = useState([{}]);
+function FundPage(): JSX.Element {
+  const [fund, setFund] = useState([{} as Fund]);
   const [shares, setShares] = useState([]);
   const [tab, setTab] = useState(0);
   const classes = useStyles();
@@ -18,7 +19,7 @@ function FundPage() {
   useDataRead('fund', { id: parseInt(id) }, setFund);
   useDataRead('shares', { fundId: parseInt(id) }, setShares);
 
-  const investors = {};
+  const investors: InvestorMap = {};
   shares.forEach(share => {
     investors[share.investor.id] = investors[share.investor.id] || share.investor;
     investors[share.investor.id].shares = (investors[share.investor.id].shares || 0) + share.amount;
@@ -34,7 +35,7 @@ function FundPage() {
       <Grid item xs={12} md={12} lg={12}>
         <Paper>
           <AppBar position="static">
-            <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)}>
+            <Tabs value={tab} onChange={(_, newTab): void => setTab(newTab)}>
               <Tab label="Summary"/>
               <Tab label="Shares"/>
               <Tab label="Value History"/>

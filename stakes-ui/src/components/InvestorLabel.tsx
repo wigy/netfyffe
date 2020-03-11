@@ -6,7 +6,7 @@ import { Investor } from '../types';
 interface InvestorLabelProps {
   align: string;
   investor: Investor;
-  text: string;
+  text: string | JSX.Element;
 }
 
 function InvestorLabel(props: InvestorLabelProps): JSX.Element {

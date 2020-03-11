@@ -18,12 +18,12 @@ import useStyles from './styles';
 import { Container, Box } from '@material-ui/core';
 import Copyright from './components/Copyright';
 import TilitintinContext from './context/TilitintinContext';
-import { PropTypes } from 'prop-types';
 import Drawer from './components/Drawer';
+import { TilitintinContextType, Fund } from './types/index.d';
 
-function App(props) {
+function App(props: TilitintinContextType): JSX.Element {
   const [open, setOpen] = useState(true);
-  const [funds, setFunds] = useState([]);
+  const [funds, setFunds] = useState([{} as Fund]);
   const classes = useStyles();
 
   const context = {
@@ -41,7 +41,7 @@ function App(props) {
             className={clsx(classes.appBar, {
               [classes.appBarShift]: open
             })}
-            onMenuClick={() => setOpen(!open)}
+            onMenuClick={(): void => setOpen(!open)}
           />
           <Drawer open={open} funds={funds}/>
           <div className={classes.content}>
@@ -50,8 +50,8 @@ function App(props) {
               <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route exact path="/dashboard" component={DashboardPage} />
-                <Route path="/accounts/:id" component={() => <AccountPage funds={funds}/>} />
-                <Route path="/accounts" component={() => <AccountsPage funds={funds}/>} />
+                <Route path="/accounts/:id" component={(): JSX.Element => <AccountPage funds={funds}/>} />
+                <Route path="/accounts" component={(): JSX.Element => <AccountsPage funds={funds}/>} />
                 <Route path="/investors/:id" component={InvestorPage} />
                 <Route path="/investors" component={InvestorsPage} />
                 <Route path="/funds/:id" component={FundPage} />
@@ -67,9 +67,5 @@ function App(props) {
     </TilitintinContext.Provider>
   );
 }
-
-App.propTypes = {
-  tags: PropTypes.object
-};
 
 export default App;

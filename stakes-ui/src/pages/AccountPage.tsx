@@ -6,8 +6,13 @@ import AccountTitle from '../components/AccountTitle';
 import useStyles from '../styles';
 import ValueChangeList from '../components/ValueChangeList';
 import TabPanel from '../components/TabPanel';
+import { Fund } from '../types/index.d';
 
-function AccountPage() {
+interface AccountPageProps {
+  funds: Fund[];
+}
+
+function AccountPage(props: AccountPageProps): JSX.Element {
   const [account, setAccount] = useState([{ fund: {}, service: {}, valueChanges: [] }]);
   const [tab, setTab] = useState(0);
   const classes = useStyles();
@@ -24,7 +29,7 @@ function AccountPage() {
       <Grid item xs={12} md={12} lg={12}>
         <Paper>
           <AppBar position="static">
-            <Tabs value={tab} onChange={(_, newTab) => setTab(newTab)}>
+            <Tabs value={tab} onChange={(_, newTab): void => setTab(newTab)}>
               <Tab label="Summary"/>
               <Tab label="Capital History"/>
             </Tabs>

@@ -4,8 +4,8 @@ import TreeItem from '@material-ui/lab/TreeItem';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TagImage from './TagImage';
-import { PropTypes } from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { Fund, Account } from '../types/index.d';
 
 const useTreeItemStyles = makeStyles(theme => ({
   root: {
@@ -50,19 +50,30 @@ const useTreeItemStyles = makeStyles(theme => ({
   }
 }));
 
-function FundTree(props) {
+interface FundTreeProps {
+  funds: Fund[];
+}
+
+function FundTree(props: FundTreeProps): JSX.Element {
   const { funds } = props;
   const classes = useTreeItemStyles();
   const history = useHistory();
 
-  function Item(props) {
+  interface ItemProps {
+    type: string;
+    target: Fund | Account;
+    link?: string;
+    children?: JSX.Element[];
+  }
+
+  function Item(props: ItemProps): JSX.Element {
     const { type, target, link, children = [] } = props;
     return <TreeItem
-      onClick={(event) => { event.preventDefault(); link && history.push(link); }}
+      onClick={(event): void => { event.preventDefault(); link && history.push(link); }}
       nodeId={`${type}${target.id}`}
       label={
         <div className={classes.labelRoot}>
-          <TagImage small tag={target.tag} className={classes.labelIcon}/>
+          {('tag' in target) && <TagImage small tag={target.tag} className={classes.labelIcon}/>}
           <Typography variant="body2" className={classes.labelText}>
             {target.name}
           </Typography>
@@ -81,18 +92,12 @@ function FundTree(props) {
       {children}
     </TreeItem>;
   }
-  Item.propTypes = {
-    children: PropTypes.any,
-    link: PropTypes.string,
-    target: PropTypes.object,
-    type: PropTypes.string
-  };
 
-  function Fund({ fund, children }) {
+  function FundNode({ fund, children }: { fund: Fund; children: JSX.Element[] }): JSX.Element {
     return Item({ type: 'Fund', target: fund, children });
   }
 
-  function Account({ fund, account }) {
+  function AccountNode({ fund, account }: { fund: Fund; account: Account }): JSX.Element {
     return Item({
       type: 'Account',
       target: {
@@ -105,7 +110,7 @@ function FundTree(props) {
   }
 
   if (!funds.length) {
-    return '';
+    return <span></span>;
   }
 
   return (
@@ -116,18 +121,14 @@ function FundTree(props) {
       defaultEndIcon={<div style={{ width: 12 }} />}
     >
       {funds.map((fund) => (
-        <Fund key={fund.id} fund={fund}>
+        <FundNode key={fund.id} fund={fund}>
           {
-            fund.accounts.map(account => <Account key={account.id} fund={fund} account={account}/>)
+            fund.accounts.map(account => <AccountNode key={account.id} fund={fund} account={account}/>)
           }
-        </Fund>
+        </FundNode>
       ))}
     </TreeView>
   );
 }
-
-FundTree.propTypes = {
-  funds: PropTypes.arrayOf(PropTypes.object)
-};
 
 export default FundTree;

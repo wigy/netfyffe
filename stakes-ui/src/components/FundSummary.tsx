@@ -1,18 +1,23 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
 import { Grid, Paper } from '@material-ui/core';
 import useStyles from '../styles';
 import { Pie } from 'react-chartjs-2';
 import theme from '../theme';
+import { Fund, Share, InvestorMap, ShareAmountMap } from '../types/index.d';
 
-function FundSummary(props) {
+interface FundSummaryProps {
+  fund: Fund;
+  shares: Share[];
+}
+
+function FundSummary(props: FundSummaryProps): JSX.Element {
   const { /* fund, */ shares } = props;
   const classes = useStyles();
   const { caption, body2 } = theme.typography;
 
   let total = 0;
-  const sharesById = {};
-  const investorsById = {};
+  const sharesById: ShareAmountMap = {};
+  const investorsById: InvestorMap = {};
 
   shares.forEach(share => {
     total += share.amount;
@@ -25,10 +30,10 @@ function FundSummary(props) {
 
   const data = Object.keys(sharesById).map(id => ({
     id,
-    name: investorsById[id].name,
-    color: investorsById[id].color,
-    shares: sharesById[id],
-    percentage: Math.round(1000 * sharesById[id] / total) / 10
+    name: investorsById[parseInt(id)].name,
+    color: investorsById[parseInt(id)].color,
+    shares: sharesById[parseInt(id)],
+    percentage: Math.round(1000 * sharesById[parseInt(id)] / total) / 10
   }));
 
   return (
@@ -59,7 +64,7 @@ function FundSummary(props) {
               tooltips: {
                 bodyFontFamily: body2.fontFamily,
                 callbacks: {
-                  label: function(tooltipItem, data) {
+                  label: function(tooltipItem, data): string {
                     const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
                     const label = `${data.labels[tooltipItem.index]} ${value}%`;
                     return label;
@@ -79,10 +84,5 @@ function FundSummary(props) {
     </Paper>
   );
 }
-
-FundSummary.propTypes = {
-  fund: PropTypes.object.isRequired,
-  shares: PropTypes.arrayOf(PropTypes.object).isRequired
-};
 
 export default FundSummary;

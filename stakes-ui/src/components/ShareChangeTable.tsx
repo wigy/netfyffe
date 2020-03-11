@@ -12,12 +12,18 @@ import moment from 'moment';
 import Amount from './Amount';
 import ShareChange from './ShareChange';
 import Percent from './Percent';
+import { Share, InvestorMap } from '../types/index.d';
 
-function ShareChangeTable(props) {
+interface ShareChangeTableProps {
+  shares: Share[];
+  cashOnly: boolean;
+}
+
+function ShareChangeTable(props: ShareChangeTableProps): JSX.Element {
   const { shares, cashOnly } = props;
-  const byDate = {};
-  const investorsById = {};
-  const total = {};
+  const byDate: {[key: string]: {[key: number]: Share[]}} = {};
+  const investorsById: InvestorMap = {};
+  const total: {[key: number]: number} = {};
 
   shares.forEach(share => {
     const { transfer, investor } = share;

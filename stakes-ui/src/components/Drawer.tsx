@@ -5,9 +5,14 @@ import { Switch, Route } from 'react-router-dom';
 import FundList from './FundList';
 import FundTree from './FundTree';
 import PieChart from '@material-ui/icons/PieChart';
-import { PropTypes } from 'prop-types';
+import { Fund } from '../types/index.d';
 
-function Drawer(props) {
+interface DrawerProps {
+  open: boolean;
+  funds: Fund[];
+}
+
+function Drawer(props: DrawerProps): JSX.Element {
   const { funds, open } = props;
   const classes = useStyles();
   return (
@@ -22,17 +27,12 @@ function Drawer(props) {
         </div>
         <Divider />
         <Switch>
-          <Route path="/accounts" component={() => <FundTree funds={funds}/>} />
-          <Route path="/funds" component={() => <FundList funds={funds} />} />
+          <Route path="/accounts" component={(): JSX.Element => <FundTree funds={funds}/>} />
+          <Route path="/funds" component={(): JSX.Element => <FundList funds={funds} />} />
         </Switch>
       </div>
     </MuiDrawer>
   );
 }
-
-Drawer.propTypes = {
-  open: PropTypes.bool.isRequired,
-  funds: PropTypes.arrayOf(PropTypes.object)
-};
 
 export default Drawer;

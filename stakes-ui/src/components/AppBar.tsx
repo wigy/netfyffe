@@ -8,14 +8,18 @@ import { useHistory } from 'react-router-dom';
 import PeopleIcon from '@material-ui/icons/People';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import { PropTypes } from 'prop-types';
 
-function AppBar(props) {
+interface AppBarProps {
+  className: string;
+  onMenuClick: () => void;
+}
+
+function AppBar(props: AppBarProps): JSX.Element {
   const { className, onMenuClick } = props;
   const classes = useStyles();
   const history = useHistory();
 
-  const goto = (where) => history.push(where);
+  const goto = (where: string): void => history.push(where);
 
   return (
     <>
@@ -25,7 +29,7 @@ function AppBar(props) {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={() => onMenuClick()}
+            onClick={(): void => onMenuClick()}
             className={classes.menuButton}
           >
             <MenuIcon />
@@ -34,7 +38,7 @@ function AppBar(props) {
             variant="outlined"
             className={classes.toolBarButton}
             startIcon={<DashboardIcon />}
-            onClick={() => goto('/dashboard')}>
+            onClick={(): void => goto('/dashboard')}>
               Dashboard
           </Button>
           &nbsp;
@@ -42,7 +46,7 @@ function AppBar(props) {
             variant="outlined"
             className={classes.toolBarButton}
             startIcon={<AccountBalanceIcon />}
-            onClick={() => goto('/funds')}>
+            onClick={(): void => goto('/funds')}>
               Funds
           </Button>
           &nbsp;
@@ -50,7 +54,7 @@ function AppBar(props) {
             variant="outlined"
             className={classes.toolBarButton}
             startIcon={<AttachMoneyIcon />}
-            onClick={() => goto('/accounts')}>
+            onClick={(): void => goto('/accounts')}>
               Accounts
           </Button>
           &nbsp;
@@ -58,7 +62,7 @@ function AppBar(props) {
             variant="outlined"
             className={classes.toolBarButton}
             startIcon={<PeopleIcon />}
-            onClick={() => goto('/investors')}>
+            onClick={(): void => goto('/investors')}>
               Investors
           </Button>
         </Toolbar>
@@ -66,10 +70,5 @@ function AppBar(props) {
     </>
   );
 }
-
-AppBar.propTypes = {
-  className: PropTypes.string,
-  onMenuClick: PropTypes.func
-};
 
 export default AppBar;
