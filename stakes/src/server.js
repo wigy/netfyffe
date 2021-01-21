@@ -8,7 +8,7 @@ const { getTags } = require('./tilitintin');
 async function auth(cred) {
   const user = await knex('investors')
     .select('id', 'name', 'email', 'tag', 'color')
-    .where({email: cred.user})
+    .where({ email: cred.user })
     .first();
   // TODO: Password check.
   return user;
@@ -17,7 +17,7 @@ async function auth(cred) {
 async function main() {
 
   const driver = Driver.create(`sqlite:///${__dirname}/../development.sqlite`);
-  const server = new SocketServerLive(config, { auth, driver });
+  const server = new SocketServerLive(config, { auth, driver });
   await driver.initialize();
 
   server.makeChannel('investors', {
@@ -74,7 +74,7 @@ async function main() {
             as: 'comment',
             select: ['id', 'data'],
             leftJoin: ['comment.id', 'valueChanges.commentId'],
-            process: {'data': 'json'},
+            process: { data: 'json' },
             members: [
               {
                 table: 'transfers',
