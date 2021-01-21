@@ -20,7 +20,7 @@
     "request-promise": "^4.2.5",
     "rtds-query": "^0.9.0",
     "rtds-server": "^0.9.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "sqlite3": "^4.1.1"
   }
 }
