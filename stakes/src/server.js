@@ -157,7 +157,7 @@ async function main() {
             table: 'services',
             as: 'service',
             select: ['id', 'name', 'tag'],
-            leftJoin: ['service.id', 'accounts.serviceId'],
+            leftJoin: ['service.id', 'accounts.serviceId']
           }
         ]
       }
@@ -188,7 +188,7 @@ async function main() {
           {
             table: 'comments',
             select: ['id', 'data'],
-            process: {'data': 'json'},
+            process: { data: 'json' },
             join: ['comments.id', 'transfer.commentId']
           },
           {
