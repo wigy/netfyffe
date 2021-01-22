@@ -10,6 +10,10 @@ interface FundListProps {
 function FundList(props: FundListProps): JSX.Element {
   const { funds } = props;
 
+  if (!funds[0].id) {
+    return <div></div>;
+  }
+
   return (
     <List>
       {

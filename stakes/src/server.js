@@ -250,6 +250,8 @@ async function main() {
     }
   });
 
+  server.noAuth('get-tags');
+
   // server.useDebug();
   server.use404();
   server.run();
