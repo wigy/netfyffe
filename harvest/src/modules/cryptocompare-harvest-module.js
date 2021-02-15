@@ -15,16 +15,18 @@ class CryptoCompareHarvestModule extends HarvestModule {
       const exchanges = await cc.exchangeList();
       Object.entries(exchanges).forEach(([name, coins]) => {
         Object.entries(coins).forEach(([coin, trades]) => {
-          if (trades.includes('EUR')) {
-            const exchange = name.toUpperCase();
-            this.exchanges[exchange] = this.exchanges[exchange] || {name, trades: []};
-            this.exchanges[exchange].trades.push(coin);
+          const exchange = name.toUpperCase();
+          this.exchanges[exchange] = this.exchanges[exchange] || {name, trades: {}, euro: new Set()};
+          this.exchanges[exchange].trades[coin] = new Set(trades);
+          if (this.exchanges[exchange].trades[coin].has('EUR')) {
+            this.exchanges[exchange].euro.add(coin);
           }
         })
       });
     }
 
     ex(exchange) {
+      exchange = exchange.toUpperCase();
       switch(exchange) {
         case 'GDAX':
           return 'COINBASE';
@@ -35,7 +37,7 @@ class CryptoCompareHarvestModule extends HarvestModule {
     isLatestAvailable(ticker) {
       let [exchange, coin] = ticker.split(':');
       exchange = this.ex(exchange);
-      return this.exchanges[exchange] && this.exchanges[exchange].trades.includes(coin);
+      return this.exchanges[exchange] && this.exchanges[exchange].euro && this.exchanges[exchange].euro.has(coin);
     }
 
     async getLatest(ticker) {
@@ -70,6 +72,24 @@ class CryptoCompareHarvestModule extends HarvestModule {
         });
       }
       return ret;
+    }
+
+    isPairAvailable(exchange, sell, buy, stamp) {
+      exchange = this.ex(exchange);
+      return this.exchanges[exchange] && this.exchanges[exchange].trades[sell] && this.exchanges[exchange].trades[sell].has(buy);
+    }
+
+    async getPair(exchange, sell, buy, stamp) {
+      exchange = this.ex(exchange);
+      const date = new Date(stamp);
+      const price = await cc.priceHistorical(sell, buy, date, {exchanges: [this.exchanges[exchange].name]});
+      return {
+        exchange,
+        sell,
+        buy,
+        price: price[buy],
+        date: moment(date).format('YYYY-MM-DD hh:mm:ss')
+      };
     }
 }
 

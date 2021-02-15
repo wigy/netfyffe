@@ -119,6 +119,17 @@ class HarvestModule {
     }
 
     /**
+     * Trading pair fetching.
+     */
+    isPairAvailable() {
+        return false;
+    }
+
+    getPair(exchange, sell, buy, stamp) {
+        throw new Error('Module does not implement getPair().');
+    }
+
+    /**
      * Fetch the classification an ticker.
      * {
      *   ticker: "ABC:DEF",

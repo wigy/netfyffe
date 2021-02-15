@@ -161,6 +161,11 @@ class Engine {
                 return data;
             });
     }
+
+    async getPair(exchange, sell, buy, stamp) {
+        await this.init();
+        return this.call('getPair', exchange, sell, buy, stamp)
+    }
 }
 
 module.exports = new Engine();
