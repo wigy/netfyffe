@@ -17,9 +17,14 @@ const router = express.Router();
 *
 * Get the trading pair value at the given time stamp.
 */
-router.get('/:exchange/:sell/:buy/:date', async (req, res) => {
+router.get('/:exchange/:sell/:buy/:date', (req, res) => {
   const {exchange, sell, buy, date} = req.params;
-  res.send(await engine.getPair(exchange, sell, buy, date));
+  engine.getPair(exchange, sell, buy, date)
+    .then(data => res.send(data))
+    .catch(err => {
+      d.error(err);
+      res.status(404).send({"error": "NotFound"});
+  });
 });
 
 module.exports = router;

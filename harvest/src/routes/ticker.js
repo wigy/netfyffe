@@ -167,9 +167,13 @@ router.get('/:ticker', (req, res) => {
 *        ...
 *     ]
 */
-router.get('/', async (req, res) => {
-  const data = await db.select('ticker').from('quotes').groupBy('ticker').pluck('ticker');
-  res.send(data)
+router.get('/', (req, res) => {
+  db.select('ticker').from('quotes').groupBy('ticker').pluck('ticker')
+    .then(data => res.send(data))
+    .catch(err => {
+        d.error(err);
+        res.status(404).send({"error": "TickerNotFound"});
+    });
 });
 
 module.exports = router;
