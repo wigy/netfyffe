@@ -166,6 +166,11 @@ class Engine {
         await this.init();
         return this.call('getPair', exchange, sell, buy, stamp)
     }
+
+    async getSpotPrice(ticker, stamp) {
+        await this.init();
+        return this.call('getSpotPrice', ticker, stamp)
+    }
 }
 
 module.exports = new Engine();

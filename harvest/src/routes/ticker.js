@@ -1,6 +1,7 @@
 const express = require('express');
 const moment = require('moment');
 const storage = require('../storage');
+const engine = require('../engine');
 const db = require('../db');
 
 const router = express.Router();
@@ -88,6 +89,19 @@ router.get('/:ticker([-A-Z0-9:]+)/:date(\\d{4}-\\d{2}-\\d{2})', (req, res) => {
 
   storage.getDailyData(ticker, date, date)
     .then(data => res.send(data[0]))
+    .catch(err => {
+      d.error(err);
+      res.status(404).send({"error": "TickerNotFound"});
+    });
+});
+
+router.get('/:ticker([-A-Z0-9:]+)/:date(\\d{4}-\\d{2}-\\d{2}%20\\d{2}:\\d{2}:\\d{2})', (req, res) => {
+
+  const { ticker, date } = req.params;
+
+  const stamp = moment.utc(date).unix() * 1000;
+  engine.getSpotPrice(ticker, stamp)
+    .then(data => res.send(data))
     .catch(err => {
       d.error(err);
       res.status(404).send({"error": "TickerNotFound"});

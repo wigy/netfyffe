@@ -16,10 +16,16 @@ class CryptoCompareHarvestModule extends HarvestModule {
       Object.entries(exchanges).forEach(([name, coins]) => {
         Object.entries(coins).forEach(([coin, trades]) => {
           const exchange = name.toUpperCase();
-          this.exchanges[exchange] = this.exchanges[exchange] || {name, trades: {}, euro: new Set()};
+          this.exchanges[exchange] = this.exchanges[exchange] || {name, trades: {}, euro: new Set(), usd: new Set(), btc: new Set()};
           this.exchanges[exchange].trades[coin] = new Set(trades);
           if (this.exchanges[exchange].trades[coin].has('EUR')) {
             this.exchanges[exchange].euro.add(coin);
+          }
+          if (this.exchanges[exchange].trades[coin].has('USD')) {
+            this.exchanges[exchange].usd.add(coin);
+          }
+          if (this.exchanges[exchange].trades[coin].has('BTC')) {
+            this.exchanges[exchange].btc.add(coin);
           }
         })
       });
@@ -74,6 +80,21 @@ class CryptoCompareHarvestModule extends HarvestModule {
       return ret;
     }
 
+    isSpotPriceAvailable(ticker, stamp) {
+      return this.isLatestAvailable(ticker);
+    }
+
+    async getSpotPrice(ticker, stamp) {
+      let [exchange, coin] = ticker.split(':');
+      exchange = this.ex(exchange);
+      const price = await cc.priceHistorical(coin, 'EUR', new Date(stamp), {exchanges: [this.exchanges[exchange].name]});
+      return {
+        ticker: ticker,
+        time: moment.utc(stamp).format('YYYY-MM-DD HH:mm:ss'),
+        price: price.EUR,
+      };
+  }
+
     isPairAvailable(exchange, sell, buy, stamp) {
       exchange = this.ex(exchange);
       return this.exchanges[exchange] && this.exchanges[exchange].trades[sell] && this.exchanges[exchange].trades[sell].has(buy);
@@ -88,7 +109,7 @@ class CryptoCompareHarvestModule extends HarvestModule {
         sell,
         buy,
         price: price[buy],
-        date: moment(date).format('YYYY-MM-DD hh:mm:ss')
+        date: moment(date).format('YYYY-MM-DD HH:mm:ss')
       };
     }
 }

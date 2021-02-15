@@ -106,7 +106,7 @@ class HarvestModule {
      * Fetch the latest value for an ticker.
      * {ticker: "ABC:DEF", value: 1.24, currency: "EUR"}
      */
-    getLatest(ticker) {
+    async getLatest(ticker) {
         throw new Error('Module does not implement getLatest().');
     }
 
@@ -114,7 +114,7 @@ class HarvestModule {
      * Fetch daily closing values for date range
      * [{date: "2017-03-27", open: 1.00, close: 1.02, high: 1.05, low: 0.99, ticker: "ABC", volume: 12000}, ...]
      */
-    getDailyData(ticker, start, end) {
+    async getDailyData(ticker, start, end) {
         throw new Error('Module does not implement getDailyData().');
     }
 
@@ -125,8 +125,21 @@ class HarvestModule {
         return false;
     }
 
-    getPair(exchange, sell, buy, stamp) {
+    async getPair(exchange, sell, buy, stamp) {
         throw new Error('Module does not implement getPair().');
+    }
+
+    /**
+     * More accurate spot price fetching.
+     * @param {String} ticker
+     * @param {Number} stamp
+     */
+    isSpotPriceAvailable(ticker, stamp) {
+        return false;
+    }
+
+    async getSpotPrice(ticker, stamp) {
+        throw new Error('Module does not implement getSpotPrice().');
     }
 
     /**
