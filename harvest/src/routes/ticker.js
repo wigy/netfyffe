@@ -99,8 +99,8 @@ router.get('/:ticker([-A-Z0-9:]+)/:date(\\d{4}-\\d{2}-\\d{2}%20\\d{2}:\\d{2}:\\d
 
   const { ticker, date } = req.params;
 
-  const stamp = moment.utc(date).unix() * 1000;
-  engine.getSpotPrice(ticker, stamp)
+  const time = moment.utc(date).unix() * 1000;
+  storage.getSpotPrice(ticker, time)
     .then(data => res.send(data))
     .catch(err => {
       d.error(err);

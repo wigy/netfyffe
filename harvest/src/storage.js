@@ -80,6 +80,23 @@ async function getDailyData(ticker, start, end) {
   return await db('quotes').select('*').where('date', '>=', start).andWhere('date', '<=', end).andWhere('ticker', ticker).orderBy('date');
 }
 
+async function fillSpotPrice(ticker, time) {
+  data = await engine.getSpotPrice(ticker, time);
+  if (data) {
+    await db('spots').insert({ ticker: data.ticker, time: moment.utc(data.time), price: data.price });
+  }
+  return data;
+}
+
+async function getSpotPrice(ticker, time) {
+  const data = await db('spots').select('*').where('ticker', ticker).andWhere('time', moment.utc(time))
+  if (!data.length) {
+    return await fillSpotPrice(ticker, time);
+  }
+  return data[0];
+}
+
 module.exports = {
-  getDailyData
+  getDailyData,
+  getSpotPrice,
 };

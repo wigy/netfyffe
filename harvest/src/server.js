@@ -2,6 +2,7 @@ const express = require('express');
 const config = require('./config');
 const app = express();
 
+// TODO: Drop this practice.
 global.d = require('neat-dump');
 
 app.use(d.middleware());
