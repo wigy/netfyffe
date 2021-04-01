@@ -12,9 +12,11 @@ async function fillDailyData(ticker, start, end) {
 
   const cache = {};
 
+  // How many days of extra data?
+  const DAY_MARGIN = 1;
   // Expand the range to ensure data for starting day and reduce future request of same date vicinity.
-  start = moment(start).subtract(7, 'days').format('YYYY-MM-DD');
-  end = moment(end).add(7, 'days').format('YYYY-MM-DD');
+  start = moment(start).subtract(DAY_MARGIN, 'days').format('YYYY-MM-DD');
+  end = moment(end).add(DAY_MARGIN, 'days').format('YYYY-MM-DD');
   if (end >= moment().format('YYYY-MM-DD')) {
     end = moment().subtract(1, 'day').format('YYYY-MM-DD');
   }
