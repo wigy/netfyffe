@@ -11,6 +11,24 @@ class CryptoCompareHarvestModule extends HarvestModule {
         this.exchanges = {};
     }
 
+    find(ticker) {
+      console.log('========================================================================================================');
+      console.log('                                         CURRENTLY SUPPORTED', ticker);
+      console.log('--------------------------------------------------------------------------------------------------------');
+      for (const ex of Object.keys(this.exchanges)) {
+        if (this.exchanges[ex].euro.has(ticker)) {
+          console.log(ex,'vs. EUR');
+        }
+        if (this.exchanges[ex].usd.has(ticker)) {
+          console.log(ex,'vs. USD');
+        }
+        if (this.exchanges[ex].btc.has(ticker)) {
+          console.log(ex,'vs. BTC');
+        }
+      }
+      console.log('========================================================================================================');
+    }
+
     async prepare() {
       const exchanges = await cc.exchangeList();
       Object.entries(exchanges).forEach(([name, coins]) => {
@@ -29,6 +47,7 @@ class CryptoCompareHarvestModule extends HarvestModule {
           }
         })
       });
+      // this.find('BNB')
     }
 
     ex(exchange) {
