@@ -69,6 +69,9 @@ class ExchangeRatesApiHarvestModule extends HarvestModule {
       for(let s = moment(first), e = moment(last); s.diff(e) <= 0; s.add(1,'day')) {
         const date = s.format('YYYY-MM-DD');
         const data = await this.get(`http://api.currencylayer.com/historical?date=${date}&currencies=EUR,${currency}&access_key=${this.apikey}`, `${currency}.${date}.json`)
+        if (!data.success) {
+          throw new Error(`API access to api.currencylayer.com failed: ${JSON.stringify(data)}`)
+        }
         const usdeur = data.quotes.USDEUR;
         const conv = data.quotes[`USD${currency}`];
         const rate = (1 / conv) * usdeur;
