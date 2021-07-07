@@ -100,11 +100,12 @@ class Engine {
         }
         if (config.HARVEST_MODULES) {
             config.HARVEST_MODULES.split(':').forEach(path => this.use(path));
+        } else {
+            await globby(__dirname + '/modules/**/*-harvest-module.js').then(files => {
+                files = files.map(x => x.replace(/.*\/(modules\/.*)\.js$/,'$1'));
+                files.forEach(x => this.use('./' + x));
+            });
         }
-        await globby(__dirname + '/modules/**/*-harvest-module.js').then(files => {
-            files = files.map(x => x.replace(/.*\/(modules\/.*)\.js$/,'$1'));
-            files.forEach(x => this.use('./' + x));
-        });
         return Promise.all(this.modules.map(module => module.prepare()));
     }
 
