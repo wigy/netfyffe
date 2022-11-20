@@ -36,7 +36,7 @@
     "knex-cli": "^1.0.2",
     "kraken-api": "^1.0.1",
     "mkdirp": "^1.0.4",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "neat-dump": "^1.0.17",
     "node-fetch": "^3.2.10",
     "nodemon": "^2.0.20",
