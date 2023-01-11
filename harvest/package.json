@@ -32,7 +32,7 @@
     "csvtojson": "^2.0.10",
     "express": "^4.17.1",
     "globby": "^11.0.2",
-    "knex": "^0.21.17",
+    "knex": "^2.4.0",
     "knex-cli": "^1.0.2",
     "kraken-api": "^1.0.1",
     "mkdirp": "^1.0.4",
